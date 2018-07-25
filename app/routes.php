@@ -13,3 +13,4 @@ $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
+
