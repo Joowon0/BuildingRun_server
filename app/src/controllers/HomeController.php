@@ -35,9 +35,11 @@ final class HomeController extends BaseController
 
     public function main(Request $request, Response $response, $args)
     {
-          print_r($_POST);
-//        $this->view->render($response, 'index.phtml');
-//        return $response;
+//          print_r($_POST);
+//          print_r($_POST['email']);
+//          print_r($_POST['password']);
+        $this->view->render($response, 'index.phtml', ['email' => $_POST['email'], 'password' => $_POST['password']]);
+        return $response;
     }
     public function login(Request $request, Response $response, $args)
     {
