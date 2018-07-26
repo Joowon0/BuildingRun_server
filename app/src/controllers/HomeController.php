@@ -33,6 +33,8 @@ final class HomeController extends BaseController
         return $response;
     }
 
+    // TODO : need to check if email and password entry is not null
+    // TODO : need to check if email has right format
     public function main(Request $request, Response $response, $args)
     {
 	$sql = "select * FROM User where EmailAddress = '" . $_POST['email'] . "'" ;
@@ -41,6 +43,7 @@ final class HomeController extends BaseController
             $result = $stmt->fetch();
 
 	    //print_r($result);
+            // TODO : need to check if activated
             if ($result == null)
                 echo "Invalid Email";
             else if (strcmp($result['HPassword'], $_POST['password']) != 0)
