@@ -37,7 +37,7 @@ final class HomeController extends BaseController
     // TODO : need to check if email has right format
     public function main(Request $request, Response $response, $args)
     {
-	$sql = "select * FROM User where EmailAddress = '" . $_POST['email'] . "'" ;
+	$sql = "SELECT * FROM User WHERE EmailAddress = '" . $_POST['email'] . "'" ;
 	try {
             $stmt = $this->db->query($sql);
             $result = $stmt->fetch();
@@ -72,5 +72,28 @@ final class HomeController extends BaseController
     {
         $this->view->render($response, 'register.phtml');
         return $response;
+    }
+
+    public function registerHandler(Request $request, Response $response, $args)
+    {
+        $sql = "SELECT * FROM User WHERE EmailAddress = '" . $_POST['email'] . "'" ;
+	try {
+            $stmt = $this->db->query($sql);
+            $result = $stmt->fetch();
+            
+            // duplicated email
+            if ($result != null)
+                echo "email already exists";
+            else {
+                echo "usable email";
+                $sql = "";
+            }
+
+        } catch (PDOException $e) {
+            echo "ERROR : " . $e->getMessage();
+        }
+
+//        $this->view->render($response, 'register.phtml');
+//        return $response;
     }
 }

@@ -13,4 +13,5 @@ $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
-
+$app->post('/registerHandler', 'App\Controller\HomeController:registerHandler')
+    ->setName('registerHandler');
