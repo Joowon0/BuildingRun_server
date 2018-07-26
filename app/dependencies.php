@@ -12,6 +12,17 @@ $container['view'] = function ($container) {
 	return new \Slim\Views\PhpRenderer(__DIR__ . '/templates/');
 };
 
+// PDO database library 
+$container['db'] = function ($c) {
+    //echo $c['settings'];
+    $db = $c['settings']['dbSettings']['db'];
+    $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
+        $db['user'], $db['pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
+};
+
 /*
 // Twig
 $container['view'] = function ($c) {

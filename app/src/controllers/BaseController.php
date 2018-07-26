@@ -8,13 +8,15 @@ class BaseController
     protected $view;
     protected $logger;
     protected $flash;
-    protected $em;  // Entities Manager
+    protected $db;  // Entities Manager
+//    protected $database;
 
     public function __construct(Container $c)
     {
         $this->view = $c->get('view');
         $this->logger = $c->get('logger');
         $this->flash = $c->get('flash');
-        $this->em = $c->get('em');
+        $this->db = $c->get('db');
+//        $this->database = $c->get('database');
     }
 }

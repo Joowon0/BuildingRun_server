@@ -12,6 +12,14 @@ return [
                 'auto_reload' => true,
             ],
         ],
+	'dbSettings' => array (
+		'db' => array (
+			'host' => '127.0.0.1',
+			'user' => 'root',
+			'pass' => '12345678',
+			'dbname' => 'User_schema'
+		),
+	),
 
         // doctrine settings
         'doctrine' => [
