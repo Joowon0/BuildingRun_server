@@ -1,6 +1,6 @@
 ﻿<?php
 require "conn.php";
-if($_POST["user_id"]!=""){
+if($_POST["EmailAddress"]!=""){
 $EmailAddress=$_POST["EmailAddress"];
 $HPassword=$_POST["HPassword"];
 $FirstName=$_POST["FirstName"];
