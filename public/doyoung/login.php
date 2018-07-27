@@ -10,11 +10,11 @@ $result = mysql_query($qry);
 
 if(mysql_num_rows($result) > 0 )
 {
-   echo "login success";
+   echo 1;
 }
 else 
 {
-   echo "login failed";
+   echo 0;
 }
 }
 
