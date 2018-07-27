@@ -9,7 +9,7 @@ $result = mysql_query($qry);
 if(mysql_num_rows($result) > 0 )
    {
       while($data = mysql_fetch_array($result)){
-         echo $data['a_id'];
+         echo $data['HPassword'];
          echo "/";
    }
    else 
