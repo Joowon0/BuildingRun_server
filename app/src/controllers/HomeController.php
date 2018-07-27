@@ -36,9 +36,40 @@ final class HomeController extends BaseController
         return $response;
     }
 
+    public function forgot_pw(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'forgot_pw.phtml');
+        return $response;
+    }
+    public function main(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'main_before.phtml');
+        return $response;
+    }
+    public function main_after(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'password' => $_POST['password']]);
+        return $response;
+    }
+    public function login(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'login.phtml');
+        return $response;
+    }
+    public function register(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'register.phtml');
+        return $response;
+    }
+
+
+
+
+
+
     // TODO : need to check if email and password entry is not null
     // TODO : need to check if email has right format
-    public function main(Request $request, Response $response, $args)
+    public function loginHandler(Request $request, Response $response, $args)
     {
 	$sql = "SELECT * FROM User WHERE EmailAddress = '" . $_POST['email'] . "'" ;
 	try {
@@ -66,17 +97,17 @@ final class HomeController extends BaseController
 //        $this->view->render($response, 'index.phtml', ['email' => $_POST['email'], 'password' => $_POST['password']]);
 //        return $response;
     }
-    public function login(Request $request, Response $response, $args)
+
+
+    // sign-out
+    public function registerHandler(Request $request, Response $response, $args)
     {
-        $this->view->render($response, 'login.phtml');
-        return $response;
-    }
-    public function register(Request $request, Response $response, $args)
-    {
+	$this->checkDuplicationEmail($_POST);
+	$this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName']);
+	
         $this->view->render($response, 'register.phtml');
         return $response;
     }
-
 
     public function checkDuplicationEmail($userINFO) {
 	$sql = "SELECT * FROM User WHERE EmailAddress = '" .
@@ -108,6 +139,7 @@ final class HomeController extends BaseController
             echo "ERROR : " . $e->getMessage();
         }
     }
+
     public function sendEmail($email, $firstName, $lastName) {
 	$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
         try {
@@ -146,26 +178,4 @@ final class HomeController extends BaseController
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         }
     }
-
-    public function registerHandler(Request $request, Response $response, $args)
-    {
-	$this->checkDuplicationEmail($_POST);
-	$this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName']);
-	
-
-        $this->view->render($response, 'register.phtml');
-        return $response;
-    }
-    public function forgot_pw(Request $request, Response $response, $args)
-    {
-        $this->view->render($response, 'forgot_pw.phtml');
-        return $response;
-    }
-    public function main_after(Request $request, Response $response, $args)
-    {
-        $this->view->render($response, 'main_after.phtml');
-        return $response;
-    }
-
-
 }
