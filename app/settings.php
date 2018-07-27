@@ -1,7 +1,7 @@
 <?php
 return [
     'settings' => [
-        // comment this line when deploy to production environment
+       // comment this line when deploy to production environment
         'displayErrorDetails' => true,
         // View settings
         'view' => [
