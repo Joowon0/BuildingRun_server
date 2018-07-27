@@ -5,13 +5,12 @@ $user_email=$_POST["EmailAddress"];
 $user_pass=$_POST["HPassword"];
 $mysql_qry ="update User set HPassword='$user_pass' where EmailAddress = '$user_email'";
 $result = mysqli_query($conn, $mysql_qry);
-if($result){  
-       echo 1;  
-    }  
-    else{  
-       echo 0; 
-       echo mysqli_error($conn);
-    } 
+$affected = mysql_affected_rows();
+if($affected > 0)
+   echo "row was updated/inserted";
+else
+   echo "No rows were ....";
+
 }
 
 mysqli_close($conn);
