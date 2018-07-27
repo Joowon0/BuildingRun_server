@@ -46,9 +46,9 @@ final class HomeController extends BaseController
         $this->view->render($response, 'main_before.phtml');
         return $response;
     }
-    public function main_after(Request $request, Response $response, $args)
+    public function main_after(Request $request, Response $response, $args, $firstName, $lastName)
     {
-        $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'password' => $_POST['password']]);
+        $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
         return $response;
     }
     public function login(Request $request, Response $response, $args)
@@ -89,7 +89,7 @@ final class HomeController extends BaseController
                 $this->login($request, $response, $args);
             }
             else {
-                $this->main_after($request, $response, $args);
+                $this->main_after($request, $response, $args, $result['FirstName'], $result['LastName']);
             }
         } catch (PDOException $e) {
             echo "ERROR : " . $e->getMessage();
