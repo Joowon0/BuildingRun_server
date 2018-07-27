@@ -156,4 +156,16 @@ final class HomeController extends BaseController
         $this->view->render($response, 'register.phtml');
         return $response;
     }
+    public function forgot_pw(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'forgot_pw.phtml');
+        return $response;
+    }
+    public function main_after(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'main_after.phtml');
+        return $response;
+    }
+
+
 }
