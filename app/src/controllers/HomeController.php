@@ -78,14 +78,19 @@ final class HomeController extends BaseController
 
 	    //print_r($result);
             // TODO : need to check if activated
-            if ($result == null)
-                echo "Invalid Email";
-            else if (strcmp($result['HPassword'], $_POST['password']) != 0)
-		echo "Wrong Password";
-            else
-                echo "Sign In Success";
-
-
+            if ($result == null) {
+                $message = "There is no account corresponding to input Email";
+		echo "<script type='text/javascript'>alert('$message');</script>";
+                $this->login($request, $response, $args);
+            }
+            else if (strcmp($result['HPassword'], $_POST['password']) != 0) {
+		$message = "Wrong Password. Please enter again.";
+		echo "<script type='text/javascript'>alert('$message');</script>";
+                $this->login($request, $response, $args);
+            }
+            else {
+                $this->main_after($request, $response, $args);
+            }
         } catch (PDOException $e) {
             echo "ERROR : " . $e->getMessage();
         }
