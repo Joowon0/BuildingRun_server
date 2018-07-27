@@ -10,7 +10,7 @@ $app->get('/post/{id}', 'App\Controller\HomeController:viewPost')
 $app->get('/main', 'App\Controller\HomeController:main')
     ->setName('main_page');
 
-$app->get('/main_after', 'App\Controller\HomeController:main_after')
+$app->post('/main_after', 'App\Controller\HomeController:main_after')
     ->setName('main_after');
 
 
