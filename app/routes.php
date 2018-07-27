@@ -9,8 +9,16 @@ $app->get('/post/{id}', 'App\Controller\HomeController:viewPost')
 
 $app->get('/main', 'App\Controller\HomeController:main')
     ->setName('main_page');
+
+$app->get('/main_after', 'App\Controller\HomeController:main_after')
+    ->setName('main_after');
+
+
 $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
+
+$app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
+    ->setName('forgot_pw');
 
