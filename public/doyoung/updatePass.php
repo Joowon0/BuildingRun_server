@@ -26,8 +26,8 @@ if (!$android){
    <body>
    
       <form action="<?php $_PHP_SELF ?>" method="POST">
-         Email: <input type = "text" name = "user_email" />
-              a_password: <input type = "text" name="user_pass" />
+         Email: <input type = "text" name = "EmailAddress" />
+              a_password: <input type = "text" name="HPassword" />
          <input type = "submit" />
       </form>
    
