@@ -1,9 +1,9 @@
 <?php
 require "conn.php";
 if($_POST["EmailAddress"]!=""){
-$user_email=$_POST["EmailAddress"];
-$user_pass=$_POST["HPassword"];
-$mysql_qry ="update User set HPassword='$user_pass' where EmailAddress = '$user_email'";
+$EmailAddress=$_POST["EmailAddress"];
+$HPassword=$_POST["HPassword"];
+$mysql_qry ="update User set HPassword='$HPassword' where EmailAddress = '$EmailAddress'";
 $result = mysqli_query($conn, $mysql_qry);
 $affected = mysql_affected_rows($result);
 if($affected > 0)
