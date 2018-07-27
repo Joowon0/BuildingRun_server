@@ -1,7 +1,8 @@
 <?php
 require "conn.php";
-$user_email=isset($_POST['EmailAddress']) ? $_POST['EmailAddress'] : '';
-$user_pass=isset($_POST['HPassword']) ? $_POST['HPassword'] : '';
+if($_POST["EmailAddress"]!=""){
+$user_email=$_POST["EmailAddress"];
+$user_pass=$_POST["HPassword"];
 $mysql_qry ="update User set HPassword='$user_pass' where EmailAddress = '$user_email'";
 $result = mysqli_query($conn, $mysql_qry);
 if($result){  
@@ -11,7 +12,7 @@ if($result){
        echo 0; 
        echo mysqli_error($conn);
     } 
-   
+}
 
 mysqli_close($conn);
 ?>
