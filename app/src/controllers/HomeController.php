@@ -62,10 +62,16 @@ final class HomeController extends BaseController
         return $response;
     }
 
-
-
-
-
+    
+function randomString($length = 6) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+	$randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
 
     // TODO : need to check if email and password entry is not null
     // TODO : need to check if email has right format
@@ -94,13 +100,6 @@ final class HomeController extends BaseController
         } catch (PDOException $e) {
             echo "ERROR : " . $e->getMessage();
         }
-
-	
-//          print_r($_POST);
-//          print_r($_POST['email']);
-//          print_r($_POST['password']);
-//        $this->view->render($response, 'index.phtml', ['email' => $_POST['email'], 'password' => $_POST['password']]);
-//        return $response;
     }
 
 
@@ -131,7 +130,7 @@ final class HomeController extends BaseController
 		$hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
                 $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
 		"'". $userINFO['email'] ."', ".     // Email
-		"'". $hashedPW          ."', ".  // Hashed password
+		"'". $hashedPW          ."', ".     // Hashed password
 		"'". $userINFO['firstName'] ."', ". // First Name
 		"'". $userINFO['lastName'] ."', ".  // Last Name
 		"'". $userINFO['phoneNum'] ."'".    // PhoneNumber

@@ -9,7 +9,6 @@ $app->get('/post/{id}', 'App\Controller\HomeController:viewPost')
 
 $app->get('/main', 'App\Controller\HomeController:main')
     ->setName('main_page');
-
 $app->post('/main_after', 'App\Controller\HomeController:main_after')
     ->setName('main_after');
 
@@ -22,5 +21,12 @@ $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
 $app->post('/registerHandler', 'App\Controller\HomeController:registerHandler')
     ->setName('registerHandler');
+
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
+
+$app->get('/random', 'App\Controller\HomeController:generateTempPW')
+    ->setName('main_after');
+
+$app->get('/accountActivate/{id}', 'App\Controller\HomeController:accountActivation')
+    ->setName('accountActivation');
