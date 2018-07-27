@@ -1,10 +1,10 @@
 <?php
 include("conn.php");
-if($_POST["user_id"]!=""){
-$user_id=$_POST["user_id"];
-$user_pass=$_POST["user_pass"];
+if($_POST["EmailAddress"]!=""){
+$user_id=$_POST["EmailAddress"];
+$user_pass=$_POST["HPassword"];
 
-$qry = "select * from User where user_id = '$user_id' and user_pass = '$user_pass'";
+$qry = "select * from User where EmailAddress = '$user_id' and HPassword = '$user_pass'";
 
 $result = mysql_query($qry);
 
@@ -32,8 +32,8 @@ if (!$android){
    <body>
    
       <form action="<?php $_PHP_SELF ?>" method="POST">
-         id: <input type = "text" name = "user_id" />
-         password: <input type = "text" name = "user_pass" />
+         id: <input type = "text" name = "EmailAddress" />
+         password: <input type = "text" name = "HPassword" />
          <input type = "submit" />
       </form>
    </body>
