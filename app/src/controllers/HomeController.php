@@ -83,7 +83,7 @@ final class HomeController extends BaseController
 		echo "<script type='text/javascript'>alert('$message');</script>";
                 $this->login($request, $response, $args);
             }
-            else if (strcmp($result['HPassword'], $_POST['password']) != 0) {
+            else if (!password_verify($_POST['password'], $result['HPassword'])) {
 		$message = "Wrong Password. Please enter again.";
 		echo "<script type='text/javascript'>alert('$message');</script>";
                 $this->login($request, $response, $args);
@@ -128,9 +128,10 @@ final class HomeController extends BaseController
 		return;
             }
             else {
+		$hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
                 $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
 		"'". $userINFO['email'] ."', ".     // Email
-		"'". $userINFO['password'] ."', ".  // Hashed password
+		"'". $hashedPW          ."', ".  // Hashed password
 		"'". $userINFO['firstName'] ."', ". // First Name
 		"'". $userINFO['lastName'] ."', ".  // Last Name
 		"'". $userINFO['phoneNum'] ."'".    // PhoneNumber
