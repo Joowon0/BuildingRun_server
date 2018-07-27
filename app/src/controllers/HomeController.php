@@ -76,7 +76,8 @@ final class HomeController extends BaseController
 
     public function registerHandler(Request $request, Response $response, $args)
     {
-        $sql = "SELECT * FROM User WHERE EmailAddress = '" . $_POST['email'] . "'" ;
+        $sql = "SELECT * FROM User WHERE EmailAddress = '" .
+		$_POST['email'] . "'" ;
 	try {
             $stmt = $this->db->query($sql);
             $result = $stmt->fetch();
@@ -86,7 +87,14 @@ final class HomeController extends BaseController
                 echo "email already exists";
             else {
                 echo "usable email";
-                $sql = "";
+                $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
+		"'". $_POST['email'] ."', ". // Email
+		"'". $_POST['password'] ."', ". // Hashed password
+		"'". $_POST['firstName'] ."', ". // First Name
+		"'". $_POST['lastName'] ."', ". // Last Name
+		"'". $_POST['phoneNum'] ."'". // PhoneNumber
+		")";
+		$stmt = $this->db->query($sql);
             }
 
         } catch (PDOException $e) {
