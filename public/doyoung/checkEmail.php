@@ -7,11 +7,11 @@ $qry = "select * from User where EmailAddress = '$EmailAddress'";
 $result = mysql_query($qry);
 if(mysql_num_rows($result) > 0 )
    {
-      echo 0;
+      echo 1;
    }
    else 
    {
-      echo 1;
+      echo 0;
    }
 }
 
