@@ -83,25 +83,28 @@ final class HomeController extends BaseController
             $result = $stmt->fetch();
             
             // duplicated email
-            if ($result != null)
-                echo "email already exists";
+            if ($result != null) {
+                $message = "The Email is already registered. Please enter other email or sign-in";
+		echo "<script type='text/javascript'>alert('$message');</script>";
+            }
             else {
-                echo "usable email";
                 $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
-		"'". $_POST['email'] ."', ". // Email
-		"'". $_POST['password'] ."', ". // Hashed password
+		"'". $_POST['email'] ."', ".     // Email
+		"'". $_POST['password'] ."', ".  // Hashed password
 		"'". $_POST['firstName'] ."', ". // First Name
-		"'". $_POST['lastName'] ."', ". // Last Name
-		"'". $_POST['phoneNum'] ."'". // PhoneNumber
+		"'". $_POST['lastName'] ."', ".  // Last Name
+		"'". $_POST['phoneNum'] ."'".    // PhoneNumber
 		")";
 		$stmt = $this->db->query($sql);
+			$message = "Sign-up is completed. Please check you email to activate you account";
+			echo "<script type='text/javascript'>alert('$message');</script>";
             }
 
         } catch (PDOException $e) {
             echo "ERROR : " . $e->getMessage();
         }
 
-//        $this->view->render($response, 'register.phtml');
-//        return $response;
+        $this->view->render($response, 'register.phtml');
+        return $response;
     }
 }
