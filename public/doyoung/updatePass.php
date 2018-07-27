@@ -5,7 +5,7 @@ $user_email=$_POST["EmailAddress"];
 $user_pass=$_POST["HPassword"];
 $mysql_qry ="update User set HPassword='$user_pass' where EmailAddress = '$user_email'";
 $result = mysqli_query($conn, $mysql_qry);
-$affected = mysql_affected_rows();
+$affected = mysql_affected_rows($result);
 if($affected > 0)
    echo "row was updated/inserted";
 else
