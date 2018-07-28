@@ -30,3 +30,24 @@ $app->get('/random', 'App\Controller\HomeController:generateTempPW')
 
 $app->get('/accountActivate/{id}', 'App\Controller\HomeController:accountActivation')
     ->setName('accountActivation');
+
+
+// show database for test
+$app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
+    ->setName('showDB_airQuality');
+$app->get('/showDB/building', 'App\Controller\DBTester:printBuilding')
+    ->setName('showDB_building');
+$app->get('/showDB/gps', 'App\Controller\DBTester:printGPS')
+    ->setName('showDB_gps');
+$app->get('/showDB/heartInfo', 'App\Controller\DBTester:printHeartInfo')
+    ->setName('showDB_heartInfo');
+$app->get('/showDB/inLoc', 'App\Controller\DBTester:printInLoc')
+    ->setName('showDB_inLoc');
+$app->get('/showDB/nonce', 'App\Controller\DBTester:printNonce')
+    ->setName('showDB_nonce');
+$app->get('/showDB/sensor', 'App\Controller\DBTester:printSensor')
+    ->setName('showDB_sensor');
+$app->get('/showDB/user', 'App\Controller\DBTester:printUser')
+    ->setName('showDB_user');
+
+
