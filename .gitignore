@@ -1,0 +1,5 @@
+# DB settings#
+/app/settings.php
+
+# log file #
+/log/app.log
