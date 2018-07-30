@@ -25,14 +25,15 @@ final class HomeController extends BaseController {
       $messages = $this->flash->getMessage('info');
 
       try {
-          $post = $this->em->find('App\Model\Post', intval($args['id']));
+        echo ($args['id']);
+          //$post = $this->em->find('App\Model\Post', intval($args['id']));
       } catch (\Exception $e) {
           echo $e->getMessage();
           die;
       }
 
-      $this->view->render($response, 'post.twig', ['post' => $post, 'flash' => $messages]);
-      return $response;
+      //$this->view->render($response, 'post.twig', ['post' => $post, 'flash' => $messages]);
+      //return $response;
   }
 
   public function forgot_pw(Request $request, Response $response, $args)

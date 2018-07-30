@@ -9,3 +9,13 @@
 [2018-07-25 06:20:37] app.INFO: Home page action dispatched [] {"uid":"49cc638"}
 [2018-07-27 05:38:14] app.INFO: Home page action dispatched [] {"uid":"4626185"}
 [2018-07-27 05:39:19] app.INFO: Home page action dispatched [] {"uid":"61b065a"}[2018-07-27 10:02:54] app.INFO: Home page action dispatched [] {"uid":"c0a01b3"}
+[2018-07-30 18:31:54] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"12dab04"}
+[2018-07-30 18:33:36] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"c2f038f"}
+[2018-07-30 18:33:41] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"3df65a1"}
+[2018-07-30 21:34:15] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"321fce7"}
+[2018-07-30 21:34:17] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"2ff2cdc"}
+[2018-07-30 21:35:20] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"e7d641a"}
+[2018-07-30 21:37:27] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"642fbd8"}
+[2018-07-30 21:37:59] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"9ab3c65"}
+[2018-07-30 21:38:01] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"cc960dc"}
+[2018-07-30 21:38:03] app.INFO: View post using Doctrine with Slim 3 [] {"uid":"d11fe8e"}

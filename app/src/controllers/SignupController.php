@@ -11,6 +11,8 @@ final class SignupController extends BaseController {
   //abstract class signupMessage {
     const SUCCESS = 1;
     const DUPLICATED = 2;
+    const NONCE_EXIST = 3;
+    const NONCE_NOT_EXIST = -1;
   //}
 
   public function registerHandler(Request $request, Response $response, $args) {
@@ -64,11 +66,8 @@ final class SignupController extends BaseController {
   }
 
   public function storeNonceInfo($USN, $nonce) {
-    //$sql = "INSERT INTO Nonce (Nonce, isSignup, USN) VALUES (".
-    //  "'".$nonce."', ".
-    //  "true, ".
-    //  $USN.")";
-    //$stmt = $this->db->query($sql);
+//    $sql = "INSERT INTO `Nonce`( `Nonce`, `isSignup`, `USN`) VALUES ( '".$nonce."' , true , ".$USN." )";
+//    $stmt = $this->db->query($sql);
   }
 
   public function checkDuplicationEmail($userINFO) {
@@ -120,6 +119,47 @@ final class SignupController extends BaseController {
       echo 'Message could not be sent.';
       echo 'Mailer Error: ' . $mail->ErrorInfo;
     }
+  }
+  public function accountActivation(Request $request, Response $response, $args) {
+    $nonce = $args['id'];
+    $nonce_existence = $this->checkNonceExist($nonce);
+    //echo $nonce_existence;
+
+    if ($nonce_existence!=self::NONCE_NOT_EXIST) {
+      $nonceID = $nonce_existence;
+      $this->deleteNonce($nonceID);
+
+      $message = "Account Activation Completed.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+      return $nonce_existence;
+    }
+    else {
+      $message = "INVALID PAGE REQUEST : NO SUCH NONCE EXIST";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+      return self::NONCE_EXIST;
+    }
+  }
+
+  public function checkNonceExist($nonce) {
+    $sql = "SELECT * FROM Nonce WHERE Nonce = '" . $nonce . "'";
+    try {
+      $stmt = $this->db->query($sql);
+      $result = $stmt->fetch();
+      //print_r($result);
+
+      if ($result != null) {
+        return $result['Nonce_ID'];
+      }
+      else {
+        return self::NONCE_NOT_EXIST;
+      }
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+  public function deleteNonce($nonceID) {
+    $sql = "DELETE FROM Nonce WHERE Nonce_ID = ". $nonceID;
+    $stmt = $this->db->query($sql);
   }
 }
 ?>

@@ -25,10 +25,10 @@ $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler'
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
 
-$app->get('/random', 'App\Controller\HomeController:generateTempPW')
-    ->setName('main_after');
+//$app->get('/random', 'App\Controller\HomeController:generateTempPW')
+//    ->setName('main_after');
 
-$app->get('/accountActivate/{id}', 'App\Controller\HomeController:accountActivation')
+$app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');
 
 
