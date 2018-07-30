@@ -22,6 +22,7 @@ if(mysql_num_rows($result) > 0 )
 }
 else 
 {
+   echo "PASSWORD: "$data['HPassword'];
    echo 0;
 }
 }
