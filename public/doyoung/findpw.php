@@ -1,5 +1,7 @@
 ﻿<?php
 require "conn.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PhPMailer\Exception;
 
 public function sendEmail($email, $firstName, $lastName) {
   $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
