@@ -3,12 +3,7 @@ require "conn.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PhPMailer\Exception;
 
-if($_POST["EmailAddress"]!=""){
-$EmailAddress=$_POST["EmailAddress"];
-$FirstName=$_POST["FirstName"];
-$LastName=$_POST["LastName"];
-$result = mysqli_query($conn, $mysql_qry);
-	public function sendEmail($email, $firstName, $lastName) {
+public function sendEmail($email, $firstName, $lastName) {
   $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
   try {
     //Server settings
@@ -37,8 +32,13 @@ $result = mysqli_query($conn, $mysql_qry);
   }
 }
 
+$EmailAddress=$_POST["EmailAddress"];
+$FirstName=$_POST["FirstName"];
+$LastName=$_POST["LastName"];
+$result = mysqli_query($conn, $mysql_qry);
+
 sendEmail($EmailAddress,$FirstName,$LastName);
-}
+
 mysqli_close($conn);
 ?>
 <?php
