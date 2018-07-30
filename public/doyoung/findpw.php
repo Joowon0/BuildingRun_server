@@ -1,22 +1,30 @@
-﻿<?php
+<?php
 require "conn.php";
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PhPMailer\Exception;
-
 if($_POST["EmailAddress"]!=""){
 $EmailAddress=$_POST["EmailAddress"];
 $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
+$mysql_qry ="select * from user where EmailAddress = '".$EmailAddress."'";
 $result = mysqli_query($conn, $mysql_qry);
-sendEmail($EmailAddress,$FirstName,$LastName);
+if(mysql_num_rows($result) > 0 )
+{
+    while($data = mysql_fetch_array($result)){
+         	   $FirstName=$data["FirstName"];
+		   $LastName=$data["LastName"];
+                   sendEmail($EmailAddress,$FirstName,$LastName);
+	}
+}
+else 
+{
+   echo 0;
+}
 }
 mysqli_close($conn);
 ?>
 <?php
-
 $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
-
 if (!$android){
 ?>
 
@@ -63,6 +71,4 @@ public function sendEmail($email, $firstName, $lastName) {
     echo 'Mailer Error: ' . $mail->ErrorInfo;
   }
 }
-
-
 ?>
