@@ -4,7 +4,7 @@ if($_POST["EmailAddress"]!=""){
 $user_id=$_POST["EmailAddress"];
 $user_pass=$_POST["HPassword"];
 
-$qry = "select * from User where EmailAddress = '$user_id'";
+$qry = "select * from User where EmailAddress = '".$user_id."'";
 
 $result = mysql_query($qry);
 
