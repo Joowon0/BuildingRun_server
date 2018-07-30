@@ -8,7 +8,7 @@ if($_POST["EmailAddress"]!=""){
 $EmailAddress=$_POST["EmailAddress"];
 $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
-$mysql_qry ="select * from user where EmailAddress = '".$EmailAddress."'";
+$mysql_qry ="select * from User where EmailAddress = '".$EmailAddress."'";
 $result = mysqli_query($conn, $mysql_qry);
 
 if(mysql_num_rows($result) > 0 )
