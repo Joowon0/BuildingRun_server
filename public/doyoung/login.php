@@ -11,7 +11,6 @@ $result = mysql_query($qry);
 if(mysql_num_rows($result) > 0 )
 {
     while($data = mysql_fetch_array($result)){
-         echo $data['HPassword'];
          if(!password_verify($_POST['HPassword'], $data['HPassword'])){
             echo 2;
          }
