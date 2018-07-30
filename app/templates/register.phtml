@@ -22,7 +22,12 @@
 
 <body>
   <?php
-  if (isset($reload) && !empty($reload)) {
+  abstract class signupMessage {
+    const SUCCESS = 1;
+    const DUPLICATED = 2;
+  }
+  if (isset($former) && !empty($former)) {
+    
     //echo "<script> document.location.href='/register'; </script>";
   }
   ?>
@@ -102,11 +107,6 @@
                     </div>
                   </div>
                 </div>
-
-
-
-
-
 
                 <div class="form-group d-flex justify-content-center">
                   <div class="form-check form-check-flat mt-0">

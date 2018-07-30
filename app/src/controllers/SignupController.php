@@ -18,8 +18,14 @@ final class SignupController extends BaseController {
     switch ($duplicateCheckResult) {
       case self::SUCCESS :
         $this->storeUserInfo($_POST);
+        $USN = $this->getUSN($_POST['email']);
         $message = "Sign-up is completed. Please check you email to activate you account";
         echo "<script type='text/javascript'>alert('$message');</script>";
+
+        $acitvationLinkNonce = HomeController::randomString(50);
+        $this->storeNonceInfo($USN, $acitvationLinkNonce);
+        $this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+
         break;
       case self::DUPLICATED:
         $message = "The Email is already registered. Please enter other email or sign-in";
@@ -29,10 +35,20 @@ final class SignupController extends BaseController {
         $message = "ERROR : smth wrong in checkDuplicationEmail().";
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
-    $this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName']);
 
-    $this->view->render($response, 'register.phtml', ['reload' => "reload"]);
+    $this->view->render($response, 'register.phtml', ['former' => $_POST]);
     return $response;
+
+  }
+
+  public function getUSN($email) {
+    $sql = "SELECT USN FROM User WHERE EmailAddress ='". $email ."'" ;
+    try {
+      $stmt = $this->db->query($sql);
+      $result = $stmt->fetch();
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
   }
 
   public function storeUserInfo($userINFO) {
@@ -47,9 +63,16 @@ final class SignupController extends BaseController {
     $stmt = $this->db->query($sql);
   }
 
+  public function storeNonceInfo($USN, $nonce) {
+    //$sql = "INSERT INTO Nonce (Nonce, isSignup, USN) VALUES (".
+    //  "'".$nonce."', ".
+    //  "true, ".
+    //  $USN.")";
+    //$stmt = $this->db->query($sql);
+  }
+
   public function checkDuplicationEmail($userINFO) {
-    $sql = "SELECT * FROM User WHERE EmailAddress = '" .
-    $userINFO['email'] . "'" ;
+    $sql = "SELECT * FROM User WHERE EmailAddress = '" . $userINFO['email'] . "'" ;
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();
@@ -65,7 +88,9 @@ final class SignupController extends BaseController {
     }
   }
 
-  public function sendEmail($email, $firstName, $lastName) {
+
+
+  public function sendEmail($email, $firstName, $lastName, $nonce) {
     $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
     try {
       //Server settings
@@ -86,8 +111,8 @@ final class SignupController extends BaseController {
       //Content
       $mail->isHTML(true);                                  // Set email format to HTML
       $mail->Subject = '[TEAMA] Account Activation';
-      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br>';
-      $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link!';
+      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br> http://teama-iot.calit2.net/'.$nonce.' <br>';
+      $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://teama-iot.calit2.net/'.$nonce;
 
       $mail->send();
       echo 'Message has been sent';
