@@ -62,7 +62,17 @@ final class HomeController extends BaseController
         return $response;
     }
 
-    
+    public function user_change(Request $request, Response $response, $args)
+    {
+        $this->view->render($response, 'user_change.phtml');
+        return $response;
+    }
+
+
+
+
+
+
 function randomString($length = 6) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);

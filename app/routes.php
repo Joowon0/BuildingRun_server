@@ -31,6 +31,15 @@ $app->get('/random', 'App\Controller\HomeController:generateTempPW')
 $app->get('/accountActivate/{id}', 'App\Controller\HomeController:accountActivation')
     ->setName('accountActivation');
 
+$app->get('/user_change', 'App\Controller\HomeController:user_change')
+    ->setName('user_change');
+
+
+
+
+
+
+
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
