@@ -21,7 +21,7 @@ if(mysql_num_rows($result) > 0 )
 }
 else 
 {
-   echo 9;
+   echo 0;
 }
 }
 
