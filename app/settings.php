@@ -15,9 +15,9 @@ return [
 	'dbSettings' => array (
 		'db' => array (
 			'host' => '127.0.0.1',
-			'user' => 'root',
-			'pass' => '12345678',
-			'dbname' => 'Total_schema'
+			'user' => 'teama-iot',
+			'pass' => 'a3fgss90tf239',
+			'dbname' => 'teama-2018summer'
 		),
 	),
 
