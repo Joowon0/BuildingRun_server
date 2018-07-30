@@ -20,12 +20,6 @@
   <link rel="shortcut icon" href="../../images/favicon.png" />
 </head>
 
-
-
-
-
-
-
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
@@ -34,7 +28,7 @@
           <div class="col-lg-4 mx-auto">
             <h2 class="text-center mb-4">SIGN UP</h2>
             <div class="auto-form-wrapper">
-              <form method="post" action="/registerHandler">
+              <form class="form" method="post" action="/registerHandler" name="RegisterForm" onsubmit="return check()">
                 <div class="form-group d-flex justify-content-between">
                   <div class="input-group">
                     <input type="email" class="form-control" placeholder="Email" name="email">
@@ -148,5 +142,31 @@
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
 </body>
+
+<script>
+  function check() {
+    if(RegisterForm.email.value == "") {
+      alert("Email value does not exist");
+      RegisterForm.email.focus();
+      return false;
+    }
+    else if(RegisterForm.password.value == "") {
+      alert("Password value does not exist");
+      RegisterForm.password.focus();
+      return false;
+    }
+    else if(RegisterForm.checkPassword.value == "") {
+      alert("Password Check value does not exist");
+      RegisterForm.checkPassword.focus();
+      return false;
+    }
+    else if (RegisterForm.password.value == RegisterForm.checkPassword.value) {
+      alert("Password and password check don't match");
+      RegisterForm.password.focus();
+      return false;
+    }
+    else return true;
+  }
+</script>
 
 </html>
