@@ -4,13 +4,20 @@ if($_POST["EmailAddress"]!=""){
 $user_id=$_POST["EmailAddress"];
 $user_pass=$_POST["HPassword"];
 
-$qry = "select * from User where EmailAddress = '$user_id' and HPassword = '$user_pass'";
+$qry = "select * from User where EmailAddress = '$user_id'";
 
 $result = mysql_query($qry);
 
 if(mysql_num_rows($result) > 0 )
 {
-   echo 1;
+    while($data = mysql_fetch_array($result)){
+         if(!password_verify($_POST['HPassword'], $data['HPassword'])){
+            echo 2;
+         }
+         else{
+            echo 1;
+         }
+    }
 }
 else 
 {
