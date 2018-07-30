@@ -19,7 +19,7 @@ $app->post('/loginHandler', 'App\Controller\LoginController:loginHandler')
     ->setName('loginHandler');
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
-$app->post('/registerHandler', 'App\Controller\HomeController:registerHandler')
+$app->post('/registerHandler', 'App\Controller\SignupController:registerHandler')
     ->setName('registerHandler');
 
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')

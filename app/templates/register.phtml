@@ -21,6 +21,11 @@
 </head>
 
 <body>
+  <?php
+  if (isset($reload) && !empty($reload)) {
+    //echo "<script> document.location.href='/register'; </script>";
+  }
+  ?>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
       <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
@@ -160,7 +165,7 @@
       RegisterForm.checkPassword.focus();
       return false;
     }
-    else if (RegisterForm.password.value == RegisterForm.checkPassword.value) {
+    else if (RegisterForm.password.value != RegisterForm.checkPassword.value) {
       alert("Password and password check don't match");
       RegisterForm.password.focus();
       return false;
