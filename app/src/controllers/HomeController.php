@@ -62,7 +62,7 @@ final class HomeController extends BaseController
         return $response;
     }
 
-    
+
 function randomString($length = 6) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -72,7 +72,7 @@ function randomString($length = 6) {
     }
     return $randomString;
 }
-
+/*
     // TODO : need to check if email and password entry is not null
     // TODO : need to check if email has right format
     public function loginHandler(Request $request, Response $response, $args)
@@ -100,7 +100,7 @@ function randomString($length = 6) {
         } catch (PDOException $e) {
             echo "ERROR : " . $e->getMessage();
         }
-    }
+    }*/
 
 
     // sign-out
@@ -108,7 +108,7 @@ function randomString($length = 6) {
     {
 	$this->checkDuplicationEmail($_POST);
 	$this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName']);
-	
+
         $this->view->render($response, 'register.phtml');
         return $response;
     }
@@ -119,7 +119,7 @@ function randomString($length = 6) {
 	try {
             $stmt = $this->db->query($sql);
             $result = $stmt->fetch();
-            
+
             // duplicated email
             if ($result != null) {
                 $message = "The Email is already registered. Please enter other email or sign-in";
