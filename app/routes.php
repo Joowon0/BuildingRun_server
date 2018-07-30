@@ -15,7 +15,7 @@ $app->post('/main_after', 'App\Controller\HomeController:main_after')
 
 $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
-$app->post('/loginHandler', 'App\Controller\HomeController:loginHandler')
+$app->post('/loginHandler', 'App\Controller\LoginController:loginHandler')
     ->setName('loginHandler');
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
@@ -49,5 +49,3 @@ $app->get('/showDB/sensor', 'App\Controller\DBTester:printSensor')
     ->setName('showDB_sensor');
 $app->get('/showDB/user', 'App\Controller\DBTester:printUser')
     ->setName('showDB_user');
-
-
