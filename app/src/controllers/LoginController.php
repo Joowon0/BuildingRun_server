@@ -24,7 +24,7 @@ function checkPassword($email) {
 }
 
 // TODO : need to check if email and password entry is not null
-function loginHandler() {
+function loginHandler(Request $request, Response $response, $args) {
   $pwCheckResult = checkPassword($_POST['email']);
 
   switch($pwCheckResult) {
@@ -46,19 +46,5 @@ function loginHandler() {
   }
 
 	// TODO : need to check if activated
-  /*
-	if ($result == null) {
-		$message = "There is no account corresponding to input Email";
-		echo "<script type='text/javascript'>alert('$message');</script>";
-		$this->login($request, $response, $args);
-	}
-	else if (!password_verify($_POST['password'], $result['HPassword'])) {
-  	$message = "Wrong Password. Please enter again.";
-  	echo "<script type='text/javascript'>alert('$message');</script>";
-  	$this->login($request, $response, $args);
-	}
-	else {
-  	$this->main_after($request, $response, $args, $result['FirstName'], $result['LastName']);
-	}*/
 }
 ?>

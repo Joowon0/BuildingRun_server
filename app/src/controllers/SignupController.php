@@ -29,12 +29,12 @@ public function registerHandler(Request $request, Response $response, $args) {
 public function storeUserInfo($userINFO) {
   $hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
   $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
-  "'". $userINFO['email'] ."', ".     // Email
-  "'". $hashedPW          ."', ".     // Hashed password
-  "'". $userINFO['firstName'] ."', ". // First Name
-  "'". $userINFO['lastName'] ."', ".  // Last Name
-  "'". $userINFO['phoneNum'] ."'".    // PhoneNumber
-  ")";
+    "'". $userINFO['email'] ."', ".     // Email
+    "'". $hashedPW          ."', ".     // Hashed password
+    "'". $userINFO['firstName'] ."', ". // First Name
+    "'". $userINFO['lastName'] ."', ".  // Last Name
+    "'". $userINFO['phoneNum'] ."'".    // PhoneNumber
+    ")";
   $stmt = $this->db->query($sql);
 }
 
