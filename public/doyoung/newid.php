@@ -6,9 +6,10 @@ $HPassword=$_POST["HPassword"];
 $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
 $PhoneNum=$_POST["PhoneNum"];
-
+$hashedPW = password_hash($HPassword, PASSWORD_DEFAULT);
+   
 $qry = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) 
-   VALUES ('$EmailAddress','$HPassword','$FirstName','$LastName','$PhoneNum')";
+   VALUES ('$EmailAddress','$hashedPW','$FirstName','$LastName','$PhoneNum')";
 $result = mysql_query($qry);
 
 if($result)
