@@ -1,4 +1,22 @@
 
+<?php
+require "conn.php";
+include "SignupController.php"
+	if($_POST["EmailAddress"]!=""){
+$EmailAddress=$_POST["EmailAddress"];
+$FirstName=$_POST["FirstName"];
+$LastName=$_POST["LastName"];
+
+sendEmail($EmailAddress,$FirstName,$LastName);
+
+mysqli_close($conn);
+	}
+?>
+<?php
+$android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
+if (!$android){
+?>
+
 <html>
    <body>
    
@@ -12,22 +30,6 @@
    
    </body>
 </html>
-<?php
-require "conn.php";
-include "SignupController.php"
-$EmailAddress=$_POST["EmailAddress"];
-$FirstName=$_POST["FirstName"];
-$LastName=$_POST["LastName"];
-
-sendEmail($EmailAddress,$FirstName,$LastName);
-
-mysqli_close($conn);
-?>
-<?php
-$android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
-if (!$android){
-?>
-
 <?php
 }
 ?>
