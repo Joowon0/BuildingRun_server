@@ -1,11 +1,9 @@
-
 <?php
 require "conn.php";
 include "SignupController.php"
 $EmailAddress=$_POST["EmailAddress"];
 $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
-$result = mysqli_query($conn, $mysql_qry);
 
 sendEmail($EmailAddress,$FirstName,$LastName);
 
