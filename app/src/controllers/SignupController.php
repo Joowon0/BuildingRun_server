@@ -66,8 +66,8 @@ final class SignupController extends BaseController {
   }
 
   public function storeNonceInfo($USN, $nonce) {
-//    $sql = "INSERT INTO `Nonce`( `Nonce`, `isSignup`, `USN`) VALUES ( '".$nonce."' , true , ".$USN." )";
-//    $stmt = $this->db->query($sql);
+    //$sql = "INSERT INTO Nonce( Nonce, isSignup, USN) VALUES ( '".$nonce."' , true , ".$USN." )";
+    //$stmt = $this->db->query($sql);
   }
 
   public function checkDuplicationEmail($userINFO) {
@@ -120,10 +120,10 @@ final class SignupController extends BaseController {
       echo 'Mailer Error: ' . $mail->ErrorInfo;
     }
   }
+
   public function accountActivation(Request $request, Response $response, $args) {
     $nonce = $args['id'];
     $nonce_existence = $this->checkNonceExist($nonce);
-    //echo $nonce_existence;
 
     if ($nonce_existence!=self::NONCE_NOT_EXIST) {
       $nonceID = $nonce_existence;
@@ -131,6 +131,7 @@ final class SignupController extends BaseController {
 
       $message = "Account Activation Completed.";
       echo "<script type='text/javascript'>alert('$message');</script>";
+
       return $nonce_existence;
     }
     else {
@@ -141,7 +142,7 @@ final class SignupController extends BaseController {
   }
 
   public function checkNonceExist($nonce) {
-    $sql = "SELECT * FROM Nonce WHERE Nonce = '" . $nonce . "'";
+    $sql = "SELECT * FROM Nonce WHERE Nonce = '" . $nonce . "' and isSignup = true ";
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();
@@ -157,6 +158,7 @@ final class SignupController extends BaseController {
       echo "ERROR : " . $e->getMessage();
     }
   }
+
   public function deleteNonce($nonceID) {
     $sql = "DELETE FROM Nonce WHERE Nonce_ID = ". $nonceID;
     $stmt = $this->db->query($sql);
