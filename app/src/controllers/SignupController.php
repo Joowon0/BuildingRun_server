@@ -113,7 +113,8 @@ final class SignupController extends BaseController {
       //Content
       $mail->isHTML(true);                                  // Set email format to HTML
       $mail->Subject = '[TEAMA] Account Activation';
-      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br> http://'.self::LINK.'/accountActivation/'.$nonce.' <br>';
+      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br>'.
+      '<a href=\"http://'.self::LINK.'/accountActivation/'.$nonce.'\"> http://'.self::LINK.'/accountActivation/'.$nonce.' </a> <br>';
       $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://'.self::LINK.'/'.$nonce;
 
       $mail->send();
