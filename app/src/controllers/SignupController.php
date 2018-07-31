@@ -48,6 +48,8 @@ final class SignupController extends BaseController {
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();
+      
+      return $result['USN'];
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }
@@ -66,8 +68,8 @@ final class SignupController extends BaseController {
   }
 
   public function storeNonceInfo($USN, $nonce) {
-    //$sql = "INSERT INTO Nonce( Nonce, isSignup, USN) VALUES ( '".$nonce."' , true , ".$USN." )";
-    //$stmt = $this->db->query($sql);
+    $sql = "INSERT INTO Nonce( Nonce, isSignup, USN) VALUES ( '".$nonce."' , true , '$USN' )";
+    $stmt = $this->db->query($sql);
   }
 
   public function checkDuplicationEmail($userINFO) {
