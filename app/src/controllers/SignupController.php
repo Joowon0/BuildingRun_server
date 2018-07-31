@@ -9,6 +9,7 @@ use PHPMailer\PHPMailer\Exception;
 
 final class SignupController extends BaseController {
   //abstract class signupMessage {
+    const LINK = 'teama-iot.calit2.net';
     const SUCCESS = 1;
     const DUPLICATED = 2;
     const NONCE_EXIST = 3;
@@ -48,7 +49,7 @@ final class SignupController extends BaseController {
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();
-      
+
       return $result['USN'];
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
@@ -112,8 +113,8 @@ final class SignupController extends BaseController {
       //Content
       $mail->isHTML(true);                                  // Set email format to HTML
       $mail->Subject = '[TEAMA] Account Activation';
-      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br> http://teama-iot.calit2.net/'.$nonce.' <br>';
-      $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://teama-iot.calit2.net/'.$nonce;
+      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br> http://'.self::LINK.'/accountActivation/'.$nonce.' <br>';
+      $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://'.self::LINK.'/'.$nonce;
 
       $mail->send();
       echo 'Message has been sent';
