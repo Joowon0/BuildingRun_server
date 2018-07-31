@@ -3,7 +3,7 @@
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8"> 
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Star Admin Free Bootstrap Admin Dashboard Template</title>
   <!-- plugins:css -->
@@ -20,13 +20,17 @@
   <link rel="shortcut icon" href="../../images/favicon.png" />
 </head>
 
-
-
-
-
-
-
 <body>
+  <?php
+  abstract class signupMessage {
+    const SUCCESS = 1;
+    const DUPLICATED = 2;
+  }
+  if (isset($former) && !empty($former)) {
+    
+    //echo "<script> document.location.href='/register'; </script>";
+  }
+  ?>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
       <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
@@ -34,10 +38,10 @@
           <div class="col-lg-4 mx-auto">
             <h2 class="text-center mb-4">SIGN UP</h2>
             <div class="auto-form-wrapper">
-              <form method="post" action="/registerHandler">
+              <form class="form" method="post" action="/registerHandler" name="RegisterForm" onsubmit="return check()">
                 <div class="form-group d-flex justify-content-between">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Email" name="email">
+                    <input type="email" class="form-control" placeholder="Email" name="email">
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>
@@ -70,7 +74,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="form-group">
                   <div class="input-group">
                     <input type="password" class="form-control" placeholder="Password" name="password">
@@ -94,7 +98,8 @@
 
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Phone Number" name="phoneNum">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                           class="form-control" placeholder="Phone Number" name="phoneNum">
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>
@@ -102,11 +107,6 @@
                     </div>
                   </div>
                 </div>
-          
-
-
-
-
 
                 <div class="form-group d-flex justify-content-center">
                   <div class="form-check form-check-flat mt-0">
@@ -148,5 +148,31 @@
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
 </body>
+
+<script>
+  function check() {
+    if(RegisterForm.email.value == "") {
+      alert("Email value does not exist");
+      RegisterForm.email.focus();
+      return false;
+    }
+    else if(RegisterForm.password.value == "") {
+      alert("Password value does not exist");
+      RegisterForm.password.focus();
+      return false;
+    }
+    else if(RegisterForm.checkPassword.value == "") {
+      alert("Password Check value does not exist");
+      RegisterForm.checkPassword.focus();
+      return false;
+    }
+    else if (RegisterForm.password.value != RegisterForm.checkPassword.value) {
+      alert("Password and password check don't match");
+      RegisterForm.password.focus();
+      return false;
+    }
+    else return true;
+  }
+</script>
 
 </html>
