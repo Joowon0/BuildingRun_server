@@ -5,12 +5,12 @@ $EmailAddress=$_POST["EmailAddress"];
 $HPassword=$_POST["HPassword"];
 $mysql_qry ="update User set HPassword='".$HPassword."' where EmailAddress = '".$EmailAddress."'";
 $result = mysqli_query($conn, $mysql_qry);
-if(mysql_affected_rows() >0){
+if($result){
    echo 1;
 }
-   else{
-      echo 2;
-   }
+else{
+   echo 2;
+    }
 }
 
 mysqli_close($conn);
