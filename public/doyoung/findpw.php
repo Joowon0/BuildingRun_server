@@ -1,3 +1,17 @@
+
+<html>
+   <body>
+   
+      <form action="<?php $_PHP_SELF ?>" method="POST">
+         Email: <input type = "text" name = "EmailAddress" />
+              firstName: <input type = "text" name="FirstName" />
+         	  lastName: <input type = "text" name="LastName" />
+         
+	<input type = "submit" />
+      </form>
+   
+   </body>
+</html>
 <?php
 require "conn.php";
 include "SignupController.php"
@@ -14,19 +28,6 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
 if (!$android){
 ?>
 
-<html>
-   <body>
-   
-      <form action="<?php $_PHP_SELF ?>" method="POST">
-         Email: <input type = "text" name = "EmailAddress" />
-              firstName: <input type = "text" name="FirstName" />
-         	  lastName: <input type = "text" name="LastName" />
-         
-	<input type = "submit" />
-      </form>
-   
-   </body>
-</html>
 <?php
 }
 ?>
