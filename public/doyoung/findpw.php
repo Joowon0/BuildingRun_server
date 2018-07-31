@@ -5,7 +5,7 @@ $EmailAddress=$_POST["EmailAddress"];
 $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
 
-sendEmail('$EmailAddress','$FirstName','$LastName');
+sendEmail($EmailAddress,$FirstName,$LastName);
 
 mysqli_close($conn);
 ?>
