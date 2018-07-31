@@ -4,12 +4,9 @@ namespace App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
 final class SignupController extends BaseController {
   //abstract class signupMessage {
-    const LINK = 'teama-iot.calit2.net';
+    
     const SUCCESS = 1;
     const DUPLICATED = 2;
     const NONCE_EXIST = 3;
@@ -27,7 +24,8 @@ final class SignupController extends BaseController {
 
         $acitvationLinkNonce = HomeController::randomString(50);
         $this->storeNonceInfo($USN, $acitvationLinkNonce);
-        $this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+        list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
+        EmailController::sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $html, $notHtml);
 
         break;
       case self::DUPLICATED:
@@ -87,41 +85,6 @@ final class SignupController extends BaseController {
       }
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
-    }
-  }
-
-
-
-  public function sendEmail($email, $firstName, $lastName, $nonce) {
-    $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-    try {
-      //Server settings
-      $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-      $mail->isSMTP();                                      // Set mailer to use SMTP
-      $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-      $mail->SMTPAuth = true;                               // Enable SMTP authentication
-      $mail->Username = 'QIoTteamA@gmail.com';                 // SMTP username
-      $mail->Password = 'vagrant!';                           // SMTP password
-      $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-      $mail->Port = 587;                                    // TCP port to connect to
-
-      //Recipients
-      $mail->setFrom('QIoTteamA@gmail.com', 'TeamA');
-      $mail->addAddress($email, $firstName . " " . $lastName);     // Add a recipient
-      $mail->addReplyTo('QIoTteamA@gmail.com', 'TeamA');
-
-      //Content
-      $mail->isHTML(true);                                  // Set email format to HTML
-      $mail->Subject = '[TEAMA] Account Activation';
-      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br>'.
-      '<a href=\"http://'.self::LINK.'/accountActivation/'.$nonce.'\"> http://'.self::LINK.'/accountActivation/'.$nonce.' </a> <br>';
-      $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://'.self::LINK.'/'.$nonce;
-
-      $mail->send();
-      echo 'Message has been sent';
-    } catch (Exception $e) {
-      echo 'Message could not be sent.';
-      echo 'Mailer Error: ' . $mail->ErrorInfo;
     }
   }
 
