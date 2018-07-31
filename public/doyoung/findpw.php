@@ -1,3 +1,4 @@
+
 <?php
 require "conn.php";
 use PHPMailer\PHPMailer\PHPMailer;
@@ -8,32 +9,7 @@ $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
 $result = mysqli_query($conn, $mysql_qry);
 
-sendEmail($EmailAddress,$FirstName,$LastName);
-
-mysqli_close($conn);
-?>
-<?php
-$android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
-if (!$android){
-?>
-
-<html>
-   <body>
-   
-      <form action="<?php $_PHP_SELF ?>" method="POST">
-         Email: <input type = "text" name = "EmailAddress" />
-              firstName: <input type = "text" name="FirstName" />
-         	  lastName: <input type = "text" name="LastName" />
-         
-	<input type = "submit" />
-      </form>
-   
-   </body>
-</html>
-<?php
-}
-
-public function sendEmail($email, $firstName, $lastName) {
+function sendEmail($email, $firstName, $lastName) {
   $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
   try {
     //Server settings
@@ -62,4 +38,27 @@ public function sendEmail($email, $firstName, $lastName) {
   }
 }
 
+sendEmail($EmailAddress,$FirstName,$LastName);
+
+mysqli_close($conn);
 ?>
+<?php
+$android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
+if (!$android){
+?>
+
+<html>
+   <body>
+   
+      <form action="<?php $_PHP_SELF ?>" method="POST">
+         Email: <input type = "text" name = "EmailAddress" />
+              firstName: <input type = "text" name="FirstName" />
+         	  lastName: <input type = "text" name="LastName" />
+         
+	<input type = "submit" />
+      </form>
+   
+   </body>
+</html>
+<?php
+}
