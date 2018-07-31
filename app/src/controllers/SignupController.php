@@ -69,7 +69,7 @@ final class SignupController extends BaseController {
   }
 
   public function storeNonceInfo($USN, $nonce) {
-    $sql = "INSERT INTO Nonce( Nonce, isSignup, USN) VALUES ( '".$nonce."' , true , '$USN' )";
+    $sql = "INSERT INTO Nonce( Nonce, USN) VALUES ( '".$nonce."' , '$USN' )";
     $stmt = $this->db->query($sql);
   }
 
