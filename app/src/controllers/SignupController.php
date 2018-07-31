@@ -129,16 +129,14 @@ final class SignupController extends BaseController {
       $nonceID = $nonce_existence;
       $this->deleteNonce($nonceID);
 
-      $message = "Account Activation Completed.";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-
-      return $nonce_existence;
     }
     else {
-      $message = "INVALID PAGE REQUEST : NO SUCH NONCE EXIST";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-      return self::NONCE_EXIST;
+      // $message = "INVALID PAGE REQUEST : NO SUCH NONCE EXIST";
+      // echo "<script type='text/javascript'>alert('$message');</script>";
     }
+
+    $this->view->render($response, 'accountActivation.phtml', ['actvationResult' => $nonce_existence]);
+    return $response;
   }
 
   public function checkNonceExist($nonce) {
