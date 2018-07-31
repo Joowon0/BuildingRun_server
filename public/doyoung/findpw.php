@@ -1,42 +1,11 @@
 
 <?php
 require "conn.php";
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PhPMailer\Exception;
-
+include "SignupController.php"
 $EmailAddress=$_POST["EmailAddress"];
 $FirstName=$_POST["FirstName"];
 $LastName=$_POST["LastName"];
 $result = mysqli_query($conn, $mysql_qry);
-
-function sendEmail($email, $firstName, $lastName) {
-  $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-  try {
-    //Server settings
-    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'QIoTteamA@gmail.com';                 // SMTP username
-    $mail->Password = 'vagrant!';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
-    //Recipients
-    $mail->setFrom('QIoTteamA@gmail.com', 'TeamA');
-    $mail->addAddress($email, $firstName . " " . $lastName);     // Add a recipient
-    $mail->addReplyTo('QIoTteamA@gmail.com', 'TeamA');
-    //Content
-    $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = '[TEAMA] Account Activation';
-    $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br>';
-    $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link!';
-    $mail->send();
-    echo 'Message has been sent';
-  } catch (Exception $e) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-  }
-}
 
 sendEmail($EmailAddress,$FirstName,$LastName);
 
