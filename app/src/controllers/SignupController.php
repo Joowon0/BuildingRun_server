@@ -143,7 +143,7 @@ final class SignupController extends BaseController {
   }
 
   public function checkNonceExist($nonce) {
-    $sql = "SELECT * FROM Nonce WHERE Nonce = '" . $nonce . "' and isSignup = true ";
+    $sql = "SELECT * FROM Nonce WHERE Nonce = '" . $nonce . "'";
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();
