@@ -7,10 +7,10 @@ $mysql_qry ="update User set HPassword='$HPassword' where EmailAddress = '$Email
 $result = mysqli_query($conn, $mysql_qry);
 echo $result;
 if($result){
-   echo 1;
+   echo $result;
 }
 else{
-   echo 2;
+   echo $result;
     }
 }
 
