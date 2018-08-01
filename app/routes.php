@@ -34,7 +34,9 @@ $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountAct
 $app->get('/user_change', 'App\Controller\HomeController:user_change')
     ->setName('user_change');
 
-
+// for APP
+$app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
+    ->setName('app_sendEmail');
 
 
 
