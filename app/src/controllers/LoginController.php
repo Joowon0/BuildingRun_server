@@ -14,22 +14,30 @@ final class LoginController extends BaseController {
   //}
 
 
-
+  // for WEB
   function loginHandler(Request $request, Response $response, $args) {
-    list ($pwCheckResult, $USN) = $this->checkPassword($_POST['email'], $_POST['password']);
-    // echo $pwCheckResult . '<br>';
-    // echo $USN .'<br>';
+    $loginResult = $this->login($_POST['email'], $_POST['password']);
+
+    if ($loginResult == self::NONCE_NOT_EXIST)
+      $this->view->render($response, 'main_after.phtml',  ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
+    else
+      $this->view->render($response, 'login.phtml', ['emailResult'=>$nonceCheck]);
+  }
+
+  // outermost common function
+  function login($email, $password) {
+    list ($pwCheckResult, $USN) = $this->checkPassword( $email, $password);
+
     if ($pwCheckResult == self::SUCCESS) {
       $nonceCheck = $this->checkNonceExist($USN);
 
       if ($nonceCheck == self::NONCE_NOT_EXIST)
-        $this->view->render($response, 'main_after.phtml',  ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
+        return self::NONCE_NOT_EXIST;
       else
-        $this->view->render($response, 'login.phtml', ['emailResult'=>$nonceCheck]);
+        return self::NONCE_EXIST;
     }
     else
-      $this->view->render($response, 'login.phtml', ['emailResult'=>$pwCheckResult]);
-  	// TODO : need to check if activated
+      return $pwCheckResult;
   }
 
   function checkPassword($email, $password) {
