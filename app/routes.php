@@ -31,6 +31,15 @@ $app->post('/forgot_pwHandler', 'App\Controller\forgottenPWController:forgot_pwH
 $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');
 
+$app->get('/user_change', 'App\Controller\HomeController:user_change')
+    ->setName('user_change');
+
+
+
+
+
+
+
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
