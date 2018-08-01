@@ -17,28 +17,30 @@ final class SignupController extends BaseController {
   public function registerHandler(Request $request, Response $response, $args) {
     list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
 
-    switch ($duplicateCheckResult) {
-      case self::SUCCESS :
-        // send user the response
-        $message = "Sign-up is completed. Please check you email to activate you account";
-        echo "<script type='text/javascript'>alert('$message');</script>";
+    // switch ($duplicateCheckResult) {
+    //   case self::SUCCESS :
+    //     // send user the response
+    //     $message = "Sign-up is completed. Please check you email to activate you account";
+    //     echo "<script type='text/javascript'>alert('$message');</script>";
+    //
+    //     // send link to user email
+    //     //list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
+    //     EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+    //
+    //     break;
+    //   case self::DUPLICATED:
+    //     $message = "The Email is already registered. Please enter other email or sign-in";
+    //     echo "<script type='text/javascript'>alert('$message');</script>";
+    //     break;
+    //   default:
+    //     $message = "ERROR : smth wrong in checkDuplicationEmail().";
+    //     echo "<script type='text/javascript'>alert('$message');</script>";
+    // }
 
-        // send link to user email
-        //list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
-        EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
-
-        break;
-      case self::DUPLICATED:
-        $message = "The Email is already registered. Please enter other email or sign-in";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-        break;
-      default:
-        $message = "ERROR : smth wrong in checkDuplicationEmail().";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-    }
-
-    //$this->view->render($response, 'register.phtml', ['former' => $_POST]);
-    //return $response;
+    $this->view->render($response, 'register.phtml', ['registerResult' => $duplicateCheckResult]);
+    if ($duplicateCheckResult == self::SUCCESS) 
+      EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+    return $response;
   }
 
   // outermost common function
