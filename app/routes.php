@@ -23,7 +23,7 @@ $app->get('/register', 'App\Controller\HomeController:register')
 $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler')
     ->setName('registerHandler');
 
-$app->get('/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
+$app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
 $app->post('/forgot_pwHandler', 'App\Controller\forgottenPWController:forgot_pwHandler')
     ->setName('forgot_pw');

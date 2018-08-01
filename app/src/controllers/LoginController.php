@@ -19,7 +19,8 @@ final class LoginController extends BaseController {
     list ($loginResult, $userINFO) = $this->login($_POST['email'], $_POST['password']);
 
     if ($loginResult == self::NONCE_NOT_EXIST)
-      $this->view->render($response, 'main_after.phtml',  ['email' => $userINFO['EmailAddress'],
+      $this->view->render($response, 'main_after.phtml',  ['USN' => $userINFO['USN'],
+      'email' => $userINFO['EmailAddress'],
       'firstName' => $userINFO['FirstName'], 'lastName' => $userINFO['LastName']]);
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);

@@ -2,8 +2,10 @@
 namespace App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 final class HomeController extends BaseController {
   public function dispatch(Request $request, Response $response, $args)
   {
@@ -71,6 +73,12 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'delete_id_check.phtml');
       return $response;
   }
+  public function forgot_pw(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'forgot_pw.phtml');
+      return $response;
+  }
+
 
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
