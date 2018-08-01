@@ -28,11 +28,6 @@ final class LoginController extends BaseController {
       $_SESSION["lastName"] = $userINFO['LastName'];
 
       echo "<script> document.location.href='/main_after'; </script>";
-      //$this->view->render($response, 'main_after.phtml');
-
-      // $this->view->render($response, 'main_after.phtml',  ['USN' => $userINFO['USN'],
-      // 'email' => $userINFO['EmailAddress'],
-      // 'firstName' => $userINFO['FirstName'], 'lastName' => $userINFO['LastName']]);
     }
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);
