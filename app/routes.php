@@ -40,7 +40,8 @@ $app->get('/pw_check', 'App\Controller\HomeController:pw_check')
 $app->get('/pw_new', 'App\Controller\HomeController:pw_new')
     ->setName('pw_new');
 
-
+$app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
+    ->setName('delete_id_check');
 
 
 

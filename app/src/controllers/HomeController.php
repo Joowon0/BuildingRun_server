@@ -70,6 +70,11 @@ final class HomeController extends BaseController {
       return $response;
   }
 
+  public function delete_id_check(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'delete_id_check.phtml');
+      return $response;
+  }
 
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
