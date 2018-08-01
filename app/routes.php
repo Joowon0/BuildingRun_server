@@ -34,6 +34,14 @@ $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountAct
 $app->get('/user_change', 'App\Controller\HomeController:user_change')
     ->setName('user_change');
 
+$app->get('/pw_check', 'App\Controller\HomeController:pw_check')
+    ->setName('pw_check');
+$app->get('/pw_new', 'App\Controller\HomeController:pw_new')
+    ->setName('pw_new');
+$app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
+    ->setName('delete_id_check');
+
+
 // for APP
 $app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
     ->setName('app_sendEmail');
