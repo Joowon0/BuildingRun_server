@@ -18,10 +18,21 @@ final class LoginController extends BaseController {
   function loginHandler(Request $request, Response $response, $args) {
     list ($loginResult, $userINFO) = $this->login($_POST['email'], $_POST['password']);
 
-    if ($loginResult == self::NONCE_NOT_EXIST)
-      $this->view->render($response, 'main_after.phtml',  ['USN' => $userINFO['USN'],
-      'email' => $userINFO['EmailAddress'],
-      'firstName' => $userINFO['FirstName'], 'lastName' => $userINFO['LastName']]);
+    if ($loginResult == self::NONCE_NOT_EXIST) {
+      // Start the session
+      session_start();
+
+      $_SESSION["USN"] = $userINFO['USN'];
+      $_SESSION["email"] = $userINFO['EmailAddress'];
+      $_SESSION["firstName"] = $userINFO['FirstName'];
+      $_SESSION["lastName"] = $userINFO['LastName'];
+
+      $this->view->render($response, 'main_after.phtml');
+
+      // $this->view->render($response, 'main_after.phtml',  ['USN' => $userINFO['USN'],
+      // 'email' => $userINFO['EmailAddress'],
+      // 'firstName' => $userINFO['FirstName'], 'lastName' => $userINFO['LastName']]);
+    }
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);
   }
@@ -31,7 +42,7 @@ final class LoginController extends BaseController {
     list ($pwCheckResult, $userINFO) = $this->checkPassword( $email, $password);
 
     if ($pwCheckResult == self::SUCCESS) {
-      $nonceCheck = $this->checkNonceExist($USN);
+      $nonceCheck = $this->checkNonceExist($userINFO['USN']);
 
       return array ($nonceCheck, $userINFO);
     }

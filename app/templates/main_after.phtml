@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +22,17 @@
 </head>
 
 <body>
+  <?php
+    // Set session variables
+    // $_SESSION["USN"] = $USN;
+    // $_SESSION["email"] = $email;
+    // $_SESSION["firstName"] = $firstName;
+    // $_SESSION["lastName"] = $lastName;
+    // echo "Session variables are set. <br>";
+    echo $_SESSION["email"] . "<br>";
+    // exit;
+  ?>
+
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -160,7 +173,7 @@
           </li>
           <li class="nav-item dropdown d-none d-xl-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <span class="profile-text">Hello, <?php echo $firstName . " " . $lastName; ?> !</span>
+              <span class="profile-text">Hello, <?php echo $_SESSION["firstName"]. " " . $_SESSION["lastName"]; ?> !</span>
               <!--img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image"-->
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -209,9 +222,9 @@
                   <img src="images/faces/face1.jpg" alt="profile image">
                 </div-->
                 <div class="text-wrapper">
-                  <p class="profile-name"><?php echo $firstName . " " . $lastName; ?></p>
+                  <p class="profile-name"><?php echo $_SESSION["firstName"] . " " . $_SESSION["lastName"]; ?></p>
                   <div>
-                    <small class="designation text-muted"><?php echo $email; ?></small>
+                    <small class="designation text-muted"><?php echo $_SESSION["email"]; ?></small>
                     <span class="status-indicator online"></span>
                   </div>
                 </div>

@@ -11,6 +11,8 @@ $app->get('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
 $app->post('/main_after', 'App\Controller\HomeController:main_after')
     ->setName('main_after');
+$app->get('/main_after', 'App\Controller\HomeController:main_after')
+    ->setName('main_after');
 
 
 $app->get('/login', 'App\Controller\HomeController:login')
@@ -58,7 +60,6 @@ $app->get('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
     ->setName('app_forgotPW');
 $app->get('/app/sendNewPwEmail', 'App\Controller\EmailController:sendNewPwEmail')
     ->setName('app_sendNewPwEmail');
-
 
 
 
