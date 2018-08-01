@@ -4,11 +4,9 @@ namespace App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
 final class SignupController extends BaseController {
   //abstract class signupMessage {
+    
     const SUCCESS = 1;
     const DUPLICATED = 2;
     const NONCE_EXIST = 3;
@@ -26,7 +24,8 @@ final class SignupController extends BaseController {
 
         $acitvationLinkNonce = HomeController::randomString(50);
         $this->storeNonceInfo($USN, $acitvationLinkNonce);
-        $this->sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+        list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
+        EmailController::sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $html, $notHtml);
 
         break;
       case self::DUPLICATED:
@@ -48,6 +47,8 @@ final class SignupController extends BaseController {
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();
+
+      return $result['USN'];
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }
@@ -66,8 +67,8 @@ final class SignupController extends BaseController {
   }
 
   public function storeNonceInfo($USN, $nonce) {
-//    $sql = "INSERT INTO `Nonce`( `Nonce`, `isSignup`, `USN`) VALUES ( '".$nonce."' , true , ".$USN." )";
-//    $stmt = $this->db->query($sql);
+    $sql = "INSERT INTO Nonce( Nonce, USN) VALUES ( '".$nonce."' , '$USN' )";
+    $stmt = $this->db->query($sql);
   }
 
   public function checkDuplicationEmail($userINFO) {
@@ -87,57 +88,22 @@ final class SignupController extends BaseController {
     }
   }
 
-
-
-  public function sendEmail($email, $firstName, $lastName, $nonce) {
-    $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-    try {
-      //Server settings
-      $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-      $mail->isSMTP();                                      // Set mailer to use SMTP
-      $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-      $mail->SMTPAuth = true;                               // Enable SMTP authentication
-      $mail->Username = 'QIoTteamA@gmail.com';                 // SMTP username
-      $mail->Password = 'vagrant!';                           // SMTP password
-      $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-      $mail->Port = 587;                                    // TCP port to connect to
-
-      //Recipients
-      $mail->setFrom('QIoTteamA@gmail.com', 'TeamA');
-      $mail->addAddress($email, $firstName . " " . $lastName);     // Add a recipient
-      $mail->addReplyTo('QIoTteamA@gmail.com', 'TeamA');
-
-      //Content
-      $mail->isHTML(true);                                  // Set email format to HTML
-      $mail->Subject = '[TEAMA] Account Activation';
-      $mail->Body    = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br> http://teama-iot.calit2.net/'.$nonce.' <br>';
-      $mail->AltBody = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://teama-iot.calit2.net/'.$nonce;
-
-      $mail->send();
-      echo 'Message has been sent';
-    } catch (Exception $e) {
-      echo 'Message could not be sent.';
-      echo 'Mailer Error: ' . $mail->ErrorInfo;
-    }
-  }
   public function accountActivation(Request $request, Response $response, $args) {
     $nonce = $args['id'];
     $nonce_existence = $this->checkNonceExist($nonce);
-    //echo $nonce_existence;
 
     if ($nonce_existence!=self::NONCE_NOT_EXIST) {
       $nonceID = $nonce_existence;
       $this->deleteNonce($nonceID);
 
-      $message = "Account Activation Completed.";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-      return $nonce_existence;
     }
     else {
-      $message = "INVALID PAGE REQUEST : NO SUCH NONCE EXIST";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-      return self::NONCE_EXIST;
+      // $message = "INVALID PAGE REQUEST : NO SUCH NONCE EXIST";
+      // echo "<script type='text/javascript'>alert('$message');</script>";
     }
+
+    $this->view->render($response, 'accountActivation.phtml', ['actvationResult' => $nonce_existence]);
+    return $response;
   }
 
   public function checkNonceExist($nonce) {
@@ -157,6 +123,7 @@ final class SignupController extends BaseController {
       echo "ERROR : " . $e->getMessage();
     }
   }
+
   public function deleteNonce($nonceID) {
     $sql = "DELETE FROM Nonce WHERE Nonce_ID = ". $nonceID;
     $stmt = $this->db->query($sql);
