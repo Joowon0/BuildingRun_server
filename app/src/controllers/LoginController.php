@@ -16,28 +16,26 @@ final class LoginController extends BaseController {
 
   // for WEB
   function loginHandler(Request $request, Response $response, $args) {
-    $loginResult = $this->login($_POST['email'], $_POST['password']);
+    list ($loginResult, $userINFO) = $this->login($_POST['email'], $_POST['password']);
 
-    if ($loginResult == self::NONCE_NOT_EXIST) // TODO : need to get name from DB
-      $this->view->render($response, 'main_after.phtml',  ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
+    if ($loginResult == self::NONCE_NOT_EXIST)
+      $this->view->render($response, 'main_after.phtml',  ['email' => $userINFO['EmailAddress'],
+      'firstName' => $userINFO['FirstName'], 'lastName' => $userINFO['LastName']]);
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);
   }
 
   // outermost common function
   function login($email, $password) {
-    list ($pwCheckResult, $USN) = $this->checkPassword( $email, $password);
+    list ($pwCheckResult, $userINFO) = $this->checkPassword( $email, $password);
 
     if ($pwCheckResult == self::SUCCESS) {
       $nonceCheck = $this->checkNonceExist($USN);
 
-      if ($nonceCheck == self::NONCE_NOT_EXIST)
-        return self::NONCE_NOT_EXIST;
-      else
-        return self::NONCE_EXIST;
+      return array ($nonceCheck, $userINFO);
     }
     else
-      return $pwCheckResult;
+      return array ($pwCheckResult, -1);
   }
 
   function checkPassword($email, $password) {
@@ -51,7 +49,7 @@ final class LoginController extends BaseController {
       } else if (!password_verify($password, $result['HPassword'])) {
         return array (self::WRONG_PASSWORD, -1);
       } else {
-        return array (self::SUCCESS, $result['USN']);
+        return array (self::SUCCESS, $result);
       }
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();

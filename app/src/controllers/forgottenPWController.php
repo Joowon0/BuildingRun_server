@@ -17,9 +17,10 @@ final class forgottenPWController extends BaseController {
 
   public function forgot_pwHandler(Request $request, Response $response, $args)
   {
-      list ($usn_existence, $usn) = $this->getUSN($_POST['email']);
+      list ($email_existence, $userINFO) = $this->getUSN($_POST['email']);
+      //print_r($userINFO); exit;
 
-      if ($usn_existence == self::EMAIL_EXIST) {
+      if ($email_existence == self::EMAIL_EXIST) {
         $new_password = HomeController::randomString(10);
         $hashedPW = password_hash($new_password, PASSWORD_DEFAULT);
 
@@ -28,7 +29,9 @@ final class forgottenPWController extends BaseController {
 
       }
 
-      $this->view->render($response, 'forgot_pw.phtml');
+      $this->view->render($response, 'forgot_pw.phtml', ['restPWResult'=>$email_existence]);
+      EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
+
       return $response;
   }
 
@@ -41,10 +44,10 @@ final class forgottenPWController extends BaseController {
       $result = $stmt->fetch();
 
       if ($result != null) {
-        return array (self::EMAIL_EXIST, $result['USN']);
+        return array (self::EMAIL_EXIST, $result);
       }
       else {
-        return array (self::EMAIL_NOT_EXIST, -1);
+        return array (self::EMAIL_NOT_EXIST, array());
       }
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
