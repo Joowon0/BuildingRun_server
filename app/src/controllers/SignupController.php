@@ -6,40 +6,20 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 final class SignupController extends BaseController {
   //abstract class signupMessage {
-
     const SUCCESS = 1;
     const DUPLICATED = 2;
     const NONCE_EXIST = 3;
-    const NONCE_NOT_EXIST = -1;
+    const NONCE_NOT_EXIST = 4;
   //}
 
   // for WEB
   public function registerHandler(Request $request, Response $response, $args) {
     list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
 
-    // switch ($duplicateCheckResult) {
-    //   case self::SUCCESS :
-    //     // send user the response
-    //     $message = "Sign-up is completed. Please check you email to activate you account";
-    //     echo "<script type='text/javascript'>alert('$message');</script>";
-    //
-    //     // send link to user email
-    //     //list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
-    //     EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
-    //
-    //     break;
-    //   case self::DUPLICATED:
-    //     $message = "The Email is already registered. Please enter other email or sign-in";
-    //     echo "<script type='text/javascript'>alert('$message');</script>";
-    //     break;
-    //   default:
-    //     $message = "ERROR : smth wrong in checkDuplicationEmail().";
-    //     echo "<script type='text/javascript'>alert('$message');</script>";
-    // }
-
     $this->view->render($response, 'register.phtml', ['registerResult' => $duplicateCheckResult]);
-    if ($duplicateCheckResult == self::SUCCESS) 
+    if ($duplicateCheckResult == self::SUCCESS)
       EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+
     return $response;
   }
 
@@ -54,7 +34,7 @@ final class SignupController extends BaseController {
 
       // store user information
       $this->storeUserInfo($userINFO, $hashedPW);
-      $USN = $this->getUSN($userINFO['email']);
+      $USN = $this->getUSN($userINFO['email']); // TODO : can I extract this to one query?
       $this->storeNonceInfo($USN, $acitvationLinkNonce);
     } else
       $acitvationLinkNonce = "NONCE NOT CREATED";
@@ -110,16 +90,10 @@ final class SignupController extends BaseController {
 
   public function accountActivation(Request $request, Response $response, $args) {
     $nonce = $args['id'];
-    $nonce_existence = $this->checkNonceExist($nonce);
-
-    if ($nonce_existence!=self::NONCE_NOT_EXIST) {
-      $nonceID = $nonce_existence;
-      $this->deleteNonce($nonceID);
-
-    }
-    else {
-      // $message = "INVALID PAGE REQUEST : NO SUCH NONCE EXIST";
-      // echo "<script type='text/javascript'>alert('$message');</script>";
+    list ($nonce_existence, $nonce_ID) = $this->checkNonceExist($nonce);
+    
+    if ($nonce_existence==self::NONCE_EXIST) {
+      $this->deleteNonce($nonce_ID);
     }
 
     $this->view->render($response, 'accountActivation.phtml', ['actvationResult' => $nonce_existence]);
@@ -134,18 +108,18 @@ final class SignupController extends BaseController {
       //print_r($result);
 
       if ($result != null) {
-        return $result['Nonce_ID'];
+        return array (self::NONCE_EXIST, $result['Nonce_ID']);
       }
       else {
-        return self::NONCE_NOT_EXIST;
+        return array (self::NONCE_NOT_EXIST, -1);
       }
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }
   }
 
-  public function deleteNonce($nonceID) {
-    $sql = "DELETE FROM Nonce WHERE Nonce_ID = ". $nonceID;
+  public function deleteNonce($nonce_ID) {
+    $sql = "DELETE FROM Nonce WHERE Nonce_ID = ". $nonce_ID;
     $stmt = $this->db->query($sql);
   }
 }

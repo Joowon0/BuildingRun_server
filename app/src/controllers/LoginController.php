@@ -21,7 +21,7 @@ final class LoginController extends BaseController {
     if ($loginResult == self::NONCE_NOT_EXIST) // TODO : need to get name from DB
       $this->view->render($response, 'main_after.phtml',  ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
     else
-      $this->view->render($response, 'login.phtml', ['emailResult'=>$nonceCheck]);
+      $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);
   }
 
   // outermost common function
