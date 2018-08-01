@@ -17,16 +17,16 @@ $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
 $app->post('/loginHandler', 'App\Controller\LoginController:loginHandler')
     ->setName('loginHandler');
+
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
 $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler')
     ->setName('registerHandler');
 
-$app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
+$app->get('/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
     ->setName('forgot_pw');
-
-//$app->get('/random', 'App\Controller\HomeController:generateTempPW')
-//    ->setName('main_after');
+$app->post('/forgot_pwHandler', 'App\Controller\forgottenPWController:forgot_pwHandler')
+    ->setName('forgot_pw');
 
 $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');

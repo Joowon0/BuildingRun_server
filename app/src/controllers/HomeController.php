@@ -36,11 +36,6 @@ final class HomeController extends BaseController {
       //return $response;
   }
 
-  public function forgot_pw(Request $request, Response $response, $args)
-  {
-      $this->view->render($response, 'forgot_pw.phtml');
-      return $response;
-  }
   public function main(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'main_before.phtml');
