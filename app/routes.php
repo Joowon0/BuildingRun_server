@@ -39,7 +39,10 @@ $app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
     ->setName('app_sendEmail');
 $app->get('/app/login', 'App\Controller\LoginController:login')
     ->setName('app_login');
-
+$app->get('/app/register', 'App\Controller\LoginController:signup')
+    ->setName('app_register');
+$app->get('/app/sendActivationEmail', 'App\Controller\LoginController:sendActivationEmail')
+    ->setName('app_sendActivationEmail');
 
 
 
