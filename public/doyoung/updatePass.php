@@ -3,14 +3,15 @@ require "conn.php";
 if($_POST["EmailAddress"]!=""){
 $EmailAddress=$_POST["EmailAddress"];
 $HPassword=$_POST["HPassword"];
-$mysql_qry ="update User set HPassword='".$HPassword."' where EmailAddress = '".$EmailAddress."'";
+$mysql_qry ="update User set HPassword='$HPassword' where EmailAddress = '$EmailAddress'";
 $result = mysqli_query($conn, $mysql_qry);
-if(mysql_affected_rows() >0){
-   echo 1;
+echo "result=".$result;
+if($result){
+   echo mysqli_affected_rows($result);
 }
-   else{
-      echo 2;
-   }
+else{
+   echo mysqli_affected_rows($result);
+    }
 }
 
 mysqli_close($conn);

@@ -1,64 +1,66 @@
 <?php
-abstract class loginMessage {
-    const SUCCESS = 0;
-    const NO_SUCH_EMAIL = 1;
-    const WORNG_PASSWORD = 2;
-}
+namespace App\Controller;
 
-function checkPassword($email) {
-  $sql = "SELECT * FROM User WHERE EmailAddress = '" . $_POST['email'] . "'" ;
-  try {
-  	$stmt = $this->db->query($sql);
-  	$result = $stmt->fetch();
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
-    if ($result == null) {
-      return loginMessage.NO_SUCH_EMAIL;
-    } else if (!password_verify($_POST['password'], $result['HPassword'])) {
-      return loginMessage.WORNG_PASSWORD;
-    } else {
-      return loginMessage.SUCCESS;
+final class LoginController extends BaseController {
+  //abstract class loginMessage {
+      const SUCCESS = 1;
+      const NO_SUCH_EMAIL = 2;
+      const WRONG_PASSWORD = 3;
+      const NONCE_EXIST = 4;
+      const NONCE_NOT_EXIST = 5;
+  //}
+
+
+
+  function loginHandler(Request $request, Response $response, $args) {
+    list ($pwCheckResult, $USN) = $this->checkPassword($_POST['email'], $_POST['password']);
+    // echo $pwCheckResult . '<br>';
+    // echo $USN .'<br>';
+    if ($pwCheckResult == self::SUCCESS) {
+      $nonceCheck = $this->checkNonceExist($USN);
+
+      if ($nonceCheck == self::NONCE_NOT_EXIST)
+        $this->view->render($response, 'main_after.phtml',  ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
+      else
+        $this->view->render($response, 'login.phtml', ['emailResult'=>$nonceCheck]);
     }
-  } catch (PDOException $e) {
-    echo "ERROR : " . $e->getMessage();
+    else
+      $this->view->render($response, 'login.phtml', ['emailResult'=>$pwCheckResult]);
+  	// TODO : need to check if activated
+  }
+
+  function checkPassword($email, $password) {
+    $sql = "SELECT * FROM User WHERE EmailAddress = '" . $email . "'" ;
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      if ($result == null) {
+        return array (self::NO_SUCH_EMAIL, -1);
+      } else if (!password_verify($password, $result['HPassword'])) {
+        return array (self::WRONG_PASSWORD, -1);
+      } else {
+        return array (self::SUCCESS, $result['USN']);
+      }
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  function checkNonceExist($USN) {
+    $sql = "SELECT * FROM Nonce WHERE USN = '" . $USN . "'";
+
+    $stmt = $this->db->query($sql);
+    $result = $stmt->fetch();
+
+    if ($result == null)
+      return self::NONCE_NOT_EXIST;
+    else
+      return self::NONCE_EXIST;
   }
 }
 
-// TODO : need to check if email and password entry is not null
-function loginHandler() {
-  $pwCheckResult = checkPassword($_POST['email']);
-
-  switch($pwCheckResult) {
-    case loginMessage.NO_SUCH_EMAIL:
-      $message = "There is no account corresponding to input Email";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-      break;
-    case loginMessage.WORNG_PASSWORD:
-      $message = "Wrong Password. Please enter again.";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-      break;
-    case loginMessage.SUCCESS:
-      $message = "Wrong Password. Please enter again.";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-      break;
-    default :
-      $message = "ERROR : smth wrong in checkPassword().";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-  }
-
-	// TODO : need to check if activated
-  /*
-	if ($result == null) {
-		$message = "There is no account corresponding to input Email";
-		echo "<script type='text/javascript'>alert('$message');</script>";
-		$this->login($request, $response, $args);
-	}
-	else if (!password_verify($_POST['password'], $result['HPassword'])) {
-  	$message = "Wrong Password. Please enter again.";
-  	echo "<script type='text/javascript'>alert('$message');</script>";
-  	$this->login($request, $response, $args);
-	}
-	else {
-  	$this->main_after($request, $response, $args, $result['FirstName'], $result['LastName']);
-	}*/
-}
 ?>

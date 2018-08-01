@@ -15,21 +15,33 @@ $app->post('/main_after', 'App\Controller\HomeController:main_after')
 
 $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
-$app->post('/loginHandler', 'App\Controller\HomeController:loginHandler')
+$app->post('/loginHandler', 'App\Controller\LoginController:loginHandler')
     ->setName('loginHandler');
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
-$app->post('/registerHandler', 'App\Controller\HomeController:registerHandler')
+$app->post('/registerHandler', 'App\Controller\SignupController:registerHandler')
     ->setName('registerHandler');
 
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
 
-$app->get('/random', 'App\Controller\HomeController:generateTempPW')
-    ->setName('main_after');
+//$app->get('/random', 'App\Controller\HomeController:generateTempPW')
+//    ->setName('main_after');
 
-$app->get('/accountActivate/{id}', 'App\Controller\HomeController:accountActivation')
+$app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');
+
+$app->get('/user_change', 'App\Controller\HomeController:user_change')
+    ->setName('user_change');
+
+$app->get('/pw_check', 'App\Controller\HomeController:pw_check')
+    ->setName('pw_check');
+
+$app->get('/pw_new', 'App\Controller\HomeController:pw_new')
+    ->setName('pw_new');
+
+
+
 
 
 // show database for test
@@ -49,5 +61,3 @@ $app->get('/showDB/sensor', 'App\Controller\DBTester:printSensor')
     ->setName('showDB_sensor');
 $app->get('/showDB/user', 'App\Controller\DBTester:printUser')
     ->setName('showDB_user');
-
-
