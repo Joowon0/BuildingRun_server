@@ -45,12 +45,19 @@ $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
 // for APP
 $app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
     ->setName('app_sendEmail');
+
+$app->get('/app/register', 'App\Controller\SignupController:signup')
+    ->setName('app_register');
+$app->get('/app/sendActivationEmail', 'App\Controller\EmailController:sendActivationEmail')
+    ->setName('app_sendActivationEmail');
+
 $app->get('/app/login', 'App\Controller\LoginController:login')
     ->setName('app_login');
-$app->get('/app/register', 'App\Controller\LoginController:signup')
-    ->setName('app_register');
-$app->get('/app/sendActivationEmail', 'App\Controller\LoginController:sendActivationEmail')
-    ->setName('app_sendActivationEmail');
+
+$app->get('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
+    ->setName('app_forgotPW');
+$app->get('/app/sendNewPwEmail', 'App\Controller\EmailController:sendNewPwEmail')
+    ->setName('app_sendNewPwEmail');
 
 
 
