@@ -28,7 +28,10 @@ $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler'
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
 $app->post('/forgot_pwHandler', 'App\Controller\forgottenPWController:forgot_pwHandler')
-    ->setName('forgot_pw');
+    ->setName('forgot_pwHandler');
+
+$app->get('/signoutHandler', 'App\Controller\HomeController:signoutHandler')
+    ->setName('signoutHandler');
 
 $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');

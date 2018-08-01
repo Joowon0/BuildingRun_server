@@ -23,14 +23,12 @@
 
 <body>
   <?php
-    // Set session variables
-    // $_SESSION["USN"] = $USN;
-    // $_SESSION["email"] = $email;
-    // $_SESSION["firstName"] = $firstName;
-    // $_SESSION["lastName"] = $lastName;
-    // echo "Session variables are set. <br>";
-    echo $_SESSION["email"] . "<br>";
-    // exit;
+  if (isset($_SESSION["USN"]) && isset($_SESSION["email"]) && $_SESSION["email"] != "") {
+    echo "Session Started. User : " . $_SESSION["email"];
+  } else {
+    echo "<script> document.location.href='/'; </script>";
+  }
+  //exit;
   ?>
 
   <div class="container-scroller">
@@ -229,7 +227,7 @@
                   </div>
                 </div>
               </div>
-               <a href="/" class="btn btn-success btn-block">Sign Out</a>
+               <a href="/signoutHandler" class="btn btn-success btn-block">Sign Out</a>
 
                 <i class="mdi mdi-plus"></i>
               </button>

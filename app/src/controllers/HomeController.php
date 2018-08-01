@@ -50,6 +50,19 @@ final class HomeController extends BaseController {
       return $response;
   }
 
+  public function signoutHandler(Request $request, Response $response, $args)
+  {
+      // remove all session variables
+      session_unset();
+
+      // destroy the session
+      session_destroy();
+
+      echo "<script> document.location.href='/login'; </script>";
+      //$this->view->render($response, 'register.phtml');
+      //return $response;
+  }
+
    public function user_change(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'user_change.phtml');
