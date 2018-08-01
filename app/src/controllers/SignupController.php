@@ -6,26 +6,26 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 final class SignupController extends BaseController {
   //abstract class signupMessage {
-    
+
     const SUCCESS = 1;
     const DUPLICATED = 2;
     const NONCE_EXIST = 3;
     const NONCE_NOT_EXIST = -1;
   //}
 
+  // for WEB
   public function registerHandler(Request $request, Response $response, $args) {
-    $duplicateCheckResult = $this->checkDuplicationEmail($_POST);
+    list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
+
     switch ($duplicateCheckResult) {
       case self::SUCCESS :
-        $this->storeUserInfo($_POST);
-        $USN = $this->getUSN($_POST['email']);
+        // send user the response
         $message = "Sign-up is completed. Please check you email to activate you account";
         echo "<script type='text/javascript'>alert('$message');</script>";
 
-        $acitvationLinkNonce = HomeController::randomString(50);
-        $this->storeNonceInfo($USN, $acitvationLinkNonce);
-        list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
-        EmailController::sendEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $html, $notHtml);
+        // send link to user email
+        //list ($html, $notHtml) = EmailController::activationEmailContent($acitvationLinkNonce);
+        EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
 
         break;
       case self::DUPLICATED:
@@ -37,9 +37,27 @@ final class SignupController extends BaseController {
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
 
-    $this->view->render($response, 'register.phtml', ['former' => $_POST]);
-    return $response;
+    //$this->view->render($response, 'register.phtml', ['former' => $_POST]);
+    //return $response;
+  }
 
+  // outermost common function
+  public function signup($userINFO) {
+    $duplicateCheckResult = $this->checkDuplicationEmail($userINFO);
+
+    if ($duplicateCheckResult == self::SUCCESS) {
+      // generate hashed password and nonce
+      $hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
+      $acitvationLinkNonce = HomeController::randomString(50);
+
+      // store user information
+      $this->storeUserInfo($userINFO, $hashedPW);
+      $USN = $this->getUSN($userINFO['email']);
+      $this->storeNonceInfo($USN, $acitvationLinkNonce);
+    } else
+      $acitvationLinkNonce = "NONCE NOT CREATED";
+
+    return array ($acitvationLinkNonce, $duplicateCheckResult);
   }
 
   public function getUSN($email) {
@@ -54,8 +72,8 @@ final class SignupController extends BaseController {
     }
   }
 
-  public function storeUserInfo($userINFO) {
-    $hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
+  public function storeUserInfo($userINFO, $hashedPW) {
+
     $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
       "'". $userINFO['email'] ."', ".     // Email
       "'". $hashedPW          ."', ".     // Hashed password

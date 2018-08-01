@@ -18,7 +18,7 @@ final class LoginController extends BaseController {
   function loginHandler(Request $request, Response $response, $args) {
     $loginResult = $this->login($_POST['email'], $_POST['password']);
 
-    if ($loginResult == self::NONCE_NOT_EXIST)
+    if ($loginResult == self::NONCE_NOT_EXIST) // TODO : need to get name from DB
       $this->view->render($response, 'main_after.phtml',  ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$nonceCheck]);
