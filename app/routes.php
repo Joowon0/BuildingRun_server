@@ -51,7 +51,8 @@ $app->post('/pw_newHandler', 'App\Controller\SetNewPassword:pw_newHandler')
 
 $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
     ->setName('delete_id_check');
-
+$app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
+    ->setName('delete_id_checkHandler');
 
 // for APP
 $app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
