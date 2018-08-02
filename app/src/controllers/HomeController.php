@@ -76,6 +76,12 @@ final class HomeController extends BaseController {
       return $response;
   }
 
+  public function intro_teama(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'intro_teama.phtml');
+      return $response;
+  }
+
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $charactersLength = strlen($characters);

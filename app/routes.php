@@ -43,6 +43,9 @@ $app->get('/pw_new', 'App\Controller\HomeController:pw_new')
 $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
     ->setName('delete_id_check');
 
+$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
+    ->setName('intro_teama');
+
 
 
 // show database for test
