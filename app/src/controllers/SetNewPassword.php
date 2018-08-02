@@ -10,12 +10,7 @@ final class SetNewPassword extends BaseController {
       const NO_SUCH_ACCOUNT = 3;
   //}
 
-  public function pw_check(Request $request, Response $response, $args)
-  {
-    $this->view->render($response, 'pw_check.phtml');
-    return $response;
-  }
-
+  // for WEB
   public function pw_checkHandler(Request $request, Response $response, $args) {
     $pwCheckResult = $this->checkPassword($_SESSION["USN"], $_POST['password']);
 
@@ -28,10 +23,11 @@ final class SetNewPassword extends BaseController {
       $this->view->render($response, 'login.phtml', ['pwCheckResult'=>self::NO_SUCH_ACCOUNT]);
       return $response;
     } else {
-
+      echo "ERROR : smth wrong with pw_checkHandler()";
     }
   }
 
+  // outermost common function
   public function checkPassword($USN, $password) {
     $sql = "SELECT * FROM User WHERE USN = '" . $USN . "'" ;
     try {
@@ -50,9 +46,20 @@ final class SetNewPassword extends BaseController {
     }
   }
 
-  public function pw_new(Request $request, Response $response, $args)
-  {
-    $this->view->render($response, 'pw_new.phtml');
-    return $response;
+  public function pw_newHandler(Request $request, Response $response, $args) {
+    $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $this->setNewPassword($_SESSION["USN"], $hashedPW);
+
+    echo "<script> document.location.href='/main_after'; </script>";
+  }
+
+  public function setNewPassword($USN, $newPassword) {
+    $sql = "UPDATE User SET HPassword='". $newPassword. "'  WHERE USN = " . $USN;
+
+    try {
+    	$stmt = $this->db->query($sql);
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
   }
 }

@@ -46,7 +46,7 @@
           <div class="col-lg-4 mx-auto">
                <h2 class="text-center mb-4 text-white">Change Password</h2>
             <div class="auto-form-wrapper">
-              <form method="post" action="pw_checkHandler">
+              <form method="post" action="pw_checkHandler" name="pwCheckForm" onsubmit="return check()">
 
                 <div class="form-group">
                   <label class="label">Enter Your Password</label>
@@ -100,5 +100,16 @@
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
 </body>
+
+<script>
+  function check() {
+    if(pwCheckForm.password.value == "") {
+      alert("Password value does not exist");
+      pwCheckForm.password.focus();
+      return false;
+    }
+    else return true;
+  }
+</script>
 
 </html>
