@@ -69,18 +69,6 @@ final class HomeController extends BaseController {
       return $response;
   }
 
-     public function pw_check(Request $request, Response $response, $args)
-  {
-      $this->view->render($response, 'pw_check.phtml');
-      return $response;
-  }
-
-   public function pw_new(Request $request, Response $response, $args)
-  {
-      $this->view->render($response, 'pw_new.phtml');
-      return $response;
-  }
-
   public function delete_id_check(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'delete_id_check.phtml');

@@ -22,6 +22,23 @@
 </head>
 
 <body>
+  <?php
+  abstract class newPWMessage {
+      const CORRECT_PASSWORD = 1;
+      const WRONG_PASSWORD = 2;
+      const NO_SUCH_ACCOUNT = 3;
+  }
+  if (isset($pwCheckResult) && !empty($pwCheckResult)) {
+    if ($pwCheckResult == newPWMessage::WRONG_PASSWORD) {
+      $message = "Wrong password. Please enter your password again.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+    } else {
+      $message = "Something went wrong in the program : " . $pwCheckResult;
+      echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+    echo "<script> document.location.href='/pw_check'; </script>";
+  }
+   ?>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
       <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
@@ -29,13 +46,12 @@
           <div class="col-lg-4 mx-auto">
                <h2 class="text-center mb-4 text-white">Change Password</h2>
             <div class="auto-form-wrapper">
-              <!--<form method="post" action="loginHandler">
-                -->
+              <form method="post" action="pw_checkHandler">
+
                 <div class="form-group">
                   <label class="label">Enter Your Password</label>
                   <div class="input-group">
                     <input type="password" class="form-control" name="password">
-<!--placeholder=="****"-->
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>
@@ -43,14 +59,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
 
-                  <a class="nav-link" href="pw_new">
-                  <button href="pw_new" class="btn btn-primary submit-btn btn-block">Confirm</button>
-                </a>
+                <div class="form-group">
+                  <!--a class="nav-link" href="pw_new"-->
+                  <button class="btn btn-primary submit-btn btn-block">Confirm</button>
+                <!--/a-->
                 </div>
 
-               
               </form>
             </div>
             <ul class="auth-footer">
