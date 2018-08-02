@@ -17,6 +17,7 @@ $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
 $app->post('/loginHandler', 'App\Controller\LoginController:loginHandler')
     ->setName('loginHandler');
+
 $app->get('/register', 'App\Controller\HomeController:register')
     ->setName('register');
 $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler')
@@ -24,9 +25,8 @@ $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler'
 
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
-
-//$app->get('/random', 'App\Controller\HomeController:generateTempPW')
-//    ->setName('main_after');
+$app->post('/forgot_pwHandler', 'App\Controller\forgottenPWController:forgot_pwHandler')
+    ->setName('forgot_pw');
 
 $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');
@@ -36,15 +36,32 @@ $app->get('/user_change', 'App\Controller\HomeController:user_change')
 
 $app->get('/pw_check', 'App\Controller\HomeController:pw_check')
     ->setName('pw_check');
-
 $app->get('/pw_new', 'App\Controller\HomeController:pw_new')
     ->setName('pw_new');
-
 $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
     ->setName('delete_id_check');
 
 $app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
     ->setName('intro_teama');
+
+
+// for APP
+$app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
+    ->setName('app_sendEmail');
+
+$app->get('/app/register', 'App\Controller\SignupController:signup')
+    ->setName('app_register');
+$app->get('/app/sendActivationEmail', 'App\Controller\EmailController:sendActivationEmail')
+    ->setName('app_sendActivationEmail');
+
+$app->get('/app/login', 'App\Controller\LoginController:login')
+    ->setName('app_login');
+
+$app->get('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
+    ->setName('app_forgotPW');
+$app->get('/app/sendNewPwEmail', 'App\Controller\EmailController:sendNewPwEmail')
+    ->setName('app_sendNewPwEmail');
+
 
 
 

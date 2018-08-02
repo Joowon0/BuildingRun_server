@@ -2,8 +2,10 @@
 namespace App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 final class HomeController extends BaseController {
   public function dispatch(Request $request, Response $response, $args)
   {
@@ -26,11 +28,7 @@ final class HomeController extends BaseController {
       //$this->view->render($response, 'post.twig', ['post' => $post, 'flash' => $messages]);
       //return $response;
   }
-  public function forgot_pw(Request $request, Response $response, $args)
-  {
-      $this->view->render($response, 'forgot_pw.phtml');
-      return $response;
-  }
+
   public function main(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'main_before.phtml');
@@ -75,6 +73,12 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'delete_id_check.phtml');
       return $response;
   }
+  public function forgot_pw(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'forgot_pw.phtml');
+      return $response;
+  }
+
 
   public function intro_teama(Request $request, Response $response, $args)
   {

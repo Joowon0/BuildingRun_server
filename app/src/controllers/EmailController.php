@@ -9,8 +9,8 @@ use PHPMailer\PHPMailer\Exception;
 
 final class EmailController extends BaseController {
   const LINK = 'teama-iot.calit2.net';
-  
-  static public function sendEmail($email, $firstName, $lastName, $html, $notHtml) {
+
+  static public function sendEmail($email, $firstName, $lastName, $sbj, $html, $notHtml) {
     $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
     try {
       //Server settings
@@ -30,7 +30,7 @@ final class EmailController extends BaseController {
 
       //Content
       $mail->isHTML(true);                                  // Set email format to HTML
-      $mail->Subject = '[TEAMA] Account Activation';
+      $mail->Subject = '[TEAMA] ' . $sbj;
       $mail->Body    = $html;
       $mail->AltBody = $notHtml;
 
@@ -42,13 +42,34 @@ final class EmailController extends BaseController {
     }
   }
 
+  // outermost common function
+  static public function sendActivationEmail($email, $firstName, $lastName, $nonce) {
+    list ($html, $notHtml) = EmailController::activationEmailContent($nonce);
+    $subject = "Account Activation";
+    EmailController::sendEmail($email, $firstName, $lastName, $subject, $html, $notHtml);
+  }
+
   static public function activationEmailContent($nonce) {
-    $html = 'Hi! This is account activation request email from teama-iot.calit2.net <br> <b>Please Click the activation link!</b> <br> The link is : <br>'.
+    $html = 'Hi! This is account activation request email from '.self::LINK.' <br> <b>Please Click the activation link!</b> <br> The link is : <br>'.
     '<a href=\"http://'.self::LINK.'/accountActivation/'.$nonce.'\"> http://'.self::LINK.'/accountActivation/'.$nonce.' </a> <br>';
-    $notHtml = 'Hi! This is account activation request email from teama-iot.calit2.net Please Click the activation link! The link is : http://'.self::LINK.'/'.$nonce;
+    $notHtml = 'Hi! This is account activation request email from '.self::LINK.' Please Click the activation link! The link is : http://'.self::LINK.'/'.$nonce;
 
     return array ($html, $notHtml);
   }
 
+  // outermost common function
+  static public function sendNewPwEmail($email, $firstName, $lastName, $new_password) {
+    list ($html, $notHtml) = EmailController::newPwEmailContent($new_password);
+    $subject = "New Password Set";
+    EmailController::sendEmail($email, $firstName, $lastName, $subject, $html, $notHtml);
+  }
 
+  static public function newPwEmailContent($new_password) {
+    $html = 'Hi! This is a new password notification email from '.self::LINK.' <br> <b> The following is your new password : </b> <br> '.$new_password.' <br>'.
+    'You can login to our website at : '.self::LINK.'/login';
+    $notHtml = 'Hi! This is a new password notification email from '.self::LINK.' The following is your new password : '.$new_password.' '.
+    'You can login to our website at : '.self::LINK.'/login';
+
+    return array ($html, $notHtml);
+  }
 }
