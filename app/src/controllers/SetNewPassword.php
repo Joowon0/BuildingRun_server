@@ -20,8 +20,7 @@ final class SetNewPassword extends BaseController {
       $this->view->render($response, 'pw_check.phtml', ['pwCheckResult'=>self::WRONG_PASSWORD]);
       return $response;
     } else if ($pwCheckResult == self::NO_SUCH_ACCOUNT) {
-      $this->view->render($response, 'login.phtml', ['pwCheckResult'=>self::NO_SUCH_ACCOUNT]);
-      return $response;
+      echo "<script> document.location.href='/login'; </script>";
     } else {
       echo "ERROR : smth wrong with pw_checkHandler()";
     }

@@ -54,11 +54,11 @@ $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
 $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
     ->setName('delete_id_checkHandler');
 
-// for APP
-$app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
-    ->setName('app_sendEmail');
 
-$app->get('/app/register', 'App\Controller\SignupController:signup')
+
+
+// for APP
+$app->post('/app/register', 'App\Controller\SignupController:app_signup')
     ->setName('app_register');
 $app->get('/app/sendActivationEmail', 'App\Controller\EmailController:sendActivationEmail')
     ->setName('app_sendActivationEmail');
@@ -71,6 +71,8 @@ $app->get('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
 $app->get('/app/sendNewPwEmail', 'App\Controller\EmailController:sendNewPwEmail')
     ->setName('app_sendNewPwEmail');
 
+$app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
+    ->setName('app_sendEmail');
 
 
 // show database for test

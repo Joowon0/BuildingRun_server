@@ -29,12 +29,17 @@
       const NO_SUCH_ACCOUNT = 3;
   }
   if (isset($pwCheckResult) && !empty($pwCheckResult)) {
-    if ($pwCheckResult == newPWMessage::WRONG_PASSWORD) {
-      $message = "Wrong password. Please enter your password again.";
-      echo "<script type='text/javascript'>alert('$message');</script>";
-    } else {
-      $message = "Something went wrong in the program : " . $pwCheckResult;
-      echo "<script type='text/javascript'>alert('$message');</script>";
+    switch ($pwCheckResult) {
+       // case newPWMessage::CORRECT_PASSWORD :
+       //  echo "<script> document.location.href='/pw_new'; </script>";
+       //  break;
+      case newPWMessage::WRONG_PASSWORD :
+        $message = "Wrong password. Please enter your password again.";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+        break;
+      default :
+        $message = "Something went wrong in the program : " . $pwCheckResult;
+        echo "<script type='text/javascript'>alert('$message');</script>";
     }
     echo "<script> document.location.href='/pw_check'; </script>";
   }

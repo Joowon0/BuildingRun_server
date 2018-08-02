@@ -23,6 +23,20 @@ final class SignupController extends BaseController {
     return $response;
   }
 
+  // TODO send email
+  public function app_signup(Request $request, Response $response, $args) {
+    if (isset($_POST['email']) && isset($_POST['firstName']) && isset($_POST['lastName']) &&
+        isset($_POST['password']) && isset($_POST['phoneNum']))
+
+    list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
+
+    $sendData = array("Result"=>$duplicateCheckResult);
+
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($sendData));
+  }
+
   // outermost common function
   public function signup($userINFO) {
     $duplicateCheckResult = $this->checkDuplicationEmail($userINFO);
@@ -91,7 +105,7 @@ final class SignupController extends BaseController {
   public function accountActivation(Request $request, Response $response, $args) {
     $nonce = $args['id'];
     list ($nonce_existence, $nonce_ID) = $this->checkNonceExist($nonce);
-    
+
     if ($nonce_existence==self::NONCE_EXIST) {
       $this->deleteNonce($nonce_ID);
     }
