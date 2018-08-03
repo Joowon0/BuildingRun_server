@@ -10,6 +10,7 @@ final class IDCancellation extends BaseController {
       const NO_SUCH_ACCOUNT = 3;
   //}
 
+  // for WEB
   public function delete_id_checkHandler(Request $request, Response $response, $args)
   {
       $pwCheckResult = $this->checkPassword($_SESSION["USN"], $_POST['password']);
@@ -17,9 +18,25 @@ final class IDCancellation extends BaseController {
       if ($pwCheckResult == self::CORRECT_PASSWORD) {
         $this->deleteUserInfo($_SESSION["USN"]);
       }
-      
+
       $this->view->render($response, 'delete_id_check.phtml', ['pwCheckResult'=>$pwCheckResult]);
       return $response;
+  }
+
+  // for APP
+  public function app_accountCancel(Request $request, Response $response, $args)
+  {
+      $pwCheckResult = $this->checkPassword($_POST["USN"], $_POST['password']);
+
+      if ($pwCheckResult == self::CORRECT_PASSWORD) {
+        $this->deleteUserInfo($_POST["USN"]);
+      }
+
+      $sendData = array("Result"=>$pwCheckResult);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
   }
 
   // outermost common function

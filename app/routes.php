@@ -68,9 +68,10 @@ $app->post('/app/checkCurrentPW', 'App\Controller\SetNewPassword:app_checkPw')
     ->setName('app_checkCurrentPW');
 $app->post('/app/setNewPW', 'App\Controller\SetNewPassword:app_setNewPW')
     ->setName('app_setNewPW');
-
 $app->post('/app/forgotPW', 'App\Controller\forgottenPWController:app_forgotPW')
     ->setName('app_forgotPW');
+$app->post('/app/accountCancel', 'App\Controller\IDCancellation:app_accountCancel')
+    ->setName('app_accountCancel');
 
 
 // show database for test

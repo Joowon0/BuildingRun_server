@@ -42,7 +42,6 @@ final class LoginController extends BaseController {
                         "email"=>$userINFO['EmailAddress'],
                         "firstName"=>$userINFO['FirstName'],
                         "lastName"=>$userINFO['LastName']);
-     print_r($sendData);
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
