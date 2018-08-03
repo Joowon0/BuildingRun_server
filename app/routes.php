@@ -60,18 +60,14 @@ $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_c
 // for APP
 $app->post('/app/register', 'App\Controller\SignupController:app_signup')
     ->setName('app_register');
-$app->get('/app/sendActivationEmail', 'App\Controller\EmailController:sendActivationEmail')
-    ->setName('app_sendActivationEmail');
 
-$app->get('/app/login', 'App\Controller\LoginController:login')
+$app->post('/app/login', 'App\Controller\LoginController:app_login')
     ->setName('app_login');
 
-$app->get('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
+$app->post('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
     ->setName('app_forgotPW');
-$app->get('/app/sendNewPwEmail', 'App\Controller\EmailController:sendNewPwEmail')
-    ->setName('app_sendNewPwEmail');
 
-$app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
+$app->post('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
     ->setName('app_sendEmail');
 
 
