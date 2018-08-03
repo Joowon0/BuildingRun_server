@@ -10,15 +10,30 @@ final class forgottenPWController extends BaseController {
     const EMAIL_NOT_EXIST = 2;
   //}
 
-
+  // for WEB
   public function forgot_pwHandler(Request $request, Response $response, $args)
   {
       list ($email_existence, $userINFO, $new_password) = $this->forgot_pw($_POST['email']);
 
-      $this->view->render($response, 'forgot_pw.phtml', ['restPWResult'=>$email_existence]);
-      EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
+      if ($email_existence == self::EMAIL_EXIST)
+        EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
 
+      $this->view->render($response, 'forgot_pw.phtml', ['restPWResult'=>$email_existence]);
       return $response;
+  }
+
+  // for APP
+  public function app_forgotPW(Request $request, Response $response, $args)
+  {
+      list ($email_existence, $userINFO, $new_password) = $this->forgot_pw($_POST['email']);
+
+      if ($email_existence == self::EMAIL_EXIST)
+        EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
+
+      $sendData = array("Result"=>$email_existence);
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
   }
 
   // outermost common function
@@ -36,9 +51,8 @@ final class forgottenPWController extends BaseController {
   }
 
   public function getUSN($email) {
-    //echo $email. "<br>"; exit;
     $sql = "SELECT * FROM User WHERE EmailAddress = '" . $email . "'" ;
-    //echo $sql. "<br>"; exit;
+    
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();

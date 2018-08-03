@@ -31,14 +31,19 @@ final class HomeController extends BaseController {
 
   public function main(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'main_before.phtml');
+      if (isset($_SESSION["USN"]) && isset($_SESSION["email"]) && $_SESSION["email"] != "") {
+        $this->view->render($response, 'main_after.phtml');
+      }
+      else {
+        $this->view->render($response, 'main_before.phtml');
+      }
       return $response;
   }
-  public function main_after(Request $request, Response $response, $args, $firstName, $lastName)
-  {
-      $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
-      return $response;
-  }
+  // public function main_after(Request $request, Response $response, $args, $firstName, $lastName)
+  // {
+  //     $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
+  //     return $response;
+  // }
   public function login(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'login.phtml');
@@ -48,6 +53,30 @@ final class HomeController extends BaseController {
   {
       $this->view->render($response, 'register.phtml');
       return $response;
+  }
+
+  public function signoutHandler(Request $request, Response $response, $args)
+  {
+      // remove all session variables
+      session_unset();
+
+      // destroy the session
+      session_destroy();
+
+      echo "<script> document.location.href='/login'; </script>";
+      //$this->view->render($response, 'register.phtml');
+      //return $response;
+  }
+
+  public function app_signout(Request $request, Response $response, $args)
+  {
+      if (isset($_POST['USN'])) {
+        $sendData = array("ACK"=>true);
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($sendData));
+      }
   }
 
    public function user_change(Request $request, Response $response, $args)
@@ -85,6 +114,21 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'intro_teama.phtml');
       return $response;
   }
+
+  public function air_map(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_map.phtml');
+      return $response;
+  }
+
+  public function air_chart(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_chart.phtml');
+      return $response;
+  }
+
+
+
 
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

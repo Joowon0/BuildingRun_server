@@ -20,6 +20,14 @@
 </head>
 
 <body>
+  <?php
+  // if (!isset($_SESSION["USN"]) || !isset($_SESSION["email"]) || !$_SESSION["email"] != "") {
+  //   echo "Session Started. User : " . $_SESSION["email"];
+  // } else {
+  //   echo "<script> document.location.href='/main_after'; </script>";
+  // }
+  ?>
+
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -247,7 +255,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="air_map" aria-expanded="false" aria-controls="ui-basic">
               <i class="menu-icon mdi mdi-content-copy"></i>
               <span class="menu-title">Air Quality System</span>
               
