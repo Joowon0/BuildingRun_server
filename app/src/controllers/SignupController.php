@@ -25,10 +25,15 @@ final class SignupController extends BaseController {
 
   // for app
   public function app_signup(Request $request, Response $response, $args) {
-    if (isset($_POST['email']) && isset($_POST['firstName']) && isset($_POST['lastName']) &&
-        isset($_POST['password']) && isset($_POST['phoneNum'])){
+    $json = file_get_contents('php://input');
+    $jsonArray = json_decode($json, true);
+    //print_r($jsonArray);
+    //echo $jsonArray['name'];
 
-      list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
+    if (isset($jsonArray['email']) && isset($jsonArray['firstName']) && isset($jsonArray['lastName']) &&
+        isset($jsonArray['password']) && isset($jsonArray['phoneNum'])){
+
+      list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($jsonArray);
 
       $sendData = array("Result"=>$duplicateCheckResult);
 
