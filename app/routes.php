@@ -44,6 +44,12 @@ $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
 $app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
     ->setName('intro_teama');
 
+$app->get('/air_map', 'App\Controller\HomeController:air_map')
+    ->setName('air_map');
+
+$app->get('/air_chart', 'App\Controller\HomeController:air_chart')
+    ->setName('air_chart');
+
 
 // for APP
 $app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')

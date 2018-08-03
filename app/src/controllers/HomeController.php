@@ -86,6 +86,21 @@ final class HomeController extends BaseController {
       return $response;
   }
 
+  public function air_map(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_map.phtml');
+      return $response;
+  }
+
+  public function air_chart(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_chart.phtml');
+      return $response;
+  }
+
+
+
+
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $charactersLength = strlen($characters);
