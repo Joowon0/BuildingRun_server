@@ -17,6 +17,11 @@ final class IDCancellation extends BaseController {
 
       if ($pwCheckResult == self::CORRECT_PASSWORD) {
         $this->deleteUserInfo($_SESSION["USN"]);
+        // remove all session variables
+        session_unset();
+
+        // destroy the session
+        session_destroy();
       }
 
       $this->view->render($response, 'delete_id_check.phtml', ['pwCheckResult'=>$pwCheckResult]);
