@@ -39,11 +39,7 @@ final class HomeController extends BaseController {
       }
       return $response;
   }
-  // public function main_after(Request $request, Response $response, $args, $firstName, $lastName)
-  // {
-  //     $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
-  //     return $response;
-  // }
+  
   public function login(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'login.phtml');
