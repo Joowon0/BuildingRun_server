@@ -3,7 +3,7 @@ abstract class signupMessage {
   const SUCCESS = 1;
   const DUPLICATED = 2;
   const NONCE_EXIST = 3;
-  const NONCE_NOT_EXIST = -1;
+  const NONCE_NOT_EXIST = 4;
 }
 if (isset($actvationResult) && !empty($actvationResult)) {
   if ($actvationResult == signupMessage::NONCE_NOT_EXIST) {
