@@ -14,12 +14,22 @@ final class SignupController extends BaseController {
 
   // for WEB
   public function registerHandler(Request $request, Response $response, $args) {
+    // Start the session
+    session_start();
+
+    $_SESSION["email"] = $_POST['email'];
+    $_SESSION["firstName"] = $_POST['firstName'];
+    $_SESSION["lastName"] = $_POST['lastName'];
+    $_SESSION["phoneNum"] = $_POST['phoneNum'];
+
     list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
 
-    $this->view->render($response, 'register.phtml', ['registerResult' => $duplicateCheckResult]);
-    //if ($duplicateCheckResult == self::SUCCESS)
-    //  EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+    if ($duplicateCheckResult == self::SUCCESS) {
+      session_unset();
+      session_destroy();
+    }
 
+    $this->view->render($response, 'register.phtml', ['registerResult' => $duplicateCheckResult]);
     return $response;
   }
 
@@ -39,7 +49,6 @@ final class SignupController extends BaseController {
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
     }
-    //else $response->withStatus()
   }
 
   // outermost common function
@@ -47,51 +56,18 @@ final class SignupController extends BaseController {
     $duplicateCheckResult = $this->checkDuplicationEmail($userINFO);
 
     if ($duplicateCheckResult == self::SUCCESS) {
-      // generate hashed password and nonce
       $hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
-      $acitvationLinkNonce = HomeController::randomString(50);
-
-      echo $acitvationLinkNonce;
-
-      // store user information
       $this->storeUserInfo($userINFO, $hashedPW);
-      $USN = $this->getUSN($userINFO['email']); // TODO : can I extract this to one query?
-      $this->storeNonceInfo($USN, $acitvationLinkNonce);
-      EmailController::sendActivationEmail($userINFO['email'], $userINFO['firstName'], $userINFO['lastName'], $acitvationLinkNonce);
 
+      $USN = $this->getUSN($userINFO['email']);
+      $acitvationLinkNonce = HomeController::randomString(50);
+      $this->storeNonceInfo($USN, $acitvationLinkNonce);
+
+      EmailController::sendActivationEmail($userINFO['email'], $userINFO['firstName'], $userINFO['lastName'], $acitvationLinkNonce);
     } else
       $acitvationLinkNonce = "NONCE NOT CREATED";
 
     return array ($acitvationLinkNonce, $duplicateCheckResult);
-  }
-
-  public function getUSN($email) {
-    $sql = "SELECT USN FROM User WHERE EmailAddress ='". $email ."'" ;
-    try {
-      $stmt = $this->db->query($sql);
-      $result = $stmt->fetch();
-
-      return $result['USN'];
-    } catch (PDOException $e) {
-      echo "ERROR : " . $e->getMessage();
-    }
-  }
-
-  public function storeUserInfo($userINFO, $hashedPW) {
-
-    $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
-      "'". $userINFO['email'] ."', ".     // Email
-      "'". $hashedPW          ."', ".     // Hashed password
-      "'". $userINFO['firstName'] ."', ". // First Name
-      "'". $userINFO['lastName'] ."', ".  // Last Name
-      "'". $userINFO['phoneNum'] ."'".    // PhoneNumber
-      ")";
-    $stmt = $this->db->query($sql);
-  }
-
-  public function storeNonceInfo($USN, $nonce) {
-    $sql = "INSERT INTO Nonce( Nonce, USN) VALUES ( '".$nonce."' , '$USN' )";
-    $stmt = $this->db->query($sql);
   }
 
   public function checkDuplicationEmail($userINFO) {
@@ -110,6 +86,37 @@ final class SignupController extends BaseController {
       echo "ERROR : " . $e->getMessage();
     }
   }
+
+  public function storeUserInfo($userINFO, $hashedPW) {
+
+    $sql = "INSERT INTO User (EmailAddress, HPassword, FirstName, LastName, PhoneNum) VALUES (".
+      "'". $userINFO['email'] ."', ".     // Email
+      "'". $hashedPW          ."', ".     // Hashed password
+      "'". $userINFO['firstName'] ."', ". // First Name
+      "'". $userINFO['lastName'] ."', ".  // Last Name
+      "'". $userINFO['phoneNum'] ."'".    // PhoneNumber
+      ")";
+    $stmt = $this->db->query($sql);
+  }
+
+  public function getUSN($email) {
+    $sql = "SELECT USN FROM User WHERE EmailAddress ='". $email ."'" ;
+    try {
+      $stmt = $this->db->query($sql);
+      $result = $stmt->fetch();
+
+      return $result['USN'];
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function storeNonceInfo($USN, $nonce) {
+    $sql = "INSERT INTO Nonce( Nonce, USN) VALUES ( '".$nonce."' , '$USN' )";
+    $stmt = $this->db->query($sql);
+  }
+
+
 
   public function accountActivation(Request $request, Response $response, $args) {
     $nonce = $args['id'];

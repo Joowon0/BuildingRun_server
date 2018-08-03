@@ -119,7 +119,13 @@
       deleteIDForm.password.focus();
       return false;
     }
-    else return true;
+
+    if (confirm("Do you really want to delete your account?")) {
+        return true;
+    } else {
+        document.location.href='/';
+        return false;
+    }
   }
 </script>
 
