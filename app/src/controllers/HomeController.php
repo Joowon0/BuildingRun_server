@@ -39,7 +39,7 @@ final class HomeController extends BaseController {
       }
       return $response;
   }
-  
+
   public function login(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'login.phtml');
@@ -66,7 +66,10 @@ final class HomeController extends BaseController {
 
   public function app_signout(Request $request, Response $response, $args)
   {
-      if (isset($_POST['USN'])) {
+      $json = file_get_contents('php://input');
+      $jsonArray = json_decode($json, true);
+      
+      if (isset($jsonArray['USN'])) {
         $sendData = array("ACK"=>true);
 
         return $response->withStatus(200)

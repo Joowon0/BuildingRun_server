@@ -28,8 +28,11 @@ final class SetNewPassword extends BaseController {
 
   // for APP
   public function app_checkPw(Request $request, Response $response, $args) {
-    if (isset($_POST['USN']) && isset($_POST['password'])) {
-      $pwCheckResult = $this->checkPassword($_POST["USN"], $_POST['password']);
+    $json = file_get_contents('php://input');
+    $jsonArray = json_decode($json, true);
+
+    if (isset($jsonArray['USN']) && isset($jsonArray['password'])) {
+      $pwCheckResult = $this->checkPassword($jsonArray["USN"], $jsonArray['password']);
 
       $sendData = array("Result"=>$pwCheckResult);
 
@@ -60,9 +63,12 @@ final class SetNewPassword extends BaseController {
 
   // for app
   public function app_setNewPW(Request $request, Response $response, $args) {
-    if (isset($_POST['USN']) && isset($_POST['password'])) {
-      $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
-      $this->setNewPassword($_POST["USN"], $hashedPW);
+    $json = file_get_contents('php://input');
+    $jsonArray = json_decode($json, true);
+
+    if (isset($jsonArray['USN']) && isset($jsonArray['password'])) {
+      $hashedPW = password_hash($jsonArray['password'], PASSWORD_DEFAULT);
+      $this->setNewPassword($jsonArray["USN"], $hashedPW);
 
       $sendData = array("ACK"=>true);
 

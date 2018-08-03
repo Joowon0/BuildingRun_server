@@ -27,8 +27,6 @@ final class SignupController extends BaseController {
   public function app_signup(Request $request, Response $response, $args) {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
-    //print_r($jsonArray);
-    //echo $jsonArray['name'];
 
     if (isset($jsonArray['email']) && isset($jsonArray['firstName']) && isset($jsonArray['lastName']) &&
         isset($jsonArray['password']) && isset($jsonArray['phoneNum'])){
