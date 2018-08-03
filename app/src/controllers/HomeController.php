@@ -31,14 +31,19 @@ final class HomeController extends BaseController {
 
   public function main(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'main_before.phtml');
+      if (isset($_SESSION["USN"]) && isset($_SESSION["email"]) && $_SESSION["email"] != "") {
+        $this->view->render($response, 'main_after.phtml');
+      }
+      else {
+        $this->view->render($response, 'main_before.phtml');
+      }
       return $response;
   }
-  public function main_after(Request $request, Response $response, $args, $firstName, $lastName)
-  {
-      $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
-      return $response;
-  }
+  // public function main_after(Request $request, Response $response, $args, $firstName, $lastName)
+  // {
+  //     $this->view->render($response, 'main_after.phtml', ['email' => $_POST['email'], 'firstName' => $firstName, 'lastName' => $lastName]);
+  //     return $response;
+  // }
   public function login(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'login.phtml');

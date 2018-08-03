@@ -9,10 +9,12 @@ $app->get('/post/{id}', 'App\Controller\HomeController:viewPost')
 
 $app->get('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
-$app->post('/main_after', 'App\Controller\HomeController:main_after')
-    ->setName('main_after');
-$app->get('/main_after', 'App\Controller\HomeController:main_after')
-    ->setName('main_after');
+$app->post('/', 'App\Controller\HomeController:main')
+    ->setName('main_page');
+// $app->post('/main_after', 'App\Controller\HomeController:main_after')
+//     ->setName('main_after');
+// $app->get('/main_after', 'App\Controller\HomeController:main_after')
+//     ->setName('main_after');
 
 
 $app->get('/login', 'App\Controller\HomeController:login')

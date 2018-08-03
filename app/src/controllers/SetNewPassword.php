@@ -76,7 +76,7 @@ final class SetNewPassword extends BaseController {
     $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $this->setNewPassword($_SESSION["USN"], $hashedPW);
 
-    echo "<script> document.location.href='/main_after'; </script>";
+    echo "<script> document.location.href='/'; </script>";
   }
 
   public function setNewPassword($USN, $newPassword) {
