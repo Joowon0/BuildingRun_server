@@ -69,7 +69,7 @@ $app->post('/app/checkCurrentPW', 'App\Controller\SetNewPassword:app_checkPw')
 $app->post('/app/setNewPW', 'App\Controller\SetNewPassword:app_setNewPW')
     ->setName('app_setNewPW');
 
-$app->post('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
+$app->post('/app/forgotPW', 'App\Controller\forgottenPWController:app_forgotPW')
     ->setName('app_forgotPW');
 
 

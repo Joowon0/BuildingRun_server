@@ -58,15 +58,18 @@ final class SetNewPassword extends BaseController {
     }
   }
 
+  // for app
   public function app_setNewPW(Request $request, Response $response, $args) {
-    $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $this->setNewPassword($_POST["USN"], $hashedPW);
+    if (isset($_POST['USN']) && isset($_POST['password'])) {
+      $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
+      $this->setNewPassword($_POST["USN"], $hashedPW);
 
-    $sendData = array("ACK"=>true);
+      $sendData = array("ACK"=>true);
 
-    return $response->withStatus(200)
-        ->withHeader('Content-Type', 'application/json')
-        ->write(json_encode($sendData));
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
+    }
   }
 
   public function pw_newHandler(Request $request, Response $response, $args) {
