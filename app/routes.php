@@ -60,15 +60,17 @@ $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_c
 // for APP
 $app->post('/app/register', 'App\Controller\SignupController:app_signup')
     ->setName('app_register');
-
 $app->post('/app/login', 'App\Controller\LoginController:app_login')
     ->setName('app_login');
+$app->post('/app/signout', 'App\Controller\HomeController:app_signout')
+    ->setName('app_signout');
+$app->post('/app/checkCurrentPW', 'App\Controller\SetNewPassword:app_checkPw')
+    ->setName('app_checkCurrentPW');
+$app->post('/app/setNewPW', 'App\Controller\SetNewPassword:app_setNewPW')
+    ->setName('app_setNewPW');
 
 $app->post('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
     ->setName('app_forgotPW');
-
-$app->post('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
-    ->setName('app_sendEmail');
 
 
 // show database for test

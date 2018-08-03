@@ -63,6 +63,17 @@ final class HomeController extends BaseController {
       //return $response;
   }
 
+  public function app_signout(Request $request, Response $response, $args)
+  {
+      if (isset($_POST['USN'])) {
+        $sendData = array("ACK"=>true);
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($sendData));
+      }
+  }
+
    public function user_change(Request $request, Response $response, $args)
   {
       $this->view->render($response, 'user_change.phtml');

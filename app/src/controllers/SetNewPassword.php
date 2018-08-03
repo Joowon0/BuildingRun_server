@@ -26,6 +26,19 @@ final class SetNewPassword extends BaseController {
     }
   }
 
+  // for APP
+  public function app_checkPw(Request $request, Response $response, $args) {
+    if (isset($_POST['USN']) && isset($_POST['password'])) {
+      $pwCheckResult = $this->checkPassword($_POST["USN"], $_POST['password']);
+
+      $sendData = array("Result"=>$pwCheckResult);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
+    }
+  }
+
   // outermost common function
   public function checkPassword($USN, $password) {
     $sql = "SELECT * FROM User WHERE USN = '" . $USN . "'" ;
@@ -43,6 +56,17 @@ final class SetNewPassword extends BaseController {
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }
+  }
+
+  public function app_setNewPW(Request $request, Response $response, $args) {
+    $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $this->setNewPassword($_POST["USN"], $hashedPW);
+
+    $sendData = array("ACK"=>true);
+
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($sendData));
   }
 
   public function pw_newHandler(Request $request, Response $response, $args) {
