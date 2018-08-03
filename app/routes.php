@@ -9,8 +9,12 @@ $app->get('/post/{id}', 'App\Controller\HomeController:viewPost')
 
 $app->get('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
-$app->post('/main_after', 'App\Controller\HomeController:main_after')
-    ->setName('main_after');
+$app->post('/', 'App\Controller\HomeController:main')
+    ->setName('main_page');
+// $app->post('/main_after', 'App\Controller\HomeController:main_after')
+//     ->setName('main_after');
+// $app->get('/main_after', 'App\Controller\HomeController:main_after')
+//     ->setName('main_after');
 
 
 $app->get('/login', 'App\Controller\HomeController:login')
@@ -26,7 +30,10 @@ $app->post('/registerHandler', 'App\Controller\SignupController:registerHandler'
 $app->get('/forgot_pw', 'App\Controller\HomeController:forgot_pw')
     ->setName('forgot_pw');
 $app->post('/forgot_pwHandler', 'App\Controller\forgottenPWController:forgot_pwHandler')
-    ->setName('forgot_pw');
+    ->setName('forgot_pwHandler');
+
+$app->get('/signoutHandler', 'App\Controller\HomeController:signoutHandler')
+    ->setName('signoutHandler');
 
 $app->get('/accountActivation/{id}', 'App\Controller\SignupController:accountActivation')
     ->setName('accountActivation');
@@ -36,10 +43,18 @@ $app->get('/user_change', 'App\Controller\HomeController:user_change')
 
 $app->get('/pw_check', 'App\Controller\HomeController:pw_check')
     ->setName('pw_check');
+$app->post('/pw_checkHandler', 'App\Controller\SetNewPassword:pw_checkHandler')
+    ->setName('pw_checkHandler');
+
 $app->get('/pw_new', 'App\Controller\HomeController:pw_new')
     ->setName('pw_new');
+$app->post('/pw_newHandler', 'App\Controller\SetNewPassword:pw_newHandler')
+    ->setName('pw_newHandler');
+
 $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
     ->setName('delete_id_check');
+$app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
+    ->setName('delete_id_checkHandler');
 
 $app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
     ->setName('intro_teama');
@@ -51,24 +66,23 @@ $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
     ->setName('air_chart');
 
 
+
+
 // for APP
-$app->get('/app/sendEmail', 'App\Controller\EmailController:sendEmail')
-    ->setName('app_sendEmail');
-
-$app->get('/app/register', 'App\Controller\SignupController:signup')
+$app->post('/app/register', 'App\Controller\SignupController:app_signup')
     ->setName('app_register');
-$app->get('/app/sendActivationEmail', 'App\Controller\EmailController:sendActivationEmail')
-    ->setName('app_sendActivationEmail');
-
-$app->get('/app/login', 'App\Controller\LoginController:login')
+$app->post('/app/login', 'App\Controller\LoginController:app_login')
     ->setName('app_login');
-
-$app->get('/app/forgot_pw', 'App\Controller\forgottenPWController:forgot_pw')
+$app->post('/app/signout', 'App\Controller\HomeController:app_signout')
+    ->setName('app_signout');
+$app->post('/app/checkCurrentPW', 'App\Controller\SetNewPassword:app_checkPw')
+    ->setName('app_checkCurrentPW');
+$app->post('/app/setNewPW', 'App\Controller\SetNewPassword:app_setNewPW')
+    ->setName('app_setNewPW');
+$app->post('/app/forgotPW', 'App\Controller\forgottenPWController:app_forgotPW')
     ->setName('app_forgotPW');
-$app->get('/app/sendNewPwEmail', 'App\Controller\EmailController:sendNewPwEmail')
-    ->setName('app_sendNewPwEmail');
-
-
+$app->post('/app/accountCancel', 'App\Controller\IDCancellation:app_accountCancel')
+    ->setName('app_accountCancel');
 
 
 // show database for test

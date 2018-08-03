@@ -15,23 +15,46 @@ final class LoginController extends BaseController {
 
 
   // for WEB
-  function loginHandler(Request $request, Response $response, $args) {
+  public function loginHandler(Request $request, Response $response, $args) {
     list ($loginResult, $userINFO) = $this->login($_POST['email'], $_POST['password']);
 
-    if ($loginResult == self::NONCE_NOT_EXIST)
-      $this->view->render($response, 'main_after.phtml',  ['USN' => $userINFO['USN'],
-      'email' => $userINFO['EmailAddress'],
-      'firstName' => $userINFO['FirstName'], 'lastName' => $userINFO['LastName']]);
+    if ($loginResult == self::SUCCESS) {
+      // Start the session
+      session_start();
+
+      $_SESSION["USN"] = $userINFO['USN'];
+      $_SESSION["email"] = $userINFO['EmailAddress'];
+      $_SESSION["firstName"] = $userINFO['FirstName'];
+      $_SESSION["lastName"] = $userINFO['LastName'];
+
+      echo "<script> document.location.href='/'; </script>";
+    }
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);
   }
 
+  public function app_login(Request $request, Response $response, $args) {
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+      list ($loginResult, $userINFO) = $this->login($_POST['email'], $_POST['password']);
+
+      $sendData = array("Result"=>$loginResult,
+                        "USN"=>$userINFO['USN'],
+                        "email"=>$userINFO['EmailAddress'],
+                        "firstName"=>$userINFO['FirstName'],
+                        "lastName"=>$userINFO['LastName']);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
+    }
+  }
+
   // outermost common function
-  function login($email, $password) {
+  public function login($email, $password) {
     list ($pwCheckResult, $userINFO) = $this->checkPassword( $email, $password);
 
     if ($pwCheckResult == self::SUCCESS) {
-      $nonceCheck = $this->checkNonceExist($USN);
+      $nonceCheck = $this->checkNonceExist($userINFO['USN']);
 
       return array ($nonceCheck, $userINFO);
     }
@@ -39,7 +62,7 @@ final class LoginController extends BaseController {
       return array ($pwCheckResult, -1);
   }
 
-  function checkPassword($email, $password) {
+  public function checkPassword($email, $password) {
     $sql = "SELECT * FROM User WHERE EmailAddress = '" . $email . "'" ;
     try {
     	$stmt = $this->db->query($sql);
@@ -57,14 +80,14 @@ final class LoginController extends BaseController {
     }
   }
 
-  function checkNonceExist($USN) {
+  public function checkNonceExist($USN) {
     $sql = "SELECT * FROM Nonce WHERE USN = '" . $USN . "'";
 
     $stmt = $this->db->query($sql);
     $result = $stmt->fetch();
 
     if ($result == null)
-      return self::NONCE_NOT_EXIST;
+      return self::SUCCESS;
     else
       return self::NONCE_EXIST;
   }

@@ -17,10 +17,26 @@ final class SignupController extends BaseController {
     list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
 
     $this->view->render($response, 'register.phtml', ['registerResult' => $duplicateCheckResult]);
-    if ($duplicateCheckResult == self::SUCCESS)
-      EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
+    //if ($duplicateCheckResult == self::SUCCESS)
+    //  EmailController::sendActivationEmail($_POST['email'], $_POST['firstName'], $_POST['lastName'], $acitvationLinkNonce);
 
     return $response;
+  }
+
+  // for app
+  public function app_signup(Request $request, Response $response, $args) {
+    if (isset($_POST['email']) && isset($_POST['firstName']) && isset($_POST['lastName']) &&
+        isset($_POST['password']) && isset($_POST['phoneNum'])){
+
+      list ($acitvationLinkNonce, $duplicateCheckResult) = $this->signup($_POST);
+
+      $sendData = array("Result"=>$duplicateCheckResult);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
+    }
+    //else $response->withStatus()
   }
 
   // outermost common function
@@ -32,10 +48,14 @@ final class SignupController extends BaseController {
       $hashedPW = password_hash($userINFO['password'], PASSWORD_DEFAULT);
       $acitvationLinkNonce = HomeController::randomString(50);
 
+      echo $acitvationLinkNonce;
+
       // store user information
       $this->storeUserInfo($userINFO, $hashedPW);
       $USN = $this->getUSN($userINFO['email']); // TODO : can I extract this to one query?
       $this->storeNonceInfo($USN, $acitvationLinkNonce);
+      EmailController::sendActivationEmail($userINFO['email'], $userINFO['firstName'], $userINFO['lastName'], $acitvationLinkNonce);
+
     } else
       $acitvationLinkNonce = "NONCE NOT CREATED";
 
@@ -91,7 +111,7 @@ final class SignupController extends BaseController {
   public function accountActivation(Request $request, Response $response, $args) {
     $nonce = $args['id'];
     list ($nonce_existence, $nonce_ID) = $this->checkNonceExist($nonce);
-    
+
     if ($nonce_existence==self::NONCE_EXIST) {
       $this->deleteNonce($nonce_ID);
     }
