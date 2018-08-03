@@ -56,6 +56,9 @@ $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
 $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
     ->setName('delete_id_checkHandler');
 
+$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
+    ->setName('intro_teama');
+
 
 
 
