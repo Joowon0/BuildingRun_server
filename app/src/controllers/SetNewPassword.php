@@ -61,7 +61,7 @@ final class SetNewPassword extends BaseController {
     }
   }
 
-  // for app
+  // for APP
   public function app_setNewPW(Request $request, Response $response, $args) {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
@@ -78,6 +78,7 @@ final class SetNewPassword extends BaseController {
     }
   }
 
+  // for WEB
   public function pw_newHandler(Request $request, Response $response, $args) {
     $hashedPW = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $this->setNewPassword($_SESSION["USN"], $hashedPW);
@@ -85,6 +86,7 @@ final class SetNewPassword extends BaseController {
     echo "<script> document.location.href='/'; </script>";
   }
 
+  // outermost common function
   public function setNewPassword($USN, $newPassword) {
     $sql = "UPDATE User SET HPassword='". $newPassword. "'  WHERE USN = " . $USN;
 

@@ -22,6 +22,15 @@
 
 <body>
   <?php
+  if (isset($_SESSION["email"])) $inputEmail = $_SESSION["email"];
+  else $inputEmail = "";
+  if (isset($_SESSION["firstName"])) $inputEmail = $_SESSION["firstName"];
+  else $inputFirstName = "";
+  if (isset($_SESSION["lastName"])) $inputEmail = $_SESSION["lastName"];
+  else $inputLastName = "";
+  if (isset($_SESSION["phoneNum"])) $inputEmail = $_SESSION["phoneNum"];
+  else $inputPhoneNum = "";
+
   abstract class signupMessage {
     const SUCCESS = 1;
     const DUPLICATED = 2;
@@ -57,14 +66,14 @@
               <form class="form" method="post" action="/registerHandler" name="RegisterForm" onsubmit="return check()">
                 <div class="form-group d-flex justify-content-between">
                   <div class="input-group">
-                    <input type="email" class="form-control" placeholder="Email" name="email">
+                    <input type="email" class="form-control" placeholder="Email" name="email" value="<?php echo $inputEmail; ?>">
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>
                       </span>
                     </div>
                   </div>
-                  <button class="btn btn-primary submit-btn btn-sm" >Confirm</button>
+                  <!--button class="btn btn-primary submit-btn btn-sm" >Confirm</button-->
                 </div>
 
 
