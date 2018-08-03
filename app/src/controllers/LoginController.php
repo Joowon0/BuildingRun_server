@@ -18,7 +18,7 @@ final class LoginController extends BaseController {
   public function loginHandler(Request $request, Response $response, $args) {
     list ($loginResult, $userINFO) = $this->login($_POST['email'], $_POST['password']);
 
-    if ($loginResult == self::NONCE_NOT_EXIST) {
+    if ($loginResult == self::SUCCESS) {
       // Start the session
       session_start();
 
@@ -88,7 +88,7 @@ final class LoginController extends BaseController {
     $result = $stmt->fetch();
 
     if ($result == null)
-      return self::NONCE_NOT_EXIST;
+      return self::SUCCESS;
     else
       return self::NONCE_EXIST;
   }
