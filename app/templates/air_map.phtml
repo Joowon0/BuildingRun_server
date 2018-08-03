@@ -36,6 +36,8 @@
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      
+
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
 
         <h1 class="text-center mb-4 text-primary"><br>TEAM A</h1>
@@ -47,10 +49,9 @@
       <div class="navbar-menu-wrapper d-flex align-items-center">
 
 <ul class="nav nav-pills">
-    <li class="active"><a data-toggle="pill" href="#Map" class="text-white">Map</a></li>
-    <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
+   <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
     <li><a data-toggle="pill" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="pill" href="#menu3">Menu 3</a></li>
+  
   </ul>
   
   
@@ -181,7 +182,7 @@
               <a class="dropdown-item p-0">
                 <div class="d-flex border-bottom">
                   <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                    <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+                   
                   </div>
                   <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
                     <i class="mdi mdi-account-outline mr-0 text-gray"></i>
@@ -241,7 +242,7 @@
       <a href="login" class="btn btn-success btn-block">Sign In</a>
 
 
-                <i class="mdi mdi-plus"></i>
+               
               </button>
             </div>
           </li>
@@ -308,17 +309,7 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="tab-content">
-          <div id="home" class="tab-pane fade in active">
-     <!--map-->
-
-     <!--map end-->
-
-
-
-
-
-
-          </div>
+          
         <div id="menu1" class="tab-pane fade">
     <h3>My Google Maps Demo</h3>
     <!--The div element for the map -->
@@ -340,11 +331,84 @@ function initMap() {
     </script>
         </div>
       <div id="menu2" class="tab-pane fade">
-      <h3>Menu 2</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-      </div>
-      <div id="menu3" class="tab-pane fade">
+      
+<!--chart start-->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Line chart</h4>
+                  <canvas id="lineChart" style="height:250px"></canvas>
+                </div>
+              </div>
             </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Bar chart</h4>
+                  <canvas id="barChart" style="height:230px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Area chart</h4>
+                  <canvas id="areaChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Doughnut chart</h4>
+                  <canvas id="doughnutChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Pie chart</h4>
+                  <canvas id="pieChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Scatter chart</h4>
+                  <canvas id="scatterChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="container-fluid clearfix">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018
+              <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with
+              <i class="mdi mdi-heart text-danger"></i>
+            </span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+<!--chart end-->
+
+
+
+      </div>
+     
   </div>
 
         <!-- content-wrapper ends -->
@@ -378,6 +442,7 @@ function initMap() {
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
+  <script src="js/chart.js"></script>
   <!-- End custom js for this page-->
 </body>
 
