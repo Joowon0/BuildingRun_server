@@ -25,7 +25,10 @@ final class forgottenPWController extends BaseController {
   // for APP
   public function app_forgotPW(Request $request, Response $response, $args)
   {
-      list ($email_existence, $userINFO, $new_password) = $this->forgot_pw($_POST['email']);
+      $json = file_get_contents('php://input');
+      $jsonArray = json_decode($json, true);
+
+      list ($email_existence, $userINFO, $new_password) = $this->forgot_pw($jsonArray['email']);
 
       if ($email_existence == self::EMAIL_EXIST)
         EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
@@ -52,7 +55,7 @@ final class forgottenPWController extends BaseController {
 
   public function getUSN($email) {
     $sql = "SELECT * FROM User WHERE EmailAddress = '" . $email . "'" ;
-    
+
     try {
       $stmt = $this->db->query($sql);
       $result = $stmt->fetch();

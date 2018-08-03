@@ -31,10 +31,13 @@ final class IDCancellation extends BaseController {
   // for APP
   public function app_accountCancel(Request $request, Response $response, $args)
   {
-      $pwCheckResult = $this->checkPassword($_POST["USN"], $_POST['password']);
+      $json = file_get_contents('php://input');
+      $jsonArray = json_decode($json, true);
+
+      $pwCheckResult = $this->checkPassword($jsonArray["USN"], $jsonArray['password']);
 
       if ($pwCheckResult == self::CORRECT_PASSWORD) {
-        $this->deleteUserInfo($_POST["USN"]);
+        $this->deleteUserInfo($jsonArray["USN"]);
       }
 
       $sendData = array("Result"=>$pwCheckResult);
