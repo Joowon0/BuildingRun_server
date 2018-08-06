@@ -1,21 +1,10 @@
 <?php
 // Routes
 
-//$app->get('/', 'App\Controller\HomeController:dispatch')
-//    ->setName('homepage');
-
-$app->get('/post/{id}', 'App\Controller\HomeController:viewPost')
-    ->setName('view_post');
-
 $app->get('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
 $app->post('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
-// $app->post('/main_after', 'App\Controller\HomeController:main_after')
-//     ->setName('main_after');
-// $app->get('/main_after', 'App\Controller\HomeController:main_after')
-//     ->setName('main_after');
-
 
 $app->get('/login', 'App\Controller\HomeController:login')
     ->setName('login');
@@ -45,15 +34,24 @@ $app->get('/pw_check', 'App\Controller\HomeController:pw_check')
     ->setName('pw_check');
 $app->post('/pw_checkHandler', 'App\Controller\SetNewPassword:pw_checkHandler')
     ->setName('pw_checkHandler');
+// TODO : Pass data through session to make it only get
+$app->get('/pw_checkHandler', 'App\Controller\SetNewPassword:pw_checkHandler')
+    ->setName('pw_checkHandler');
 
 $app->get('/pw_new', 'App\Controller\HomeController:pw_new')
     ->setName('pw_new');
 $app->post('/pw_newHandler', 'App\Controller\SetNewPassword:pw_newHandler')
     ->setName('pw_newHandler');
+// TODO : Pass data through session to make it only get
+$app->get('/pw_newHandler', 'App\Controller\SetNewPassword:pw_newHandler')
+    ->setName('pw_newHandler');
 
 $app->get('/delete_id_check', 'App\Controller\HomeController:delete_id_check')
     ->setName('delete_id_check');
 $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
+    ->setName('delete_id_checkHandler');
+// TODO : Pass data through session to make it only get
+$app->get('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
     ->setName('delete_id_checkHandler');
 
 //$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
