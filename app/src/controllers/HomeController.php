@@ -33,31 +33,31 @@ final class HomeController extends BaseController {
       return false;
   }
 
-  public function need2BSignIn($message, $link) {
-    //echo $message;
-    //echo $link; exit;
-    if ($this->isSignedIn()) {
-      $this->view->render($response, $link);
-      return $response;
-    }
-    else {
-      echo "<script type='text/javascript'>alert('$message');</script>";
-
-      echo "<script> document.location.href='/login'; </script>";
-    }
-  }
-
-  public function need2BSignOut($message, $link) {
-    if ($this->isSignedIn()) {
-      echo "<script type='text/javascript'>alert('$message');</script>";
-
-      echo "<script> document.location.href='/'; </script>";
-    }
-    else {
-      $this->view->render($response, $link);
-      return $response;
-    }
-  }
+  // public function need2BSignIn($message, $link) {
+  //   //echo $message;
+  //   //echo $link; exit;
+  //   if ($this->isSignedIn()) {
+  //     $this->view->render($response, $link);
+  //     return $response;
+  //   }
+  //   else {
+  //     echo "<script type='text/javascript'>alert('$message');</script>";
+  //
+  //     echo "<script> document.location.href='/login'; </script>";
+  //   }
+  // }
+  //
+  // public function need2BSignOut($message, $link) {
+  //   if ($this->isSignedIn()) {
+  //     echo "<script type='text/javascript'>alert('$message');</script>";
+  //
+  //     echo "<script> document.location.href='/'; </script>";
+  //   }
+  //   else {
+  //     $this->view->render($response, $link);
+  //     return $response;
+  //   }
+  // }
 
   public function main(Request $request, Response $response, $args)
   {
@@ -72,15 +72,36 @@ final class HomeController extends BaseController {
 
   public function login(Request $request, Response $response, $args)
   {
-    $message = "You are already signed in.";
-    $link = 'login.phtml';
-    $this->need2BSignOut($message, $link);
+    // $message = "You are already signed in.";
+    // $link = 'login.phtml';
+    // $this->need2BSignOut($message, $link);
+    if ($this->isSignedIn()) {
+      $message = "You are already signed in.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/'; </script>";
+    }
+    else {
+      $this->view->render($response, 'login.phtml');
+      return $response;
+    }
   }
   public function register(Request $request, Response $response, $args)
   {
-    $message = "You are already signed in. Please sign out before you register.";
-    $link = 'register.phtml';
-    $this->need2BSignOut($message, $link);
+    // $message = "You are already signed in. Please sign out before you register.";
+    // $link = 'register.phtml';
+    // $this->need2BSignOut($message, $link);
+
+    if ($this->isSignedIn()) {
+      $message = "You are already signed in. Please sign out before you register.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/'; </script>";
+    }
+    else {
+      $this->view->render($response, 'register.phtml');
+      return $response;
+    }
   }
 
   public function signoutHandler(Request $request, Response $response, $args)
@@ -110,9 +131,16 @@ final class HomeController extends BaseController {
 
    public function user_change(Request $request, Response $response, $args)
   {
-    $message = "Please sign-in to view your profile.";
-    $link = 'user_change.phtml';
-    $this->need2BSignIn($message, $link);
+    if ($this->isSignedIn()) {
+      $this->view->render($response, 'user_change.phtml');
+      return $response;
+    }
+    else {
+      $message = "Please sign-in to view your profile.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/login'; </script>";
+    }
   }
 
      public function pw_check(Request $request, Response $response, $args)
