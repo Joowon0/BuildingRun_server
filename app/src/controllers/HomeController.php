@@ -3,35 +3,65 @@ namespace App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
 final class HomeController extends BaseController {
-  public function dispatch(Request $request, Response $response, $args)
-  {
-      $this->logger->info("Home page action dispatched");
-      $this->flash->addMessage('info', 'Sample flash message');
-      $this->view->render($response, 'home.twig');
-      return $response;
+  // public function dispatch(Request $request, Response $response, $args)
+  // {
+  //     $this->logger->info("Home page action dispatched");
+  //     $this->flash->addMessage('info', 'Sample flash message');
+  //     $this->view->render($response, 'home.twig');
+  //     return $response;
+  // }
+  // public function viewPost(Request $request, Response $response, $args)
+  // {
+  //     $this->logger->info("View post using Doctrine with Slim 3");
+  //     $messages = $this->flash->getMessage('info');
+  //     try {
+  //       echo ($args['id']);
+  //         //$post = $this->em->find('App\Model\Post', intval($args['id']));
+  //     } catch (\Exception $e) {
+  //         echo $e->getMessage();
+  //         die;
+  //     }
+  //     //$this->view->render($response, 'post.twig', ['post' => $post, 'flash' => $messages]);
+  //     //return $response;
+  // }
+
+  static public function isSignedIn() {
+    if (isset($_SESSION["USN"]) && isset($_SESSION["email"]) && $_SESSION["email"] != "")
+      return true;
+    else
+      return false;
   }
-  public function viewPost(Request $request, Response $response, $args)
-  {
-      $this->logger->info("View post using Doctrine with Slim 3");
-      $messages = $this->flash->getMessage('info');
-      try {
-        echo ($args['id']);
-          //$post = $this->em->find('App\Model\Post', intval($args['id']));
-      } catch (\Exception $e) {
-          echo $e->getMessage();
-          die;
-      }
-      //$this->view->render($response, 'post.twig', ['post' => $post, 'flash' => $messages]);
-      //return $response;
+
+  public function need2BSignIn($message, $link) {
+    //echo $message;
+    //echo $link; exit;
+    if ($this->isSignedIn()) {
+      $this->view->render($response, $link);
+      return $response;
+    }
+    else {
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/login'; </script>";
+    }
+  }
+
+  public function need2BSignOut($message, $link) {
+    if ($this->isSignedIn()) {
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/'; </script>";
+    }
+    else {
+      $this->view->render($response, $link);
+      return $response;
+    }
   }
 
   public function main(Request $request, Response $response, $args)
   {
-      if (isset($_SESSION["USN"]) && isset($_SESSION["email"]) && $_SESSION["email"] != "") {
+      if ($this->isSignedIn()) {
         $this->view->render($response, 'main_after.phtml');
       }
       else {
@@ -42,13 +72,15 @@ final class HomeController extends BaseController {
 
   public function login(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'login.phtml');
-      return $response;
+    $message = "You are already signed in.";
+    $link = 'login.phtml';
+    $this->need2BSignOut($message, $link);
   }
   public function register(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'register.phtml');
-      return $response;
+    $message = "You are already signed in. Please sign out before you register.";
+    $link = 'register.phtml';
+    $this->need2BSignOut($message, $link);
   }
 
   public function signoutHandler(Request $request, Response $response, $args)
@@ -59,16 +91,14 @@ final class HomeController extends BaseController {
       // destroy the session
       session_destroy();
 
-      echo "<script> document.location.href='/login'; </script>";
-      //$this->view->render($response, 'register.phtml');
-      //return $response;
+      echo "<script> document.location.href='/'; </script>";
   }
 
   public function app_signout(Request $request, Response $response, $args)
   {
       $json = file_get_contents('php://input');
       $jsonArray = json_decode($json, true);
-      
+
       if (isset($jsonArray['USN'])) {
         $sendData = array("ACK"=>true);
 
@@ -80,39 +110,71 @@ final class HomeController extends BaseController {
 
    public function user_change(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'user_change.phtml');
-      return $response;
+    $message = "Please sign-in to view your profile.";
+    $link = 'user_change.phtml';
+    $this->need2BSignIn($message, $link);
   }
 
      public function pw_check(Request $request, Response $response, $args)
   {
+    if ($this->isSignedIn()) {
       $this->view->render($response, 'pw_check.phtml');
       return $response;
+    }
+    else {
+      $message = "Please sign-in before changing password.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/login'; </script>";
+    }
   }
 
    public function pw_new(Request $request, Response $response, $args)
   {
+    if ($this->isSignedIn()) {
       $this->view->render($response, 'pw_new.phtml');
       return $response;
+    }
+    else {
+      $message = "Please sign-in before changing password.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/login'; </script>";
+    }
   }
 
   public function delete_id_check(Request $request, Response $response, $args)
   {
+    if ($this->isSignedIn()) {
       $this->view->render($response, 'delete_id_check.phtml');
       return $response;
+    }
+    else {
+      $message = "Please sign-in to delete an account.";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/login'; </script>";
+    }
   }
   public function forgot_pw(Request $request, Response $response, $args)
   {
+    if ($this->isSignedIn()) {
+      $message = "You are already signed in..";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+
+      echo "<script> document.location.href='/'; </script>";
+    }
+    else
       $this->view->render($response, 'forgot_pw.phtml');
-      return $response;
+    return $response;
   }
 
 
-  public function intro_teama(Request $request, Response $response, $args)
-  {
-      $this->view->render($response, 'intro_teama.phtml');
-      return $response;
-  }
+  // public function intro_teama(Request $request, Response $response, $args)
+  // {
+  //     $this->view->render($response, 'intro_teama.phtml');
+  //     return $response;
+  // }
 
   public function air_map(Request $request, Response $response, $args)
   {
@@ -125,9 +187,6 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'air_chart.phtml');
       return $response;
   }
-
-
-
 
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

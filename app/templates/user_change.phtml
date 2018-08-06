@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Star Admin Free Bootstrap Admin Dashboard Template</title>
+  <title>User Page</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
@@ -24,9 +24,9 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-  
-        <h1 class="text-center mb-4 text-primary"><br>TEAM A</h1>
-       
+
+        <a href="/"><h1 class="text-center mb-4 text-primary"><br>TEAM A</h1></a>
+
         <a class="navbar-brand brand-logo-mini" href="index.html">
           <img src="images/logo-mini.svg" alt="logo" />
         </a>
@@ -48,16 +48,14 @@
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item dropdown">
+          <!--li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <i class="mdi mdi-file-document-box"></i>
-<!--
 
               <span class="count">7</span>
 
--->              
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+</a-->
+            <!--div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
               <div class="dropdown-item">
                 <p class="mb-0 font-weight-normal float-left">You have 7 unread mails
                 </p>
@@ -106,13 +104,13 @@
                 </div>
               </a>
             </div>
-          </li>
-          <li class="nav-item dropdown">
+          </li-->
+          <!--li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="mdi mdi-bell"></i>
               <!--
               <span class="count">4</span>
-            -->
+            >
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
               <a class="dropdown-item">
@@ -163,16 +161,16 @@
                 </div>
               </a>
             </div>
-          </li>
+          </li-->
           <li class="nav-item dropdown d-none d-xl-inline-block">
       <!--      <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               -->
 
-              <span class="profile-text">Welcome, We are Team A ! </span>
-             
+              <span class="profile-text">Welcome <?php echo $_SESSION["firstName"]; ?> <?php echo $_SESSION["lastName"]; ?>, We are Team A ! </span>
+
              <!-- <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image"> -->
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+            <!--div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <a class="dropdown-item p-0">
                 <div class="d-flex border-bottom">
                   <div class="py-3 px-4 d-flex align-items-center justify-content-center">
@@ -198,7 +196,7 @@
               <a class="dropdown-item">
                 Sign Out
               </a>
-            </div>
+            </div-->
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -213,106 +211,42 @@
         <ul class="nav">
           <li class="nav-item nav-profile">
             <div class="nav-link">
-
-            <!--
-              
-              <div class="user-wrapper">
-                <div class="profile-image">
-                  <img src="images/faces/face1.jpg" alt="profile image">
-                </div>
-                <div class="text-wrapper">
-                  <p class="profile-name">Richard V.Welsh</p>
-                  <div>
-                    <small class="designation text-muted">Manager</small>
-                    <span class="status-indicator online"></span>
-                  </div>
-                </div>
-              </div>
-
-            -->
-
       <br>
       <br>
-      <a href="login" class="btn btn-success btn-block">Sign Out</a>
-              
+      <a href="signoutHandler" class="btn btn-success btn-block">Sign Out</a>
 
-                <i class="mdi mdi-plus"></i>
               </button>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="menu-icon mdi mdi-television"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="">
               <i class="menu-icon mdi mdi-content-copy"></i>
-              <span class="menu-title">Basic UI Elements</span>
-              <i class="menu-arrow"></i>
+              <span class="menu-title">Air Quality System</span>
+
             </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="">
               <i class="menu-icon mdi mdi-backup-restore"></i>
-              <span class="menu-title">Form elements</span>
+              <span class="menu-title">Heart Rate System</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
+            <a class="nav-link" href="">
               <i class="menu-icon mdi mdi-chart-line"></i>
-              <span class="menu-title">Charts</span>
+              <span class="menu-title">My sensor List</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <i class="menu-icon mdi mdi-table"></i>
-              <span class="menu-title">Tables</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/icons/font-awesome.html">
-              <i class="menu-icon mdi mdi-sticker"></i>
-              <span class="menu-title">Icons</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-restart"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/login.html"> Login </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/register.html"> Register </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-404.html"> 404 </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
-                </li>
-              </ul>
-            </div>
-          </li>
+
+            	<li class="nav-item">
+            	<a class="nav-link" href="user_change">
+                <i class="menu-icon mdi mdi-restart"></i>
+                <span class="menu-title">User Page</span>
+                </i>
+              </a>
+            </li>
+        </li>
         </ul>
       </nav>
 
@@ -324,24 +258,22 @@
                        <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Basic form</h4>
-                  <p class="card-description">
-                    Basic form elements
-                  </p>
+                  <h4 class="card-title">User Information</h4>
                   <form class="forms-sample">
                     <div class="form-group">
-                      <label for="exampleInputName1">Name</label>
-                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-                    </div>
-                    <div class="form-group">
                       <label for="exampleInputEmail3">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                      <input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword4">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword4" placeholder="Password">
+                      <label for="exampleInputName1">First Name</label>
+                      <input type="text" class="form-control" id="firstName" placeholder="First Name" value="<?php echo $_SESSION['firstName']; ?>">
                     </div>
                     <div class="form-group">
+                      <label for="exampleInputName1">Last Name</label>
+                      <input type="text" class="form-control" id="lastName" placeholder="Last Name" value="<?php echo $_SESSION['lastName']; ?>">
+                    </div>
+
+                    <!--div class="form-group">
                       <label>File upload</label>
                       <input type="file" name="img[]" class="file-upload-default">
                       <div class="input-group col-xs-12">
@@ -350,17 +282,17 @@
                           <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                         </span>
                       </div>
-                    </div>
+                    </div-->
                     <div class="form-group">
-                      <label for="exampleInputCity1">City</label>
-                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                      <label for="exampleInputCity1">Phone Number</label>
+                      <input type="text" class="form-control" id="PhoneNum" placeholder="Location">
                     </div>
-                    <div class="form-group">
+                    <!--div class="form-group">
                       <label for="exampleTextarea1">Textarea</label>
                       <textarea class="form-control" id="exampleTextarea1" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    </div-->
+                    <button type="submit" class="btn btn-success mr-2">Modify</button>
+                    <!--button class="btn btn-light">Cancel</button-->
                   </form>
                 </div>
               </div>
@@ -372,14 +304,14 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                     
+
                       <p class="auto-style1">
                         <span lang="ko">&nbsp; Change Password &nbsp; &nbsp; </span>
                         <a href="pw_check" class="btn btn-success mr-2">Click here</a>
-                       
+
                       </p>
-                  
-                    
+
+
                     </div>
                   </div>
                 </div>
@@ -387,15 +319,15 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                     
+
                       <p class="auto-style1">
                         <span lang="ko">Delete Your Account&nbsp;</span>
-                        
+
                         <a href="delete_id_check" class="btn btn-success mr-2">Click here</a>
 
                       </p>
-                  
-                    
+
+
                     </div>
                   </div>
                 </div>
