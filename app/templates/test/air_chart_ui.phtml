@@ -34,17 +34,17 @@
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              
+            <a href="#" class="nav-link">Schedule
+              <span class="badge badge-primary ml-1">New</span>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a href="#" class="nav-link">
-             </a>
+              <i class="mdi mdi-elevation-rise"></i>Reports</a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              </a>
+              <i class="mdi mdi-bookmark-plus-outline"></i>Score</a>
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
@@ -247,22 +247,32 @@
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item">
-                  <a class="nav-link" href="air_map">Map</a>
+                  <a class="nav-link" href="pages/ui-features/air_map_ui.phtml">Map</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="air_chart">Chart</a>
+                  <a class="nav-link" href="pages/ui-features/air_chart_ui.phtml">Chart</a>
                 </li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="heart">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
               <i class="menu-icon mdi mdi-backup-restore"></i>
               <span class="menu-title">Heart Rate System</span>
             </a>
+             <div class="collapse" id="ui-basic1">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="pages/ui-features/air_map_ui.phtml">Map</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pages/ui-features/air_chart_ui.phtml">Chart</a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sensor_list">
+            <a class="nav-link" href="">
               <i class="menu-icon mdi mdi-chart-line"></i>
               <span class="menu-title">My sensor List</span>
             </a>
@@ -315,59 +325,11 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-   <div class="row" style="">
-            <div class="col-lg-6 grid-margin stretch-card" style="">
-              <div class="card">
-                <div class="card-body" style="">
-                  <h4 class="card-title">Line chart</h4>
-                  <canvas id="lineChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Area chart</h4>
-                  <canvas id="areaChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Pie chart</h4>
-                  <canvas id="pieChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018
-              <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with
-              <i class="mdi mdi-heart text-danger"></i>
-            </span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-<!--chart end-->
+  <div class="main-panel">
+        <div class="content-wrapper">
          
 
-          
-
-
-
+          <!--img src="../../images/team.PNG" style="width: 135%; vertical-align: middle" /-->
         </div>
       </div>
       </div>

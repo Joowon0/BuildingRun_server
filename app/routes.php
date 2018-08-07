@@ -63,6 +63,13 @@ $app->get('/air_map', 'App\Controller\HomeController:air_map')
 $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
     ->setName('air_chart');
 
+$app->get('/heart', 'App\Controller\HomeController:heart')
+    ->setName('heart');
+
+$app->get('/sensor_list', 'App\Controller\HomeController:sensor_list')
+    ->setName('sensor_list');
+
+
 
 
 
