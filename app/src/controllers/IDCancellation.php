@@ -71,7 +71,7 @@ final class IDCancellation extends BaseController {
 
     try {
       $stmt = $this->db->query($sql);
-
+      return true;
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }

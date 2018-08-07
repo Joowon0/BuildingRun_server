@@ -18,12 +18,12 @@ final class SetNewPassword extends BaseController {
       echo "<script> document.location.href='/pw_new'; </script>";
     } else if ($pwCheckResult == self::WRONG_PASSWORD) {
       $this->view->render($response, 'pw_check.phtml', ['pwCheckResult'=>self::WRONG_PASSWORD]);
-      return $response;
     } else if ($pwCheckResult == self::NO_SUCH_ACCOUNT) {
       echo "<script> document.location.href='/login'; </script>";
     } else {
       echo "ERROR : smth wrong with pw_checkHandler()";
     }
+    return $response;
   }
 
   // for APP
@@ -40,6 +40,8 @@ final class SetNewPassword extends BaseController {
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
     }
+    else
+      return $respons->withStatus(204);
   }
 
   // outermost common function
@@ -76,6 +78,8 @@ final class SetNewPassword extends BaseController {
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
     }
+    else
+      return $respons->withStatus(204);
   }
 
   // for WEB
@@ -84,6 +88,7 @@ final class SetNewPassword extends BaseController {
     $this->setNewPassword($_SESSION["USN"], $hashedPW);
 
     echo "<script> document.location.href='/'; </script>";
+    return $response;
   }
 
   // outermost common function
@@ -92,6 +97,7 @@ final class SetNewPassword extends BaseController {
 
     try {
     	$stmt = $this->db->query($sql);
+      return true;
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }

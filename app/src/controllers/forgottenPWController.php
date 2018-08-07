@@ -75,6 +75,7 @@ final class forgottenPWController extends BaseController {
     $sql = "UPDATE User SET HPassword='".$new_password."' WHERE EmailAddress='".$email."' ";
     try {
       $stmt = $this->db->query($sql);
+      return true;
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }
