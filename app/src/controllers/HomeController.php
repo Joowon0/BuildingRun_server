@@ -120,7 +120,7 @@ final class HomeController extends BaseController {
   {
     $message = "You are already signed in..";
     $link = 'forgot_pw.phtml';
-    return $this->need2BSignIn($response, $message, $link);
+    return $this->need2BSignOut($response, $message, $link);
   }
 
 
