@@ -54,6 +54,12 @@ $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_c
 $app->get('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
     ->setName('delete_id_checkHandler');
 
+
+$app->get('/getJSON', 'App\Controller\ChartController:getJSON')
+    ->setName('getJSON');
+$app->get('/chartTEST', 'App\Controller\ChartController:chartTEST')
+    ->setName('chartTEST');
+
 //$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
 //    ->setName('intro_teama');
 

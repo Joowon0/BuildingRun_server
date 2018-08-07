@@ -34,6 +34,7 @@ final class forgottenPWController extends BaseController {
         EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
 
       $sendData = array("Result"=>$email_existence);
+      
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
