@@ -20,6 +20,9 @@ final class DataController extends BaseController {
           ->withHeader('Content-Type', 'application/json');
           //->write(json_encode($sendData));
     }
+    else {
+      return $response->withStatus(204);
+    }
   }
 
   public function storeGPS($data) {
@@ -46,6 +49,36 @@ final class DataController extends BaseController {
       $data['temper']. ",".
       $data['SSN']   . ", '".
       $data['timestamp']."' )" ;
+    try {
+      $stmt = $this->db->query($sql);
+      return true;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  // for APP
+  public function app_heartDataTransfer(Request $request, Response $response, $args) {
+    $json = file_get_contents('php://input');
+    $jsonArray = json_decode($json, true);
+
+    if (isset($jsonArray['USN']) && isset($jsonArray['timestamp'])) {
+      $this->storeHeartData($jsonArray);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json');
+    }
+    else {
+      return $response->withStatus(204);
+    }
+  }
+
+  public function storeHeartData($data) {
+    $sql = "INSERT INTO Heart_Info(Timestamp, HeartRate, HeartInterval, USN) VALUES ( '".
+      $data['timestamp']."',".
+      $data['heartRate'].",".
+      $data['heartInterval'].",".
+      $data['USN'].")" ;
     try {
       $stmt = $this->db->query($sql);
       return true;

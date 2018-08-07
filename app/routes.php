@@ -90,6 +90,8 @@ $app->post('/app/accountCancel', 'App\Controller\IDCancellation:app_accountCance
     ->setName('app_accountCancel');
 $app->post('/app/airQualityDataTransfer', 'App\Controller\DataController:app_airQualityDataTransfer')
     ->setName('app_airQualityDataTransfer');
+$app->post('/app/heartDataTransfer', 'App\Controller\DataController:app_heartDataTransfer')
+    ->setName('app_heartDataTransfer');
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
