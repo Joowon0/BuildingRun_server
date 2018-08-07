@@ -99,6 +99,8 @@ final class SignupController extends BaseController {
       "'". $userINFO['phoneNum'] ."'".    // PhoneNumber
       ")";
     $stmt = $this->db->query($sql);
+
+    return true;
   }
 
   public function getUSN($email) {

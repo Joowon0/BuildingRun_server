@@ -88,7 +88,8 @@ $app->post('/app/forgotPW', 'App\Controller\forgottenPWController:app_forgotPW')
     ->setName('app_forgotPW');
 $app->post('/app/accountCancel', 'App\Controller\IDCancellation:app_accountCancel')
     ->setName('app_accountCancel');
-
+$app->post('/app/airQualityDataTransfer', 'App\Controller\DataController:app_airQualityDataTransfer')
+    ->setName('app_airQualityDataTransfer');
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
