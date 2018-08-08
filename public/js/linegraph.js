@@ -9,23 +9,19 @@ var ajaxFn = function(){
 
       var timestamp = [];
       var CO  = [];
-      var CO2 = [];
       var SO2 = [];
       var NO2 = [];
       var O3  = [];
       var PM2_5 = [];
-      var PM10 = [];
 
       for(var i in data) {
 
         timestamp.push(data[i].Timestamp);
         CO.push(data[i].CO);
-        CO2.push(data[i].CO2);
         SO2.push(data[i].SO2);
         NO2.push(data[i].NO2);
         O3.push(data[i].O3);
         PM2_5.push(data[i].PM2_5);
-        PM10.push(data[i].PM10);
       }
 
       var chartdata = {
@@ -40,16 +36,6 @@ var ajaxFn = function(){
             pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
             pointHoverBorderColor: "rgba(59, 89, 152, 1)",
             data: CO
-          },
-          {
-            label: "CO2",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(29, 202, 255, 0.75)",
-            borderColor: "rgba(29, 202, 255, 1)",
-            pointHoverBackgroundColor: "rgba(29, 202, 255, 1)",
-            pointHoverBorderColor: "rgba(29, 202, 255, 1)",
-            data: CO2
           },
           {
             label: "SO2",
@@ -90,16 +76,6 @@ var ajaxFn = function(){
             pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
             pointHoverBorderColor: "rgba(211, 72, 54, 1)",
             data: PM2_5
-          },
-          {
-            label: "PM10",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(211, 72, 54, 0.75)",
-            borderColor: "rgba(211, 72, 54, 1)",
-            pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
-            pointHoverBorderColor: "rgba(211, 72, 54, 1)",
-            data: PM10
           }
         ]
       };
