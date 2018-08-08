@@ -1,0 +1,122 @@
+var timeOutId = 0;
+var ajaxFn = function(){
+  $.ajax({
+    url : "/getJSON",
+    type : "GET",
+    success : function(data){
+      // console.log(data);
+      data = JSON.parse(data);
+
+      var timestamp = [];
+      var CO  = [];
+      var CO2 = [];
+      var SO2 = [];
+      var NO2 = [];
+      var O3  = [];
+      var PM2_5 = [];
+      var PM10 = [];
+
+      for(var i in data) {
+
+        timestamp.push(data[i].Timestamp);
+        CO.push(data[i].CO);
+        CO2.push(data[i].CO2);
+        SO2.push(data[i].SO2);
+        NO2.push(data[i].NO2);
+        O3.push(data[i].O3);
+        PM2_5.push(data[i].PM2_5);
+        PM10.push(data[i].PM10);
+      }
+
+      var chartdata = {
+        labels: timestamp,
+        datasets: [
+          {
+            label: "CO",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(59, 89, 152, 0.75)",
+            borderColor: "rgba(59, 89, 152, 1)",
+            pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
+            pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+            data: CO
+          },
+          {
+            label: "CO2",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(29, 202, 255, 0.75)",
+            borderColor: "rgba(29, 202, 255, 1)",
+            pointHoverBackgroundColor: "rgba(29, 202, 255, 1)",
+            pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+            data: CO2
+          },
+          {
+            label: "SO2",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(211, 72, 54, 0.75)",
+            borderColor: "rgba(211, 72, 54, 1)",
+            pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+            pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+            data: SO2
+          },
+          {
+            label: "NO2",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(59, 89, 152, 0.75)",
+            borderColor: "rgba(59, 89, 152, 1)",
+            pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
+            pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+            data: NO2
+          },
+          {
+            label: "O3",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(29, 202, 255, 0.75)",
+            borderColor: "rgba(29, 202, 255, 1)",
+            pointHoverBackgroundColor: "rgba(29, 202, 255, 1)",
+            pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+            data: O3
+          },
+          {
+            label: "PM2.5",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(211, 72, 54, 0.75)",
+            borderColor: "rgba(211, 72, 54, 1)",
+            pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+            pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+            data: PM2_5
+          },
+          {
+            label: "PM10",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(211, 72, 54, 0.75)",
+            borderColor: "rgba(211, 72, 54, 1)",
+            pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+            pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+            data: PM10
+          }
+        ]
+      };
+
+      var ctx = $("#mycanvas");
+
+      var LineGraph = new Chart(ctx, {
+        type: 'line',
+        data: chartdata
+      });
+    },
+    error : function(data) {
+
+    }
+  });
+}
+
+ajaxFn();
+//OR use BELOW line to wait 10 secs before first call
+setInterval(ajaxFn, 5000);

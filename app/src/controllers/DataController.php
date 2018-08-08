@@ -10,8 +10,7 @@ final class DataController extends BaseController {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
 
-    if (isset($jsonArray['USN']) && isset($jsonArray['timestamp']) &&
-    isset($jsonArray['latitude']) && isset($jsonArray['longitude']) && isset($jsonArray['SSN'])) {
+    if (isset($jsonArray['USN']) && isset($jsonArray['timestamp']) && isset($jsonArray['SSN'])) {
 
       $this->storeGPS($jsonArray);
       $this->storeAirQuality($jsonArray);

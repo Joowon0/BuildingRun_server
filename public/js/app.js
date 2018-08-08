@@ -1,14 +1,16 @@
 $(document).ready(function(){
 	$.ajax({
-		url: "192.168.33.99/getJSON",
+		url: "getJSON",
 		method: "GET",
 		success: function(data) {
 			console.log(data);
+			data = JSON.parse(data);
+
 			var player = [];
 			var score = [];
 
 			for(var i in data) {
-				player.push("Player " + data[i].CO);
+				player.push(data[i].CO);
 				score.push(data[i].Timestamp);
 			}
 
