@@ -4,29 +4,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 final class ChartController extends BaseController {
-  public function player(Request $request, Response $response, $args) {
-    echo "[
-  {
-    \"userid\" : \"1\",
-    \"facebook\" : \"100\",
-    \"twitter\" : \"200\",
-    \"googleplus\" : \"80\"
-  },
-  {
-    \"userid\" : \"2\",
-    \"facebook\" : \"60\",
-    \"twitter\" : \"150\",
-    \"googleplus\" : \"180\"
-  },
-  {
-    \"userid\" : \"3\",
-    \"facebook\" : \"50\",
-    \"twitter\" : \"90\",
-    \"googleplus\" : \"120\"
-  }
-]";
-    return $response;
-  }
   public function chartTEST(Request $request, Response $response, $args) {
       $this->view->render($response, 'linegraph.phtml');
       return $response;

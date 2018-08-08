@@ -67,8 +67,6 @@ $app->get('/getJSON', 'App\Controller\ChartController:getJSON')
     ->setName('getJSON');
 $app->get('/chartTEST', 'App\Controller\ChartController:chartTEST')
     ->setName('chartTEST');
-$app->get('/player', 'App\Controller\ChartController:player')
-    ->setName('player');
 
 //$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
 //    ->setName('intro_teama');
