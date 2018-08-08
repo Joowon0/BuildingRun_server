@@ -76,7 +76,7 @@ final class SensorController extends BaseController {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
 
-    if (isset($jsonArray['USN']) && isset($jsonArray['SSN'])) {
+    if (isset($jsonArray['SSN'])) {
       $SSN_existence = $this->checkSSNExist2($jsonArray['SSN']);
 
       if ($SSN_existence == self::SSN_EXIST) {
