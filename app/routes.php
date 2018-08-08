@@ -1,6 +1,6 @@
 <?php
 // Routes
-
+// user management
 $app->get('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
 $app->post('/', 'App\Controller\HomeController:main')
@@ -54,7 +54,15 @@ $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_c
 $app->get('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
     ->setName('delete_id_checkHandler');
 
+// sensor management
+$app->post('/app/sensorRegister', 'App\Controller\SensorController:app_sensorRegister')
+    ->setName('app_sensorRegister');
+$app->post('/app/sensorDeregister', 'App\Controller\SensorController:app_sensorDeregister')
+    ->setName('app_sensorDeregister');
+$app->post('/app/sensorListView', 'App\Controller\SensorController:app_sensorListView')
+    ->setName('app_sensorListView');
 
+// chart
 $app->get('/getJSON', 'App\Controller\ChartController:getJSON')
     ->setName('getJSON');
 $app->get('/chartTEST', 'App\Controller\ChartController:chartTEST')

@@ -52,6 +52,9 @@ final class LoginController extends BaseController {
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
     }
+    else {
+      return $response->withStatus(204);
+    }
   }
 
   // outermost common function
