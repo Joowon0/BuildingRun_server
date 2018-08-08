@@ -16,7 +16,11 @@ final class DataController extends BaseController {
       $this->storeGPS($jsonArray);
       $this->storeAirQuality($jsonArray);
 
-      return $response->withStatus(200);
+      $sendData = array("ACK"=>true);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
     }
     else {
       return $response->withStatus(204);
@@ -63,7 +67,11 @@ final class DataController extends BaseController {
     if (isset($jsonArray['USN']) && isset($jsonArray['timestamp'])) {
       $this->storeHeartData($jsonArray);
 
-      return $response->withStatus(200);
+      $sendData = array("ACK"=>true);
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($sendData));
     }
     else {
       return $response->withStatus(204);
