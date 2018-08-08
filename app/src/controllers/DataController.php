@@ -39,14 +39,12 @@ final class DataController extends BaseController {
 
   // TODO : need to calcul AQI
   public function storeAirQuality($data) {
-    $sql = "INSERT INTO AirQuality_Info(CO, CO_AQI, CO2, CO2_AQI, SO2, SO2_AQI, NO2, NO2_AQI, O3, O3_AQI, PM2_5, PM2_5_AQI, PM10, PM10_AQI, AQI_avg, Temp, SSN, Timestamp) VALUES (".
+    $sql = "INSERT INTO AirQuality_Info(CO, CO_AQI, SO2, SO2_AQI, NO2, NO2_AQI, O3, O3_AQI, PM2_5, PM2_5_AQI, AQI_avg, Temp, SSN, Timestamp) VALUES (".
       $data['CO']    . ", -1, ".
-      $data['CO2']   . ", -1, ".
       $data['SO2']   . ", -1, " .
       $data['NO2']   . ", -1, ".
       $data['O3']    . ", -1, ".
-      $data['PM2.5'] . ", -1, ".
-      $data['PM10']  . ", -1, -1,".
+      $data['PM2.5'] . ", -1, -1,".
       $data['temper']. ",".
       $data['SSN']   . ", '".
       $data['timestamp']."' )" ;
