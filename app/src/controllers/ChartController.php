@@ -40,7 +40,10 @@ final class ChartController extends BaseController {
   }
 
   public function heartRateHour(Request $request, Response $response, $args) {
+    $sql = "SELECT SUBSTR(Timestamp, 9, 5) as ts, avg(HeartRate) as HeartRate, avg(HeartInterval) as HeartInterval FROM Heart_Info WHERE USN = ".$_SESSION["USN"]." GROUP BY SUBSTR(Timestamp, 9, 5)";
 
+    $this->makeJSON($sql);
+    return $response;
   }
 
   public function hour(Request $request, Response $response, $args) {

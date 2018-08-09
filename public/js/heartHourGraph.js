@@ -1,9 +1,9 @@
 $(document).ready(function(){
   $.ajax({
-    url : "/getJSON/heart10Min",
+    url : "/getJSON/heartHour",
     type : "GET",
     success : function(data){
-      //console.log(data);
+      console.log(data);
       data = JSON.parse(data);
 
       var timestamp = [];
@@ -12,7 +12,7 @@ $(document).ready(function(){
 
       for(var i in data) {
         ts = data[i].ts;
-        timestamp.push(ts.substring(0,2) + 'd ' + ts.substring(3,5) + 'h ' + ts.substring(6) + '0m ');
+        timestamp.push(ts.substring(0,2) + 'd ' + ts.substring(3,5) + 'h ');
         heartRate.push(data[i].HeartRate);
         heartInterval.push(data[i].HeartInterval);
       }
@@ -74,8 +74,8 @@ $(document).ready(function(){
       };
 
       var ctx = $("#mycanvas");
-      var heartRatectx = $("#heartRate10MinChart");
-      var heratIntervalctx = $("#heartInterval10MinChart");
+      var heartRatectx = $("#heartRateHourChart");
+      var heratIntervalctx = $("#heartIntervalHourChart");
 
 
       var LineGraph = new Chart(ctx, {
