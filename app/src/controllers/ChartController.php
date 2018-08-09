@@ -32,7 +32,7 @@ final class ChartController extends BaseController {
     // echo $sql;
     // exit;
 
-    $this->makeJSON($sql);
+    $this->makeJSON($sqlShow);
     return $response;
   }
 
