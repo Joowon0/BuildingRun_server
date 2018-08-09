@@ -12,7 +12,7 @@ $(document).ready(function(){
 
       for(var i in data) {
         ts = data[i].ts;
-        timestamp.push(ts.substring(0,1) + 'd ' + ts.substring(3,4) + 'h ' + ts.substring(6) + '0m ');
+        timestamp.push(ts.substring(0,2) + 'd ' + ts.substring(3,5) + 'h ' + ts.substring(6) + '0m ');
         heartRate.push(data[i].HeartRate);
         heartInterval.push(data[i].HeartInterval);
       }
