@@ -76,7 +76,6 @@ final class DataController extends BaseController {
   }
 
   public function storeHeartData($data) {
-    print_r($data);exit;
     $sql = "INSERT INTO Heart_Info(Timestamp, HeartRate, HeartInterval, USN) VALUES ( '".
       $data['timestamp']."',".
       $data['heartRate'].",".
