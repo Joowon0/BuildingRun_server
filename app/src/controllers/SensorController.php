@@ -5,8 +5,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 final class SensorController extends BaseController {
   //abstract class sensorMessage {
-      const SSN_EXIST = 1;
-      const SSN_NOT_EXIST = 2;
+      const MAC_EXIST = 1;
+      const MAC_NOT_EXIST = 2;
   //}
 
   // for APP
@@ -15,15 +15,16 @@ final class SensorController extends BaseController {
     $jsonArray = json_decode($json, true);
 
     if (isset($jsonArray['USN']) && isset($jsonArray['MAC'])) {
-      $SSN_existence = $this->checkSSNExist($jsonArray['USN'], $jsonArray['MAC']);
+      // $SSN_existence = $this->checkSSNExist($jsonArray['USN'], $jsonArray['MAC']);
 
-      if ($SSN_existence == self::SSN_NOT_EXIST) {
-        $this->storeSensorInfo($jsonArray['USN'], $jsonArray['MAC']);
-        $SSN = $this->getSSN($jsonArray['MAC']);
-      }
-      $sendData = array("Result"=>$SSN_existence,
-                        "USN"=>$jsonArray['USN'],
-                        "SSN"=>$SSN);
+      // if ($SSN_existence == self::SSN_NOT_EXIST) {
+        $this->storeSensorInfo($jsonArray['USN'], $jsonArray['MAC'], $jsonArray['latitude'], $jsonArray['longitude']);
+      //   $SSN = $this->getSSN($jsonArray['MAC']);
+      // }
+      // $sendData = array("Result"=>$SSN_existence,
+      //                   "USN"=>$jsonArray['USN'],
+      //                   "SSN"=>$SSN);
+      $sendData = array("ACK"=>true);
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
@@ -33,23 +34,23 @@ final class SensorController extends BaseController {
       return $response->withStatus(204);
   }
 
-  public function checkSSNExist($USN, $MAC) {
-    $sql = "SELECT * FROM Sensor WHERE USN = ".$USN." AND MAC = '" . $MAC . "' " ;
-    try {
-    	$stmt = $this->db->query($sql);
-    	$result = $stmt->fetch();
-
-      if ($result == null) {
-        return self::SSN_NOT_EXIST;
-      } else {
-        return self::SSN_EXIST;
-      }
-    } catch (PDOException $e) {
-      echo "ERROR : " . $e->getMessage();
-    }
-  }
-  public function storeSensorInfo($USN, $MAC) {
-    $sql = "INSERT INTO Sensor(MAC, USN, isIndoor) VALUES ('".$MAC."', ".$USN.", false)";
+  // public function checkSSNExist($USN, $MAC) {
+  //   $sql = "SELECT * FROM Sensor WHERE USN = ".$USN." AND MAC = '" . $MAC . "' " ;
+  //   try {
+  //   	$stmt = $this->db->query($sql);
+  //   	$result = $stmt->fetch();
+  //
+  //     if ($result == null) {
+  //       return self::SSN_NOT_EXIST;
+  //     } else {
+  //       return self::SSN_EXIST;
+  //     }
+  //   } catch (PDOException $e) {
+  //     echo "ERROR : " . $e->getMessage();
+  //   }
+  // }
+  public function storeSensorInfo($USN, $MAC, $lati, $long) {
+    $sql = "INSERT INTO Sensor(MAC, USN, latitude, lognitude) VALUES ('".$MAC."', ".$USN.", ".$lati.", ".$long.")";
     try {
       $stmt = $this->db->query($sql);
 
@@ -59,30 +60,31 @@ final class SensorController extends BaseController {
     }
   }
 
-  public function getSSN ($MAC) {
-    $sql = "SELECT * FROM Sensor WHERE MAC = '" . $MAC . "'" ;
-    try {
-      $stmt = $this->db->query($sql);
-      $result = $stmt->fetch();
-
-      return $result['SSN'];
-    } catch (PDOException $e) {
-      echo "ERROR : " . $e->getMessage();
-    }
-  }
+  // public function getSSN ($MAC) {
+  //   $sql = "SELECT * FROM Sensor WHERE MAC = '" . $MAC . "'" ;
+  //   try {
+  //     $stmt = $this->db->query($sql);
+  //     $result = $stmt->fetch();
+  //
+  //     return $result['SSN'];
+  //   } catch (PDOException $e) {
+  //     echo "ERROR : " . $e->getMessage();
+  //   }
+  // }
 
   // for APP
   public function app_sensorDeregister(Request $request, Response $response, $args) {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
 
-    if (isset($jsonArray['SSN'])) {
-      $SSN_existence = $this->checkSSNExist2($jsonArray['SSN']);
+    if (isset($jsonArray['MAC'])) {
+      $MAC_existence = $this->checkMACExist2($jsonArray['MAC']);
+      echo $MAC_existence;
 
-      if ($SSN_existence == self::SSN_EXIST) {
-        $this->deleteSSN($jsonArray['SSN']);
+      if ($MAC_existence == self::MAC_EXIST) {
+        $this->deleteMAC($jsonArray['MAC']);
       }
-      $sendData = array("Result"=>$SSN_existence);
+      $sendData = array("Result"=>$MAC_existence);
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
@@ -92,24 +94,24 @@ final class SensorController extends BaseController {
       return $response->withStatus(204);
   }
 
-  public function checkSSNExist2($SSN) {
-    $sql = "SELECT * FROM Sensor WHERE SSN = ".$SSN ;
+  public function checkMACExist2($MAC) {
+    $sql = "SELECT * FROM Sensor WHERE MAC = '".$MAC."'" ;
     try {
     	$stmt = $this->db->query($sql);
     	$result = $stmt->fetch();
 
       if ($result == null) {
-        return self::SSN_NOT_EXIST;
+        return self::MAC_NOT_EXIST;
       } else {
-        return self::SSN_EXIST;
+        return self::MAC_EXIST;
       }
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }
   }
 
-  public function deleteSSN($SSN) {
-    $sql = "DELETE FROM Sensor WHERE SSN = ".$SSN ;
+  public function deleteMAC($MAC) {
+    $sql = "DELETE FROM Sensor WHERE MAC = '".$MAC."'" ;
 
     try {
       $stmt = $this->db->query($sql);

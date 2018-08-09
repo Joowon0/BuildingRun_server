@@ -12,7 +12,7 @@ final class DataController extends BaseController {
 
     if (isset($jsonArray['USN']) && isset($jsonArray['timestamp']) && isset($jsonArray['SSN'])) {
 
-      $this->storeGPS($jsonArray);
+      //$this->storeGPS($jsonArray);
       $this->storeAirQuality($jsonArray);
 
       $sendData = array("ACK"=>true);

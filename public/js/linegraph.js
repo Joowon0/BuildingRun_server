@@ -1,7 +1,7 @@
 var timeOutId = 0;
 var ajaxFn = function(){
   $.ajax({
-    url : "/getJSON",
+    url : "/getJSON/all",
     type : "GET",
     success : function(data){
       // console.log(data);
@@ -13,15 +13,16 @@ var ajaxFn = function(){
       var NO2 = [];
       var O3  = [];
       var PM2_5 = [];
+      var TEMP = [];
 
       for(var i in data) {
-
         timestamp.push(data[i].Timestamp);
         CO.push(data[i].CO);
         SO2.push(data[i].SO2);
         NO2.push(data[i].NO2);
         O3.push(data[i].O3);
         PM2_5.push(data[i].PM2_5);
+        TEMP.push(data[i].Temp);
       }
 
       var chartdata = {

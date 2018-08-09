@@ -63,8 +63,12 @@ $app->post('/app/sensorListView', 'App\Controller\SensorController:app_sensorLis
     ->setName('app_sensorListView');
 
 // chart
-$app->get('/getJSON', 'App\Controller\ChartController:getJSON')
-    ->setName('getJSON');
+$app->get('/getJSON/all', 'App\Controller\ChartController:getJSON')
+    ->setName('getJSONall');
+$app->get('/getJSON/min', 'App\Controller\ChartController:minute')
+    ->setName('getJSONmin');
+$app->get('/getJSON/hour', 'App\Controller\ChartController:hour')
+    ->setName('getJSONhour');
 $app->get('/chartTEST', 'App\Controller\ChartController:chartTEST')
     ->setName('chartTEST');
 

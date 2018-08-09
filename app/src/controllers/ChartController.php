@@ -9,18 +9,12 @@ final class ChartController extends BaseController {
       return $response;
   }
 
-  public function makeJSON($SSN, $airType) {
-    $sql = "SELECT * FROM AirQuality_Info WHERE SSN = ".$SSN." ORDER BY Timestamp";
-
+  public function makeJSON($sql) {
     try {
       $stmt = $this->db->query($sql);
-      //$result = $stmt->fetch();
-
       $data = array();
-      foreach ($stmt as $result) {
-        //print_r ($result);
-        //echo "<br>";
 
+      foreach ($stmt as $result) {
         $data[] = $result;
       }
       print json_encode($data);
@@ -32,8 +26,21 @@ final class ChartController extends BaseController {
     return true;
   }
 
+  public function hour(Request $request, Response $response, $args) {
+    $sql = "SELECT avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM2_5) AS PM2_5, SUBSTR(Timestamp, 6, 8) AS timestamp FROM AirQuality_Info GROUP BY SUBSTR(Timestamp, 6, 8)";
+    $this->makeJSON($sql);
+  }
+
+  public function minute(Request $request, Response $response, $args) {
+    $sql = "SELECT avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM2_5) AS PM2_5, SUBSTR(Timestamp, 6, 11) AS timestamp FROM AirQuality_Info GROUP BY SUBSTR(Timestamp, 6, 11)";
+    $this->makeJSON($sql);
+  }
+
   public function getJSON(Request $request, Response $response, $args) {
-    $this->makeJSON(1, 'CO');
+    $SSN = 1;
+    $sql = "SELECT * FROM AirQuality_Info WHERE SSN = ".$SSN." ORDER BY Timestamp";
+
+    $this->makeJSON($sql);
     return $response;
   }
 }
