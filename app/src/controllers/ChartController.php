@@ -37,8 +37,8 @@ final class ChartController extends BaseController {
   }
 
   public function getJSON(Request $request, Response $response, $args) {
-    $SSN = 1;
-    $sql = "SELECT * FROM AirQuality_Info WHERE SSN = ".$SSN." ORDER BY Timestamp";
+    $MAC = "fdsa";
+    $sql = "SELECT * FROM AirQuality_Info WHERE MAC = '".$MAC."' ORDER BY Timestamp";
 
     $this->makeJSON($sql);
     return $response;
