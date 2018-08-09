@@ -11,10 +11,12 @@ var ajaxFn = function(){
       var heartRate  = [];
       var heartInterval = [];
 
+      len = data.length;
       for(var i in data) {
-        timestamp.push(data[i].hh + 'h ' + data[i].mm + 'm ' + data[i].ss + 's ' );
-        heartRate.push(data[i].HeartRate);
-        heartInterval.push(data[i].HeartInterval);
+        back = len - i - 1;
+        timestamp.push(data[back].hh + 'h ' + data[back].mm + 'm ' + data[back].ss + 's ' );
+        heartRate.push(data[back].HeartRate);
+        heartInterval.push(data[back].HeartInterval);
       }
 
       var chartdata = {
