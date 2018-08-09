@@ -69,6 +69,8 @@ $app->get('/getJSON/min', 'App\Controller\ChartController:minute')
     ->setName('getJSONmin');
 $app->get('/getJSON/hour', 'App\Controller\ChartController:hour')
     ->setName('getJSONhour');
+$app->get('/getJSON/heartReal', 'App\Controller\ChartController:heartRateReal')
+    ->setName('getJSONheartRateReal');
 $app->get('/chartTEST', 'App\Controller\ChartController:chartTEST')
     ->setName('chartTEST');
 
