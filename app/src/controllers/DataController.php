@@ -10,7 +10,7 @@ final class DataController extends BaseController {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
 
-    if (isset($jsonArray['USN']) && isset($jsonArray['timestamp']) && isset($jsonArray['SSN'])) {
+    if (isset($jsonArray['USN']) && isset($jsonArray['TIME']) && isset($jsonArray['SSN'])) {
 
       //$this->storeGPS($jsonArray);
       $this->storeAirQuality($jsonArray);
@@ -28,7 +28,7 @@ final class DataController extends BaseController {
 
   public function storeGPS($data) {
     $sql = "INSERT INTO GPS(Out_lat, Out_log, Timestamp, USN) VALUES (".
-      $data['latitude']. ", ". $data['longitude'] .", '" . $data['timestamp'] . "', " . $data['USN']. ")" ;
+      $data['latitude']. ", ". $data['longitude'] .", '" . $data['TIME'] . "', " . $data['USN']. ")" ;
     try {
       $stmt = $this->db->query($sql);
       return true;
@@ -47,7 +47,7 @@ final class DataController extends BaseController {
       $data['PM2.5'] . ", -1, -1,".
       $data['temper']. ",".
       $data['SSN']   . ", '".
-      $data['timestamp']."' )" ;
+      $data['TIME']."' )" ;
     try {
       $stmt = $this->db->query($sql);
       return true;
@@ -77,7 +77,7 @@ final class DataController extends BaseController {
 
   public function storeHeartData($data) {
     $sql = "INSERT INTO Heart_Info(Timestamp, HeartRate, HeartInterval, USN) VALUES ( '".
-      $data['timestamp']."',".
+      $data['TIME']."',".
       $data['heartRate'].",".
       $data['heartInterval'].",".
       $data['USN'].")" ;
