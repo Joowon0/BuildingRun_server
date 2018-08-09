@@ -27,6 +27,7 @@ final class ChartController extends BaseController {
   }
   public function heartRateReal(Request $request, Response $response, $args) {
     $sql = "SELECT SUBSTR(Timestamp, 12, 2) as hh, SUBSTR(Timestamp, 15, 2) as mm, SUBSTR(Timestamp, 18, 2) as ss, HeartRate, HeartInterval FROM Heart_Info WHERE USN = ".$_SESSION["USN"]." ORDER BY Timestamp DESC LIMIT 20";
+    $sqlShow = "SELECT * FROM " . $sql ." ORDER BY hh, mm, ss";
     // echo $_SESSION["USN"];
     // echo $sql;
     // exit;
