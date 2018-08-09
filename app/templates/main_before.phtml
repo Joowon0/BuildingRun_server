@@ -16,16 +16,16 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="images/teama_logo.png" />
 </head>
-
 <body>
+
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
 
-        <a href=""><h1 class="text-center mb-4 text-primary"><br>TEAM A</h1>
+        <a href="/"><h1 class="text-center mb-4 text-primary"><br>TEAM A</h1></a>
 
         <a class="navbar-brand brand-logo-mini" href="index.html">
           <img src="images/logo-mini.svg" alt="logo" />
@@ -34,24 +34,23 @@
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
           <li class="nav-item">
-
-          </li>
-          <li class="nav-item active">
-
+            <a href="#" class="nav-link">
+              
+            </a>
           </li>
           <li class="nav-item">
-
+            <a href="#" class="nav-link">
+             </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              </a>
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item dropdown">
+          <!--li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <i class="mdi mdi-file-document-box"></i>
-<!--
 
-              <span class="count">7</span>
-
--->
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
               <div class="dropdown-item">
@@ -102,13 +101,10 @@
                 </div>
               </a>
             </div>
-          </li>
-          <li class="nav-item dropdown">
+          </li-->
+          <!--li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="mdi mdi-bell"></i>
-              <!--
-              <span class="count">4</span>
-            -->
+
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
               <a class="dropdown-item">
@@ -159,16 +155,18 @@
                 </div>
               </a>
             </div>
-          </li>
+          </link-->
           <li class="nav-item dropdown d-none d-xl-inline-block">
       <!--      <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               -->
+<!--
+              <span class="profile-text">Welcome <?php// echo $_SESSION["firstName"]; ?> <?php //echo $_SESSION["lastName"]; ?>, We are Team A ! </span>
+-->
 
               <span class="profile-text">Welcome, We are Team A ! </span>
-
              <!-- <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image"> -->
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+            <!--div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <a class="dropdown-item p-0">
                 <div class="d-flex border-bottom">
                   <div class="py-3 px-4 d-flex align-items-center justify-content-center">
@@ -194,7 +192,7 @@
               <a class="dropdown-item">
                 Sign Out
               </a>
-            </div>
+            </div-->
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -229,36 +227,31 @@
 
       <br>
       <br>
+      
       <a href="login" class="btn btn-success btn-block">Sign In</a>
 
 
-                <i class="mdi mdi-plus"></i>
+
               </button>
             </div>
           </li>
-          <li class="nav-item">
+          <!--li class="nav-item">
             <a class="nav-link" href="intro_teama">
               <i class="menu-icon mdi mdi-television"></i>
               <span class="menu-title">About Team A</span>
             </a>
-          </li>
+          </li-->
+      
+
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="login">
               <i class="menu-icon mdi mdi-content-copy"></i>
               <span class="menu-title">Air Quality System</span>
-
             </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
           </li>
+
+
+
           <li class="nav-item">
             <a class="nav-link" href="login">
               <i class="menu-icon mdi mdi-backup-restore"></i>
@@ -286,13 +279,17 @@
           </li>
         -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-restart"></i>
-              <span class="menu-title">User Pages</span>
 
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
+            	<li class="nav-item">
+            	<a class="nav-link" href="login">
+                <i class="menu-icon mdi mdi-restart"></i>
+                <span class="menu-title">User Page</span>
+                </i>
+              </a>
+            </li>
+        </li>
+            <!--div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">data-toggle="collapse" href="" aria-expanded="false" aria-controls="ui-basic"
                 <li class="nav-item">
                   <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a>
                 </li>
@@ -309,15 +306,23 @@
                   <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
                 </li>
               </ul>
-            </div>
-          </li>
+            </div-->
         </ul>
       </nav>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <img src="../../images/team.PNG" style="width: 100%; vertical-align: middle" />
+  <div class="main-panel">
+        <div class="content-wrapper">
+         
+
+          <img src="../../images/team.PNG" style="width: 135%; vertical-align: middle" />
         </div>
+      </div>
+      </div>
+        </div>
+      </div>
+        <!-- partial -->
       </div>
       <!-- main-panel ends -->
     </div>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Circles</title>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+           <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+var comics = (function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "newyork-as-json",
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+})(); 
+      
+      function initMap() {
+        // Create the map.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: {lat: 40.750422, lng: -73.99632},
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+
+        var infoWin = new google.maps.InfoWindow();
+
+
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        for (var hero in comics) {
+
+        // Create marker 
+        var marker = new google.maps.Marker({
+          map: map,
+          position: new google.maps.LatLng(comics[hero].center)
+  
+        });
+
+        google.maps.event.addListener(marker, 'click', function(evt) {
+          infoWin.setContent(comics[hero].city + ", " + comics[hero].state + " has s2: " + comics[hero].s2);
+          infoWin.open(map, this);
+        })
+
+          
+        }
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXMKBcstoboBgrHBcho5saILTBq3PHtPQ&callback=initMap">
+    </script>
+
+</body>
+</html>

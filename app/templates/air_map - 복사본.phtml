@@ -17,6 +17,16 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/teama_logo.png" />
+
+   <style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+  
+
 </head>
 <body>
 
@@ -312,136 +322,49 @@
             </div-->
         </ul>
       </nav>
-   
-             <!-- partial -->
+      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row">
-                       <div class="col-md-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">User Information</h4>
-                  <form class="forms-sample">
-                    <div class="form-group">
-                      <label for="exampleInputEmail3">Email address</label>
-                      <input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputName1">First Name</label>
-                      <input type="text" class="form-control" id="firstName" placeholder="First Name" value="<?php echo $_SESSION['firstName']; ?>">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputName1">Last Name</label>
-                      <input type="text" class="form-control" id="lastName" placeholder="Last Name" value="<?php echo $_SESSION['lastName']; ?>">
-                    </div>
 
-                    <!--div class="form-group">
-                      <label>File upload</label>
-                      <input type="file" name="img[]" class="file-upload-default">
-                      <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                        </span>
-                      </div>
-                    </div-->
-                    <div class="form-group">
-                      <label for="exampleInputCity1">Phone Number</label>
-                      <input type="text" class="form-control" id="PhoneNum" placeholder="Location">
-                    </div>
-                    <!--div class="form-group">
-                      <label for="exampleTextarea1">Textarea</label>
-                      <textarea class="form-control" id="exampleTextarea1" rows="2"></textarea>
-                    </div-->
-                    <button type="submit" class="btn btn-success mr-2">Modify</button>
-                    <!--button class="btn btn-light">Cancel</button-->
-                  </form>
-                </div>
-              </div>
-            </div>
+<!--Start-->
 
 
-            <div class="col-md-6 d-flex align-items-stretch grid-margin">
-              <div class="row flex-grow">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
 
-                      <p class="auto-style1">
-                        <span lang="ko">&nbsp; Change Password &nbsp; &nbsp; </span>
-                        <a href="pw_check" class="btn btn-success mr-2">Click here</a>
-
-                      </p>
-
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-
-                      <p class="auto-style1">
-                        <span lang="ko">Delete Your Account&nbsp;</span>
-
-                        <a href="delete_id_check" class="btn btn-success mr-2">Click here</a>
-
-                      </p>
+<!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: 32.8884, lng: -117.2416};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+   <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfHa_4ZD_TIff4iowZpOutTWlpAzw_Krg&callback=initMap">
+</script>
 
 
-                    </div>
-                  </div>
-                </div>
 
 
-                <div class="col-12 stretch-card">
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title">Horizontal Form</h4>
-                      <p class="card-description">
-                        Horizontal form layout
-                      </p>
-                      <form class="forms-sample">
-                        <div class="form-group row">
-                          <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
-                          <div class="col-sm-9">
-                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Password</label>
-                          <div class="col-sm-9">
-                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
-                          </div>
-                        </div>
-                        <button type="submit" class="btn btn-success mr-2">Submit</button>
-                        <button class="btn btn-light">Cancel</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+<!--End-->
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018
-              <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with
-              <i class="mdi mdi-heart text-danger"></i>
-            </span>
-          </div>
-        </footer>
+      </div>
+      </div>
+        </div>
+      </div>
         <!-- partial -->
       </div>
-
-
-
-
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->

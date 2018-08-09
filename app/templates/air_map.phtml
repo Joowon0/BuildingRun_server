@@ -17,6 +17,17 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/teama_logo.png" />
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+   <style>
+
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+  
+
 </head>
 <body>
 
@@ -315,66 +326,59 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-   <div class="row" style="">
-            <div class="col-lg-6 grid-margin stretch-card" style="">
-              <div class="card">
-                <div class="card-body" style="">
-                  <h4 class="card-title">Line chart</h4>
-                  <canvas id="lineChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Area chart</h4>
-                  <canvas id="areaChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Pie chart</h4>
-                  <canvas id="pieChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018
-              <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with
-              <i class="mdi mdi-heart text-danger"></i>
-            </span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-<!--chart end-->
-         
 
-          
+<!--Start-->
+<div id="map"></div>
+    <script>
+var comics = (function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'url': "/mapjson",
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+})(); 
+      
+      function initMap() {
+        // Create the map.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 9,
+          center: {lat: 32.857, lng: -117.2231},
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
 
+        var infoWin = new google.maps.InfoWindow();
 
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        for (var hero in comics) {
+        // Create marker 
+                var myLatLng = new google.maps.LatLng(comics[hero].latitude, comics[hero].longitude);
 
-        </div>
-      </div>
-      </div>
-        </div>
-      </div>
-        <!-- partial -->
-      </div>
+                
+                
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: myLatLng,
+                    html: "<span class='pogo_name'>" + comics[hero].USN + "</a></span><br />" + comics[hero].latitude + "<br />" + comics[hero].longitude
+                });
+                    
+                google.maps.event.addListener(marker, 'click', function(evt) {
+                  infoWin.setContent("<span class='pgclass'>" +  comics[hero].USN + "</span><p>CO2: " + comics[hero].latitude + "<br />pm25: " + comics[hero].LO);
+                  infoWin.open(map, this);
+                })
+
+        }
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfHa_4ZD_TIff4iowZpOutTWlpAzw_Krg&callback=initMap">
+    </script>
+
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->

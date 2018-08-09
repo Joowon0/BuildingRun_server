@@ -57,8 +57,6 @@ $app->get('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_ch
 //$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
 //    ->setName('intro_teama');
 
-$app->get('/air_map', 'App\Controller\HomeController:air_map')
-    ->setName('air_map');
 
 $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
     ->setName('air_chart');
@@ -68,6 +66,17 @@ $app->get('/heart', 'App\Controller\HomeController:heart')
 
 $app->get('/sensor_list', 'App\Controller\HomeController:sensor_list')
     ->setName('sensor_list');
+
+//map
+
+$app->get('/mapjson', 'App\Controller\MapsController:mapjson')
+    ->setName('mapjson');
+
+$app->get('/air_map', 'App\Controller\MapsController:air_map')
+    ->setName('air_map');
+
+
+
 
 
 
