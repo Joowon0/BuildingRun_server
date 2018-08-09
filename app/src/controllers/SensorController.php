@@ -141,7 +141,8 @@ final class SensorController extends BaseController {
   }
 
   public function getSensorInfo($USN) {
-    $sql = "SELECT SSN, MAC FROM Sensor WHERE USN = ".$USN ;
+    $sql = "SELECT SSN, latitude, longitude FROM Sensor WHERE USN = ".$USN ;
+    echo $sql . "\n";exit;
     try {
     	$stmt = $this->db->query($sql);
     	$result = $stmt->fetch();
