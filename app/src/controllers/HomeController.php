@@ -141,6 +141,16 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'air_chart.phtml');
       return $response;
   }
+  public function air_chart10min(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_chart10min.phtml');
+      return $response;
+  }
+  public function air_chartHour(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_chartHour.phtml');
+      return $response;
+  }
 
   public function heart(Request $request, Response $response, $args)
   {
