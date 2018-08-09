@@ -61,7 +61,7 @@ final class DataController extends BaseController {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
 
-    if (isset($jsonArray['USN']) && isset($jsonArray['timestamp'])) {
+    if (isset($jsonArray['USN']) && isset($jsonArray['TIME'])) {
       $this->storeHeartData($jsonArray);
 
       $sendData = array("ACK"=>true);
@@ -76,6 +76,7 @@ final class DataController extends BaseController {
   }
 
   public function storeHeartData($data) {
+    print_r($data);exit;
     $sql = "INSERT INTO Heart_Info(Timestamp, HeartRate, HeartInterval, USN) VALUES ( '".
       $data['timestamp']."',".
       $data['heartRate'].",".
