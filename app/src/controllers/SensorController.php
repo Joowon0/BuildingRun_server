@@ -50,7 +50,7 @@ final class SensorController extends BaseController {
   //   }
   // }
   public function storeSensorInfo($USN, $MAC, $lati, $long) {
-    $sql = "INSERT INTO Sensor(MAC, USN, latitude, lognitude) VALUES ('".$MAC."', ".$USN.", ".$lati.", ".$long.")";
+    $sql = "INSERT INTO Sensor(MAC, USN, latitude, longitude) VALUES ('".$MAC."', ".$USN.", ".$lati.", ".$long.")";
     try {
       $stmt = $this->db->query($sql);
 
