@@ -1,22 +1,20 @@
-var timeOutId = 0;
-var ajaxFn = function(){
+$(document).ready(function(){
   $.ajax({
-    url : "/getJSON/heartReal",
+    url : "/getJSON/heart10Min",
     type : "GET",
     success : function(data){
-      //console.log(data);
+      console.log(data);
       data = JSON.parse(data);
 
       var timestamp = [];
       var heartRate  = [];
       var heartInterval = [];
 
-      len = data.length;
       for(var i in data) {
-        back = len - i - 1;
-        timestamp.push(data[back].hh + 'h ' + data[back].mm + 'm ' + data[back].ss + 's ' );
-        heartRate.push(data[back].HeartRate);
-        heartInterval.push(data[back].HeartInterval);
+        ts = data[i].ts;
+        timestamp.push(ts.substring(0,1) + 'd ' + ts.substring(3,4) + 'h ' + ts.substring(6) + '0m ');
+        heartRate.push(data[i].HeartRate);
+        heartInterval.push(data[i].HeartInterval);
       }
 
       var chartdata = {
@@ -76,8 +74,8 @@ var ajaxFn = function(){
       };
 
       var ctx = $("#mycanvas");
-      var heartRatectx = $("#heartRateChart");
-      var heratIntervalctx = $("#heartIntervalChart");
+      var heartRatectx = $("#heartRate10MinChart");
+      var heratIntervalctx = $("#heartInterval10MinChart");
 
 
       var LineGraph = new Chart(ctx, {
@@ -97,8 +95,4 @@ var ajaxFn = function(){
 
     }
   });
-}
-
-ajaxFn();
-//OR use BELOW line to wait 10 secs before first call
-setInterval(ajaxFn, 1000);
+});
