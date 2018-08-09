@@ -31,13 +31,14 @@ final class LoginController extends BaseController {
     }
     else
       $this->view->render($response, 'login.phtml', ['emailResult'=>$loginResult]);
+    return $response;
   }
 
   // for APP
   public function app_login(Request $request, Response $response, $args) {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
-    
+
     if (isset($jsonArray['email']) && isset($jsonArray['password'])) {
       list ($loginResult, $userINFO) = $this->login($jsonArray['email'], $jsonArray['password']);
 
@@ -50,6 +51,9 @@ final class LoginController extends BaseController {
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
+    }
+    else {
+      return $response->withStatus(204);
     }
   }
 

@@ -21,6 +21,7 @@ final class HomeController extends BaseController {
       echo "<script type='text/javascript'>alert('$message');</script>";
 
       echo "<script> document.location.href='/login'; </script>";
+      return $response;
     }
   }
 
@@ -29,6 +30,7 @@ final class HomeController extends BaseController {
       echo "<script type='text/javascript'>alert('$message');</script>";
 
       echo "<script> document.location.href='/'; </script>";
+      return $reponse;
     }
     else {
       $this->view->render($response, $link);
@@ -51,13 +53,13 @@ final class HomeController extends BaseController {
   {
     $message = "You are already signed in.";
     $link = 'login.phtml';
-    $this->need2BSignOut($response, $message, $link);
+    return $this->need2BSignOut($response, $message, $link);
   }
   public function register(Request $request, Response $response, $args)
   {
     $message = "You are already signed in. Please sign out before you register.";
     $link = 'register.phtml';
-    $this->need2BSignOut($response, $message, $link);
+    return $this->need2BSignOut($response, $message, $link);
   }
 
   public function signoutHandler(Request $request, Response $response, $args)
@@ -69,6 +71,7 @@ final class HomeController extends BaseController {
       session_destroy();
 
       echo "<script> document.location.href='/'; </script>";
+      return true;
   }
 
   public function app_signout(Request $request, Response $response, $args)
@@ -89,35 +92,35 @@ final class HomeController extends BaseController {
   {
     $message = "Please sign-in to view your profile.";
     $link = 'user_change.phtml';
-    $this->need2BSignIn($response, $message, $link);
+    return $this->need2BSignIn($response, $message, $link);
   }
 
      public function pw_check(Request $request, Response $response, $args)
   {
     $message = "Please sign-in before changing password.";
     $link = 'pw_check.phtml';
-    $this->need2BSignIn($response, $message, $link);
+    return $this->need2BSignIn($response, $message, $link);
   }
 
    public function pw_new(Request $request, Response $response, $args)
   {
     $message = "Please sign-in before changing password.";
     $link = 'pw_new.phtml';
-    $this->need2BSignIn($response, $message, $link);
+    return $this->need2BSignIn($response, $message, $link);
   }
 
   public function delete_id_check(Request $request, Response $response, $args)
   {
     $message = "Please sign-in to delete an account.";
     $link = 'delete_id_check.phtml';
-    $this->need2BSignIn($response, $message, $link);
+    return $this->need2BSignIn($response, $message, $link);
   }
 
   public function forgot_pw(Request $request, Response $response, $args)
   {
     $message = "You are already signed in..";
     $link = 'forgot_pw.phtml';
-    $this->need2BSignIn($response, $message, $link);
+    return $this->need2BSignOut($response, $message, $link);
   }
 
 
@@ -133,6 +136,16 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'air_chart.phtml');
       return $response;
   }
+  public function air_chart10min(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_chart10min.phtml');
+      return $response;
+  }
+  public function air_chartHour(Request $request, Response $response, $args)
+  {
+      $this->view->render($response, 'air_chartHour.phtml');
+      return $response;
+  }
 
   public function heart(Request $request, Response $response, $args)
   {
@@ -145,7 +158,7 @@ final class HomeController extends BaseController {
       $this->view->render($response, 'sensor_list.phtml');
       return $response;
   }
-  
+
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $charactersLength = strlen($characters);

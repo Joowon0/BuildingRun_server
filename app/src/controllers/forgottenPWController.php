@@ -34,6 +34,7 @@ final class forgottenPWController extends BaseController {
         EmailController::sendNewPwEmail($userINFO['EmailAddress'], $userINFO['FirstName'], $userINFO['LastName'], $new_password);
 
       $sendData = array("Result"=>$email_existence);
+      
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
@@ -75,6 +76,7 @@ final class forgottenPWController extends BaseController {
     $sql = "UPDATE User SET HPassword='".$new_password."' WHERE EmailAddress='".$email."' ";
     try {
       $stmt = $this->db->query($sql);
+      return true;
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
     }

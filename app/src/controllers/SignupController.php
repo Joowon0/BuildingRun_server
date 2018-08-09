@@ -49,6 +49,8 @@ final class SignupController extends BaseController {
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($sendData));
     }
+    else
+      return $respons->withStatus(204);
   }
 
   // outermost common function
@@ -97,6 +99,8 @@ final class SignupController extends BaseController {
       "'". $userINFO['phoneNum'] ."'".    // PhoneNumber
       ")";
     $stmt = $this->db->query($sql);
+
+    return true;
   }
 
   public function getUSN($email) {
@@ -114,6 +118,7 @@ final class SignupController extends BaseController {
   public function storeNonceInfo($USN, $nonce) {
     $sql = "INSERT INTO Nonce( Nonce, USN) VALUES ( '".$nonce."' , '$USN' )";
     $stmt = $this->db->query($sql);
+    return true;
   }
 
 
@@ -151,6 +156,7 @@ final class SignupController extends BaseController {
   public function deleteNonce($nonce_ID) {
     $sql = "DELETE FROM Nonce WHERE Nonce_ID = ". $nonce_ID;
     $stmt = $this->db->query($sql);
+    return true;
   }
 }
 ?>

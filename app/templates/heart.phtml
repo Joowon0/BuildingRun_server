@@ -35,7 +35,7 @@
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
           <li class="nav-item">
             <a href="#" class="nav-link">
-              
+
             </a>
           </li>
           <li class="nav-item">
@@ -315,16 +315,62 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-  <div class="main-panel">
-        <div class="content-wrapper">
-         
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Heart Rate (Real-time)</h4>
+                  <canvas id="heartRateChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Heart Interval (Real-time)</h4>
+                  <canvas id="heartIntervalChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Heart Rate (period : 10min)</h4>
+                  <canvas id="heartRate10MinChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Heart Interval (period : 10min)</h4>
+                  <canvas id="heartInterval10MinChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Heart Rate (period : 1h)</h4>
+                  <canvas id="heartRateHourChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Heart Interval (period : 1h)</h4>
+                  <canvas id="heartIntervalHourChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <img src="../../images/team.PNG" style="width: 135%; vertical-align: middle" />
         </div>
-      </div>
-      </div>
-        </div>
-      </div>
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -336,6 +382,10 @@
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <script src="/js/heartGraph.js"></script>
+  <script src="/js/heart10minGraph.js"></script>
+  <script src="/js/heartHourGraph.js"></script>
+
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->

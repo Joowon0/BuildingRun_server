@@ -1,6 +1,6 @@
 <?php
 // Routes
-
+// user management
 $app->get('/', 'App\Controller\HomeController:main')
     ->setName('main_page');
 $app->post('/', 'App\Controller\HomeController:main')
@@ -54,12 +54,42 @@ $app->post('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_c
 $app->get('/delete_id_checkHandler', 'App\Controller\IDCancellation:delete_id_checkHandler')
     ->setName('delete_id_checkHandler');
 
+// sensor management
+$app->post('/app/sensorRegister', 'App\Controller\SensorController:app_sensorRegister')
+    ->setName('app_sensorRegister');
+$app->post('/app/sensorDeregister', 'App\Controller\SensorController:app_sensorDeregister')
+    ->setName('app_sensorDeregister');
+$app->post('/app/sensorListView', 'App\Controller\SensorController:app_sensorListView')
+    ->setName('app_sensorListView');
+
+// chart
+$app->get('/getJSON/all', 'App\Controller\ChartController:getJSON')
+    ->setName('getJSONall');
+$app->get('/getJSON/min', 'App\Controller\ChartController:minute')
+    ->setName('getJSONmin');
+$app->get('/getJSON/hour', 'App\Controller\ChartController:hour')
+    ->setName('getJSONhour');
+
+$app->get('/getJSON/heartReal', 'App\Controller\ChartController:heartRateReal')
+    ->setName('getJSONheartRateReal');
+$app->get('/getJSON/heart10Min', 'App\Controller\ChartController:heartRate10Min')
+    ->setName('getJSONheartRate10Min');
+$app->get('/getJSON/heartHour', 'App\Controller\ChartController:heartRateHour')
+    ->setName('getJSONheartRateHour');
+
+$app->get('/chartTEST', 'App\Controller\ChartController:chartTEST')
+    ->setName('chartTEST');
+
 //$app->get('/intro_teama', 'App\Controller\HomeController:intro_teama')
 //    ->setName('intro_teama');
 
 
 $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
     ->setName('air_chart');
+$app->get('/air_chart10min', 'App\Controller\HomeController:air_chart10min')
+    ->setName('airair_chart10min_chart');
+$app->get('/air_chartHour', 'App\Controller\HomeController:air_chartHour')
+    ->setName('air_chartHour');
 
 $app->get('/heart', 'App\Controller\HomeController:heart')
     ->setName('heart');
@@ -97,7 +127,10 @@ $app->post('/app/forgotPW', 'App\Controller\forgottenPWController:app_forgotPW')
     ->setName('app_forgotPW');
 $app->post('/app/accountCancel', 'App\Controller\IDCancellation:app_accountCancel')
     ->setName('app_accountCancel');
-
+$app->post('/app/airQualityDataTransfer', 'App\Controller\DataController:app_airQualityDataTransfer')
+    ->setName('app_airQualityDataTransfer');
+$app->post('/app/heartDataTransfer', 'App\Controller\DataController:app_heartDataTransfer')
+    ->setName('app_heartDataTransfer');
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
