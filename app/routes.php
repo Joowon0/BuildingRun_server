@@ -81,8 +81,7 @@ $app->get('/getJSON/heart10Min', 'App\Controller\ChartController:heartRate10Min'
     ->setName('getJSONheartRate10Min');
 $app->get('/getJSON/heartHour', 'App\Controller\ChartController:heartRateHour')
     ->setName('getJSONheartRateHour');
-
-
+    
 // chart (air)
 $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
     ->setName('air_chart');
@@ -98,6 +97,17 @@ $app->get('/heart', 'App\Controller\HomeController:heart')
 // sensor list view
 $app->get('/sensor_list', 'App\Controller\HomeController:sensor_list')
     ->setName('sensor_list');
+
+//map
+
+$app->get('/mapjson', 'App\Controller\MapsController:mapjson')
+    ->setName('mapjson');
+
+$app->get('/air_map', 'App\Controller\MapsController:air_map')
+    ->setName('air_map');
+
+
+
 
 
 
