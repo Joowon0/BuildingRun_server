@@ -132,4 +132,70 @@ final class ChartController extends BaseController {
       echo "ERROR : " . $e->getMessage();
     }
   }
+
+  // for APP historic data view
+  public function app_heartHistory(Request $request, Response $response, $args) {
+    $json = file_get_contents('php://input');
+    $jsonArray = json_decode($json, true);
+
+    if (isset($jsonArray['USN']) && isset($jsonArray['period']) &&
+        isset($jsonArray['startDate']) && isset($jsonArray['endDate'])) {
+
+      if ($jsonArray['period'] == 1)
+        $airData = $this->hourHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);
+      else if ($jsonArray['period'] == 2)
+        $airData = $this->dayHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);;
+
+      return $response->withStatus(200)
+          ->withHeader('Content-Type', 'application/json')
+          ->write(json_encode($airData));
+    }
+    else
+      return $response->withStatus(204);
+  }
+
+  public function hourHeart($USN, $startDate, $endDate) {
+    $sql = "SELECT SUBSTR(Timestamp, 1, 13) as TIME, avg(HeartRate) as HeartRate, avg(HeartInterval) as HeartInterval
+            FROM Heart_Info
+            WHERE USN = ".$USN." AND
+            '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 13)";
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      $airData = array();
+
+      while ($result != null) {
+        array_push($airData, $result);
+        $result = $stmt->fetch();
+      }
+      //print_r($data); exit;
+      return $airData;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function dayHeart($MAC, $startDate, $endDate) {
+    $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(HeartRate) as HeartRate, avg(HeartInterval) as HeartInterval
+            FROM Heart_Info
+            WHERE USN = ".$USN." AND
+            '".$startDate."' <= Timestamp AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 10)";
+
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      $airData = array();
+
+      while ($result != null) {
+        array_push($airData, $result);
+        $result = $stmt->fetch();
+      }
+      //print_r($data); exit;
+      return $airData;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
 }
