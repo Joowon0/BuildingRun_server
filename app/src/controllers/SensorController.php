@@ -101,6 +101,8 @@ final class SensorController extends BaseController {
     $message = "Sensor " . $_SESSION['MAC'] . " is deregistered";
     echo "<script type='text/javascript'>alert('$message');</script>";
 
+    echo "<script> document.location.href='/sensor_list'; </script>";
+
     return true;
   }
 

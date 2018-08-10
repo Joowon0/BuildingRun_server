@@ -156,12 +156,46 @@ final class HomeController extends BaseController {
 
   public function air_chart10min(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'air_chart10min.phtml');
+      if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
+        $sql = "SELECT * FROM Sensor WHERE USN = ".$_SESSION['USN']." LIMIT 1";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        $_SESSION['MAC'] = $result['MAC'];
+      }
+
+      $sql = "SELECT * FROM Sensor WHERE MAC = '".$_SESSION['MAC']."' LIMIT 1";
+
+      try {
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+
+      } catch (PDOException $e) {
+        echo "ERROR : " . $e->getMessage();
+      }
+
+      $this->view->render($response, 'air_chart10min.phtml', ['MAC'=>$result['MAC'], 'lati'=>$result['latitude'], 'logn'=>$result['longitude']]);
       return $response;
   }
   public function air_chartHour(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'air_chartHour.phtml');
+      if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
+        $sql = "SELECT * FROM Sensor WHERE USN = ".$_SESSION['USN']." LIMIT 1";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        $_SESSION['MAC'] = $result['MAC'];
+      }
+
+      $sql = "SELECT * FROM Sensor WHERE MAC = '".$_SESSION['MAC']."' LIMIT 1";
+
+      try {
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+
+      } catch (PDOException $e) {
+        echo "ERROR : " . $e->getMessage();
+      }
+
+      $this->view->render($response, 'air_chartHour.phtml', ['MAC'=>$result['MAC'], 'lati'=>$result['latitude'], 'logn'=>$result['longitude']]);
       return $response;
   }
 
@@ -171,7 +205,7 @@ final class HomeController extends BaseController {
       return $response;
   }
 
-  
+
 
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -193,5 +227,5 @@ final class HomeController extends BaseController {
 
 
 
-  
+
 }
