@@ -62,9 +62,6 @@ $app->post('/app/sensorDeregister', 'App\Controller\SensorController:app_sensorD
 $app->post('/app/sensorListView', 'App\Controller\SensorController:app_sensorListView')
     ->setName('app_sensorListView');
 
-$app->get('/air_map', 'App\Controller\HomeController:air_map')
-    ->setName('air_map');
-
 
 // chart JSON data (air)
 $app->get('/getJSON/all', 'App\Controller\ChartController:getJSON')
@@ -81,7 +78,7 @@ $app->get('/getJSON/heart10Min', 'App\Controller\ChartController:heartRate10Min'
     ->setName('getJSONheartRate10Min');
 $app->get('/getJSON/heartHour', 'App\Controller\ChartController:heartRateHour')
     ->setName('getJSONheartRateHour');
-    
+
 // chart (air)
 $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
     ->setName('air_chart');
@@ -132,6 +129,11 @@ $app->post('/app/airQualityDataTransfer', 'App\Controller\DataController:app_air
     ->setName('app_airQualityDataTransfer');
 $app->post('/app/heartDataTransfer', 'App\Controller\DataController:app_heartDataTransfer')
     ->setName('app_heartDataTransfer');
+
+$app->get('/app/airQualityHistory', 'App\Controller\ChartController:app_airQualityHistory')
+    ->setName('app_airQualityHistory');
+$app->get('/app/heartHistory', 'App\Controller\ChartController:app_heartHistory')
+    ->setName('app_heartHistory');
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
