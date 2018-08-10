@@ -73,12 +73,7 @@ final class ChartController extends BaseController {
   public function app_airQualityHistory(Request $request, Response $response, $args) {
     $json = file_get_contents('php://input');
     $jsonArray = json_decode($json, true);
-    echo "asdf";
-    echo $jsonArray['MAC'];
-    echo $jsonArray['period'];
-    echo $jsonArray['startDate'];
-    echo $jsonArray['endDate'];
-    exit;
+
     if (isset($jsonArray['MAC']) && isset($jsonArray['period']) &&
         isset($jsonArray['startDate']) && isset($jsonArray['endDate'])) {
 
