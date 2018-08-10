@@ -130,9 +130,9 @@ $app->post('/app/airQualityDataTransfer', 'App\Controller\DataController:app_air
 $app->post('/app/heartDataTransfer', 'App\Controller\DataController:app_heartDataTransfer')
     ->setName('app_heartDataTransfer');
 
-$app->get('/app/airQualityHistory', 'App\Controller\ChartController:app_airQualityHistory')
+$app->post('/app/airQualityHistory', 'App\Controller\ChartController:app_airQualityHistory')
     ->setName('app_airQualityHistory');
-$app->get('/app/heartHistory', 'App\Controller\ChartController:app_heartHistory')
+$app->post('/app/heartHistory', 'App\Controller\ChartController:app_heartHistory')
     ->setName('app_heartHistory');
 
 // show database for test
