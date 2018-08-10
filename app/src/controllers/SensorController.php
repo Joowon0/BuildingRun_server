@@ -94,6 +94,19 @@ final class SensorController extends BaseController {
       return $response->withStatus(204);
   }
 
+  // for WEB
+  public function sensorDeregister(Request $request, Response $response, $args) {
+    echo "<script>
+          if (confirm(\"Do you really want to deregister?\")) {
+            ". $this->deleteMAC($_SESSION['MAC']); ."
+          } else {
+            document.location.href='/sensor_list';
+          }
+          </script>";
+
+    return true;
+  }
+
   public function checkMACExist2($MAC) {
     $sql = "SELECT * FROM Sensor WHERE MAC = '".$MAC."'" ;
     try {
