@@ -6,11 +6,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 final class MapsController extends BaseController
 {
-   
+
 	 public function mapjson(Request $request, Response $response, $args) {
-        $sql = "SELECT Sensor.MAC, CO, SO2, NO2, O3, PM25, TEMP
-                FROM AirQuality_Info JOIN Sensor
-                ORDER BY Timestamp DESC";
+        $sql = "SELECT *
+                FROM Sensor RIGHT JOIN (
+                    SELECT AirQuality_Info.MAC as MAC, AirQuality_Info.Timestamp as Timestamp, AirQuality_Info.CO as CO, AirQuality_Info.SO2 as SO2, AirQuality_Info.NO2 as NO2, AirQuality_Info.O3 as O3, AirQuality_Info.PM25 as PM25, AirQuality_Info.TEMP as TEMP
+                    FROM AirQuality_Info RIGHT JOIN (SELECT max(Timestamp) as ts, MAC FROM AirQuality_Info GROUP BY MAC) x
+                    ON AirQuality_Info.Timestamp = x.ts AND AirQuality_Info.MAC = x.MAC) y
+                ON Sensor.MAC = y.MAC";
         try {
             $sth = $this->db->query($sql);
             $pogo = $sth->fetchAll();
@@ -18,11 +21,11 @@ final class MapsController extends BaseController
             if ($pogo) {
                 $sensor_array = [];
                 foreach ($pogo as $sensor) {
-                  
+
                     $sensor_array[] = array(
 
-                        "MAC"=>$sensor['MAC'], 
-                        "CO" => $sensor['CO'], 
+                        "MAC"=>$sensor['MAC'],
+                        "CO" => $sensor['CO'],
                         "SO2" => $sensor['SO2'],
                         "NO2" => $sensor['NO2'],
                         "O3" => $sensor['O3'],
@@ -30,8 +33,8 @@ final class MapsController extends BaseController
                         "TEMP" => $sensor['TEMP'],
                         "latitude" => $sensor['latitude'],
                         "longitude" => $sensor['longitude'],
-                    );   
-                        
+                    );
+
                 }
 
                //return $response->withHeader(200)
@@ -49,12 +52,12 @@ final class MapsController extends BaseController
             echo '{"error":{"text":'. $e->getMessage() .'}}';
         }
 
-   } 
+   }
 
 
     public function air_map(Request $request, Response $response, $args) {
         $response = $this->view->render($response, 'air_map.phtml');
         return $response;
-    }    
+    }
 
 }
