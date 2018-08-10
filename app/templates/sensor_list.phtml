@@ -316,6 +316,61 @@
       <div class="main-panel">
         <div class="content-wrapper">
          
+          <script>
+          var sensor_list = (function () {
+          var json = null;
+
+          $.ajax({
+             'async': false,
+             'url': "/sensor_json",
+             'dataType': "json",
+             'success': function (data) {
+             json = data;
+        }
+    });
+    return json;
+})(); 
+      
+   function init_list() {
+       
+        for (var hero in comics) {
+        // Create marker 
+                var myLatLng = new google.maps.LatLng(comics[hero].latitude, comics[hero].longitude);
+
+                
+                
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: myLatLng,
+                    html: "<span class='pogo_name'>" + comics[hero].MAC
+                     + "</a></span><br />" + comics[hero].CO 
+                     + "<br />" + comics[hero].SO2 
+                     + "<br />" + comics[hero].NO2 
+                     + "<br />" + comics[hero].O3 
+                     + "<br />" + comics[hero].PM25 
+                     + "<br />" + comics[hero].TEMP
+                });
+                    
+                google.maps.event.addListener(marker, 'click', function(evt) {
+                  infoWin.setContent("<span class='pgclass'>" 
+                    +  comics[hero].MAC 
+                    + "</span><p>CO: " + comics[hero].CO 
+                    + "<br />SO2: " + comics[hero].SO2
+                    + "<br />NO2: " + comics[hero].NO2
+                    + "<br />O3: " + comics[hero].O3
+                    + "<br />PM25: " + comics[hero].PM25
+                    + "<br />TEMP: " + comics[hero].TEMP
+                    
+                    );
+                  infoWin.open(map, this);
+                })
+
+        }
+      }
+    </script>
+
+
+
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -351,17 +406,16 @@
                             12:34:56:78:90:AB
                           </td>
                           <td>
-                            Herman Beck
+                            32.17
                           </td>
                           <td>
-                              
+                            -117.54
                           </td>
                           <td>
-                            $ 77.99
+                            2018-08-07 08:45:33
                           </td>
                           <td>
                             <button type="button" class="btn btn-dark btn-rounded btn-xs">Show me</button>
-                            
                           </td>
                           <td> <button type="button" class="btn btn-danger btn-rounded btn-xs">Deregister</button>
                           </td>>
