@@ -92,8 +92,12 @@ $app->get('/heart', 'App\Controller\HomeController:heart')
     ->setName('heart');
 
 // sensor list view
-$app->get('/sensor_list', 'App\Controller\HomeController:sensor_list')
+$app->get('/sensor_list', 'App\Controller\SensorListController:sensor_list')
     ->setName('sensor_list');
+
+$app->get('/sensor_json', 'App\Controller\SensorListController:sensor_json')
+    ->setName('sensor_json');
+
 
 //map
 

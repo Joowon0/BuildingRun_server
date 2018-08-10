@@ -153,11 +153,7 @@ final class HomeController extends BaseController {
       return $response;
   }
 
-  public function sensor_list(Request $request, Response $response, $args)
-  {
-      $this->view->render($response, 'sensor_list.phtml');
-      return $response;
-  }
+  
 
   static function randomString($length = 6) {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -168,4 +164,16 @@ final class HomeController extends BaseController {
       }
       return $randomString;
   }
+
+
+
+
+
+
+
+
+
+
+
+  
 }

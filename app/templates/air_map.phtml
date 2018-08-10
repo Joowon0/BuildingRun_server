@@ -351,7 +351,7 @@ var comics = (function () {
         mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        var infoWin = new google.maps.InfoWindow();
+        var infowindow = new google.maps.InfoWindow();
 
         // Construct the circle for each value in citymap.
         // Note: We scale the area of the circle based on the population.
@@ -360,7 +360,7 @@ var comics = (function () {
                 var myLatLng = new google.maps.LatLng(comics[hero].latitude, comics[hero].longitude);
 
                 
-                
+            
                 var marker = new google.maps.Marker({
                     map: map,
                     position: myLatLng,
@@ -372,20 +372,25 @@ var comics = (function () {
                      + "<br />" + comics[hero].PM25 
                      + "<br />" + comics[hero].TEMP
                 });
-                    
+                
+
                 google.maps.event.addListener(marker, 'click', function(evt) {
-                  infoWin.setContent("<span class='pgclass'>" 
-                    +  comics[hero].MAC 
-                    + "</span><p>CO: " + comics[hero].CO 
-                    + "<br />SO2: " + comics[hero].SO2
-                    + "<br />NO2: " + comics[hero].NO2
-                    + "<br />O3: " + comics[hero].O3
-                    + "<br />PM25: " + comics[hero].PM25
-                    + "<br />TEMP: " + comics[hero].TEMP
-                    
-                    );
-                  infoWin.open(map, this);
+                  infowindow.setContent(this.html);
+                  infowindow.open(map, this);
                 })
+
+                radiuss = 350;
+                color = "green";
+                var cityCircle = new google.maps.Circle({
+                    strokeColor: color,
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    fillColor: color,
+                    fillOpacity: 0.15,
+                    map: map,
+                    center: myLatLng,
+                    radius: radiuss
+                });
 
         }
       }
