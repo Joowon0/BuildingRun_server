@@ -275,7 +275,7 @@
           <li class="nav-item">
             <a class="nav-link" href="sensor_list">
               <i class="menu-icon mdi mdi-chart-line"></i>
-              <span class="menu-title">My sensor List</span>
+              <span class="menu-title">My sensor</span>
             </a>
           </li>
           <!--
@@ -347,7 +347,7 @@ var comics = (function () {
         // Create the map.
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 9,
-          center: {lat: 32.857, lng: -117.2231},
+          center: {lat: 32.8826086, lng: -117.2344811},
         mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -364,11 +364,26 @@ var comics = (function () {
                 var marker = new google.maps.Marker({
                     map: map,
                     position: myLatLng,
-                    html: "<span class='pogo_name'>" + comics[hero].USN + "</a></span><br />" + comics[hero].latitude + "<br />" + comics[hero].longitude
+                    html: "<span class='pogo_name'>" + comics[hero].MAC
+                     + "</a></span><br />" + comics[hero].CO 
+                     + "<br />" + comics[hero].SO2 
+                     + "<br />" + comics[hero].NO2 
+                     + "<br />" + comics[hero].O3 
+                     + "<br />" + comics[hero].PM25 
+                     + "<br />" + comics[hero].TEMP
                 });
                     
                 google.maps.event.addListener(marker, 'click', function(evt) {
-                  infoWin.setContent("<span class='pgclass'>" +  comics[hero].USN + "</span><p>CO2: " + comics[hero].latitude + "<br />pm25: " + comics[hero].LO);
+                  infoWin.setContent("<span class='pgclass'>" 
+                    +  comics[hero].MAC 
+                    + "</span><p>CO: " + comics[hero].CO 
+                    + "<br />SO2: " + comics[hero].SO2
+                    + "<br />NO2: " + comics[hero].NO2
+                    + "<br />O3: " + comics[hero].O3
+                    + "<br />PM25: " + comics[hero].PM25
+                    + "<br />TEMP: " + comics[hero].TEMP
+                    
+                    );
                   infoWin.open(map, this);
                 })
 

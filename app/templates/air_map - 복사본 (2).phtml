@@ -17,6 +17,17 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/teama_logo.png" />
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+   <style>
+
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+  
+
 </head>
 <body>
 
@@ -315,18 +326,59 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-  <div class="main-panel">
-        <div class="content-wrapper">
-         
 
-          <img src="../../images/team.PNG" style="width: 135%; vertical-align: middle" />
-        </div>
-      </div>
-      </div>
-        </div>
-      </div>
-        <!-- partial -->
-      </div>
+<!--Start-->
+<div id="map"></div>
+    <script>
+var comics = (function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'url': "/mapjson",
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+})(); 
+      
+      function initMap() {
+        // Create the map.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 9,
+          center: {lat: 32.857, lng: -117.2231},
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infoWin = new google.maps.InfoWindow();
+
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        for (var hero in comics) {
+        // Create marker 
+                var myLatLng = new google.maps.LatLng(comics[hero].latitude, comics[hero].longitude);
+
+                
+                
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: myLatLng,
+                    html: "<span class='pogo_name'>" + comics[hero].MAC + "</a></span><br />" + comics[hero].latitude + "<br />" + comics[hero].longitude
+                });
+                    
+                google.maps.event.addListener(marker, 'click', function(evt) {
+                  infoWin.setContent("<span class='pgclass'>" +  comics[hero].MAC + "</span><p>CO2: " + comics[hero].latitude + "<br />pm25: " + comics[hero].LO);
+                  infoWin.open(map, this);
+                })
+
+        }
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfHa_4ZD_TIff4iowZpOutTWlpAzw_Krg&callback=initMap">
+    </script>
+
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->

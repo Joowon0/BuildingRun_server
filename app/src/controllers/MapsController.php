@@ -8,8 +8,9 @@ final class MapsController extends BaseController
 {
    
 	 public function mapjson(Request $request, Response $response, $args) {
-        $sql = "SELECT USN, latitude, longitude
-                FROM Sensor";
+        $sql = "SELECT Sensor.MAC, CO, SO2, NO2, O3, PM25, TEMP
+                FROM AirQuality_Info JOIN Sensor
+                ORDER BY Timestamp DESC";
         try {
             $sth = $this->db->query($sql);
             $pogo = $sth->fetchAll();
@@ -18,9 +19,18 @@ final class MapsController extends BaseController
                 $sensor_array = [];
                 foreach ($pogo as $sensor) {
                   
-                    $sensor_array[] = array("USN"=>$sensor['USN'], 
-                        "latitude" => $sensor['latitude'], 
-                        "longitude" => $sensor['longitude']);   
+                    $sensor_array[] = array(
+
+                        "MAC"=>$sensor['MAC'], 
+                        "CO" => $sensor['CO'], 
+                        "SO2" => $sensor['SO2'],
+                        "NO2" => $sensor['NO2'],
+                        "O3" => $sensor['O3'],
+                        "PM25" => $sensor['PM25'],
+                        "TEMP" => $sensor['TEMP'],
+                        "latitude" => $sensor['latitude'],
+                        "longitude" => $sensor['longitude'],
+                    );   
                         
                 }
 
