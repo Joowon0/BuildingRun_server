@@ -1,10 +1,9 @@
-var timeOutId = 0;
-var ajaxFn = function(){
+$(document).ready(function(){
   $.ajax({
-    url : "/getJSON/all",
+    url : "/getJSON/airHour",
     type : "GET",
     success : function(data){
-      // console.log(data);
+      console.log(data);
       data = JSON.parse(data);
 
       var timestamp = [];
@@ -16,7 +15,8 @@ var ajaxFn = function(){
       var TEMP = [];
 
       for(var i in data) {
-        timestamp.push(data[i].Timestamp);
+        ts = data[i].ts;
+        timestamp.push(ts.substring(0,2) + 'd ' + ts.substring(3,5) + 'h ' + ts.substring(6) + '0m ');
         CO.push(data[i].CO);
         SO2.push(data[i].SO2);
         NO2.push(data[i].NO2);
@@ -225,8 +225,4 @@ var ajaxFn = function(){
 
     }
   });
-}
-
-ajaxFn();
-//OR use BELOW line to wait 10 secs before first call
-setInterval(ajaxFn, 5000);
+});

@@ -66,10 +66,10 @@ $app->post('/app/sensorListView', 'App\Controller\SensorController:app_sensorLis
 // chart JSON data (air)
 $app->get('/getJSON/all', 'App\Controller\ChartController:getJSON')
     ->setName('getJSONall');
-$app->get('/getJSON/min', 'App\Controller\ChartController:minute')
-    ->setName('getJSONmin');
-$app->get('/getJSON/hour', 'App\Controller\ChartController:hour')
-    ->setName('getJSONhour');
+$app->get('/getJSON/air10Min', 'App\Controller\ChartController:air10Min')
+    ->setName('getJSONair10Min');
+$app->get('/getJSON/airHour', 'App\Controller\ChartController:airHour')
+    ->setName('getJSONairHour');
 
 // chart JSON data (heart)
 $app->get('/getJSON/heartReal', 'App\Controller\ChartController:heartRateReal')

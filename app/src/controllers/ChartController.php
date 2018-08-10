@@ -49,16 +49,6 @@ final class ChartController extends BaseController {
   }
 
   // air quality information
-  public function hour(Request $request, Response $response, $args) {
-    $sql = "SELECT avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM2_5) AS PM2_5, SUBSTR(Timestamp, 6, 8) AS timestamp FROM AirQuality_Info GROUP BY SUBSTR(Timestamp, 6, 8)";
-    $this->makeJSON($sql);
-  }
-
-  public function minute(Request $request, Response $response, $args) {
-    $sql = "SELECT avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM2_5) AS PM2_5, SUBSTR(Timestamp, 6, 11) AS timestamp FROM AirQuality_Info GROUP BY SUBSTR(Timestamp, 6, 11)";
-    $this->makeJSON($sql);
-  }
-
   public function getJSON(Request $request, Response $response, $args) {
     $sql = "SELECT * FROM AirQuality_Info JOIN Sensor WHERE USN = ".$_SESSION['USN']." ORDER BY Timestamp";
 
@@ -66,7 +56,23 @@ final class ChartController extends BaseController {
     return $response;
   }
 
+  public function air10Min(Request $request, Response $response, $args) {
+    $MAC = 'fdsa';
+    $sql = "SELECT SUBSTR(Timestamp, 9, 7) as ts, avg(CO) as CO, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3, avg(PM25) as PM25, avg(TEMP) as TEMP
+            FROM AirQuality_Info
+            WHERE MAC = '".$MAC."'
+            GROUP BY SUBSTR(Timestamp, 9, 7)";
+    $this->makeJSON($sql);
+  }
 
+  public function airHour(Request $request, Response $response, $args) {
+    $MAC = 'fdsa';
+    $sql = "SELECT SUBSTR(Timestamp, 9, 5) as ts, avg(CO) as CO, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3, avg(PM25) as PM25, avg(TEMP) as TEMP
+            FROM AirQuality_Info
+            WHERE MAC = '".$MAC."'
+            GROUP BY SUBSTR(Timestamp, 9, 5)";
+    $this->makeJSON($sql);
+  }
 
 
   // for APP historic data view
