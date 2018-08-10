@@ -80,7 +80,7 @@ final class ChartController extends BaseController {
       if ($jsonArray['period'] == 1)
         $airData = $this->hourAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
       else if ($jsonArray['period'] == 2)
-        ;
+        $airData = $this->dayAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);;
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
@@ -92,6 +92,24 @@ final class ChartController extends BaseController {
 
   public function hourAirQuality($MAC, $startDate, $endDate) {
     $sql = "SELECT SUBSTR(Timestamp, 1, 13) as TIME, avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM25) AS PM25, avg(TEMP) as TEMP FROM AirQuality_Info WHERE '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 13)";
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      $airData = array();
+
+      while ($result != null) {
+        array_push($airData, $result);
+        $result = $stmt->fetch();
+      }
+      //print_r($data); exit;
+      return $airData;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+  public function dayAirQuality($MAC, $startDate, $endDate) {
+    $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM25) AS PM25, avg(TEMP) as TEMP FROM AirQuality_Info WHERE '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 10)";
     try {
     	$stmt = $this->db->query($sql);
     	$result = $stmt->fetch();
