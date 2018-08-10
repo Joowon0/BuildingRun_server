@@ -229,4 +229,4 @@ var ajaxFn = function(){
 
 ajaxFn();
 //OR use BELOW line to wait 10 secs before first call
-setInterval(ajaxFn, 5000);
+setInterval(ajaxFn, 1000);
