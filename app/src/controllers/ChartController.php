@@ -176,11 +176,11 @@ final class ChartController extends BaseController {
     }
   }
 
-  public function dayHeart($MAC, $startDate, $endDate) {
+  public function dayHeart($USN, $startDate, $endDate) {
     $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(HeartRate) as HeartRate, avg(HeartInterval) as HeartInterval
             FROM Heart_Info
             WHERE USN = ".$USN." AND
-            '".$startDate."' <= Timestamp AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 10)";
+            '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 10)";
 
     try {
     	$stmt = $this->db->query($sql);
