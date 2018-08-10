@@ -62,7 +62,7 @@ $app->post('/app/sensorDeregister', 'App\Controller\SensorController:app_sensorD
 $app->post('/app/sensorListView', 'App\Controller\SensorController:app_sensorListView')
     ->setName('app_sensorListView');
 
-$app->post('/sensorDeregister', 'App\Controller\SensorController:sensorDeregister')
+$app->get('/sensorDeregister', 'App\Controller\SensorController:sensorDeregister')
     ->setName('sensorDeregister');
 
 // chart JSON data (air)
