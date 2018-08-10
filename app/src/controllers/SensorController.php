@@ -96,13 +96,10 @@ final class SensorController extends BaseController {
 
   // for WEB
   public function sensorDeregister(Request $request, Response $response, $args) {
-    echo "<script>
-          if (confirm(\"Do you really want to deregister?\")) {
-            <?php $this->deleteMAC($_SESSION['MAC']); ?>
-          } else {
-            document.location.href='/sensor_list';
-          }
-          </script>";
+   $this->deleteMAC($_SESSION['MAC']);
+
+    $message = "Sensor " . $_SESSION['MAC'] . " is deregistered";
+    echo "<script type='text/javascript'>alert('$message');</script>";
 
     return true;
   }
