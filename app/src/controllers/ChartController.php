@@ -167,7 +167,9 @@ final class ChartController extends BaseController {
       else if ($jsonArray['period'] == 2)
         $airData = $this->hourHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);
       else if ($jsonArray['period'] == 3)
-        $airData = $this->dayHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);;
+        $airData = $this->dayHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);
+      else
+        return $response->withStatus(204);
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
