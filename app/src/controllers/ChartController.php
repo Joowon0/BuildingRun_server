@@ -51,7 +51,7 @@ final class ChartController extends BaseController {
 
   // air quality information
   public function getJSON(Request $request, Response $response, $args) {
-    $sql = "SELECT * FROM AirQuality_Info JOIN Sensor WHERE USN = ".$_SESSION['USN']." ORDER BY Timestamp";
+    $sql = "SELECT * FROM AirQuality_Info JOIN Sensor ON AirQuality_Info.MAC = Sensor.MAC WHERE Sensor.MAC = '".$_SESSION['MAC']."' ORDER BY Timestamp;";
 
     $this->makeJSON($sql);
     return $response;
