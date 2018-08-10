@@ -84,12 +84,18 @@ final class ChartController extends BaseController {
     if (isset($jsonArray['MAC']) && isset($jsonArray['period']) &&
         isset($jsonArray['startDate']) && isset($jsonArray['endDate'])) {
 
+      $airData = array ();
       if ($jsonArray['period'] == 1)
         $airData = $this->minAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
       else if ($jsonArray['period'] == 2)
         $airData = $this->hourAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
       else if ($jsonArray['period'] == 3)
-        $airData = $this->dayAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);;
+        $airData = $this->dayAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
+      else if ($jsonArray['period'] == 4)
+        $airData = $this->tenDayAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
+
+      print_r($airData);
+      exit();
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
@@ -137,6 +143,30 @@ final class ChartController extends BaseController {
   }
   public function dayAirQuality($MAC, $startDate, $endDate) {
     $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM25) AS PM25, avg(TEMP) as TEMP FROM AirQuality_Info WHERE MAC = '".$MAC."' AND '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 10)";
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      $airData = array();
+
+      while ($result != null) {
+        array_push($airData, $result);
+        $result = $stmt->fetch();
+      }
+      //print_r($data); exit;
+      return $airData;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+  public function tenDayAirQuality($MAC, $startDate, $endDate) {
+    $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM25) AS PM25, avg(TEMP) as TEMP
+FROM (SELECT *
+     FROM AirQuality_Info
+     WHERE MAC = '".$MAC."' AND
+     '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."'
+     ORDER BY Timestamp) x
+GROUP BY SUBSTR(Timestamp, 1, 10) LIMIT 10";
     try {
     	$stmt = $this->db->query($sql);
     	$result = $stmt->fetch();
