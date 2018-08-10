@@ -324,15 +324,12 @@
               <div class="card card-weather">
                 <div class="card-body">
                   <address>
-                    <p class="font-weight-bold">Star Admin Inc</p>
+                    <p class="font-weight-bold">MAC : <?php echo $MAC ;?></p>
                     <p>
-                      695 lsom Ave,
+                      latitude : <?php echo $lati ; ?>
                     </p>
                     <p>
-                      Suite 00
-                    </p>
-                    <p>
-                      San Francisco, CA 94107
+                      lognitude : <?php echo $logn ; ?>
                     </p>
                   </address>
                 </div>
@@ -342,7 +339,9 @@
             <div class="col-lg-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <button type="button" class="btn btn-inverse-primary btn-fw">View My Sensors</button>
+                  <button onclick="window.location='/sensor_list';" type="button" class="btn btn-inverse-primary btn-fw">View My Sensors</button>
+                  <button onclick="window.location='/air_map';" type="button" class="btn btn-inverse-success btn-fw">MAP</button>
+                  <button type="button" class="btn btn-inverse-danger btn-fw">Deregister</button>
                 </div>
               </div>
             </div>

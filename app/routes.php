@@ -81,7 +81,7 @@ $app->get('/getJSON/heartHour', 'App\Controller\ChartController:heartRateHour')
 
 // chart (air)
 $app->get('/air_chart', 'App\Controller\HomeController:air_chart')
-    ->setName('air_chart');
+    ->setName('air_chart');    
 $app->get('/air_chart10min', 'App\Controller\HomeController:air_chart10min')
     ->setName('airair_chart10min_chart');
 $app->get('/air_chartHour', 'App\Controller\HomeController:air_chartHour')
