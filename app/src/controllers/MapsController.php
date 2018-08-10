@@ -10,7 +10,7 @@ final class MapsController extends BaseController
 	 public function mapjson(Request $request, Response $response, $args) {
         $sql = "SELECT *
                 FROM Sensor RIGHT JOIN (
-                    SELECT AirQuality_Info.MAC as MAC, AirQuality_Info.Timestamp as Timestamp, AirQuality_Info.CO as CO, AirQuality_Info.SO2 as SO2, AirQuality_Info.NO2 as NO2, AirQuality_Info.O3 as O3, AirQuality_Info.PM25 as PM25, AirQuality_Info.TEMP as TEMP
+                    SELECT AirQuality_Info.MAC as MAC, AirQuality_Info.Timestamp as Timestamp, CO, SO2, NO2, O3, PM25, TEMP
                     FROM AirQuality_Info RIGHT JOIN (SELECT max(Timestamp) as ts, MAC FROM AirQuality_Info GROUP BY MAC) x
                     ON AirQuality_Info.Timestamp = x.ts AND AirQuality_Info.MAC = x.MAC) y
                 ON Sensor.MAC = y.MAC";
