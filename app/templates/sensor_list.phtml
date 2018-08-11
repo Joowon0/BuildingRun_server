@@ -35,7 +35,7 @@
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
           <li class="nav-item">
             <a href="#" class="nav-link">
-              
+
             </a>
           </li>
           <li class="nav-item">
@@ -315,45 +315,45 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-         
+
           <script>
           var sensor_list = (function () {
           var json = null;
 
-         
+
     return json;
-})(); 
-      
+})();
+
    function init_list() {
-       
+
         for (var hero in comics) {
-        // Create marker 
+        // Create marker
                 var myLatLng = new google.maps.LatLng(comics[hero].latitude, comics[hero].longitude);
 
-                
-                
+
+
                 var marker = new google.maps.Marker({
                     map: map,
                     position: myLatLng,
                     html: "<span class='pogo_name'>" + comics[hero].MAC
-                     + "</a></span><br />" + comics[hero].CO 
-                     + "<br />" + comics[hero].SO2 
-                     + "<br />" + comics[hero].NO2 
-                     + "<br />" + comics[hero].O3 
-                     + "<br />" + comics[hero].PM25 
+                     + "</a></span><br />" + comics[hero].CO
+                     + "<br />" + comics[hero].SO2
+                     + "<br />" + comics[hero].NO2
+                     + "<br />" + comics[hero].O3
+                     + "<br />" + comics[hero].PM25
                      + "<br />" + comics[hero].TEMP
                 });
-                    
+
                 google.maps.event.addListener(marker, 'click', function(evt) {
-                  infoWin.setContent("<span class='pgclass'>" 
-                    +  comics[hero].MAC 
-                    + "</span><p>CO: " + comics[hero].CO 
+                  infoWin.setContent("<span class='pgclass'>"
+                    +  comics[hero].MAC
+                    + "</span><p>CO: " + comics[hero].CO
                     + "<br />SO2: " + comics[hero].SO2
                     + "<br />NO2: " + comics[hero].NO2
                     + "<br />O3: " + comics[hero].O3
                     + "<br />PM25: " + comics[hero].PM25
                     + "<br />TEMP: " + comics[hero].TEMP
-                    
+
                     );
                   infoWin.open(map, this);
                 })
@@ -368,7 +368,7 @@
               <div class="card">
                 <div class="card-body">
                   <h1 class="card-title">My Sensor</h1>
-               
+
                   <div class="table-responsive">
                     <table class="table table-bordered">
                       <thead>
@@ -395,7 +395,7 @@
                       </thead>
                       <tbody>
 
-                       <!-- 
+                       <!--
                         <tr>
                           <td>
                             12:34:56:78:90:AB
@@ -418,16 +418,15 @@
                   -->
 
                       <?php
-                   
-                       for($column=1; $column<$sizeof($sensor); $column++) {
-
-                      echo "<tr><td>".$sensor[$column][."</td>";
-                      echo "<td>".$sensor['latitude']."</td>";
-                      echo "<td>".$sensor['longitude']."</td>";
-                      echo "<td>".$sensor['Timestamp']."</td>";
-                      echo "<tr>";
-
-                          }
+                       for($i=0; $i< count ($sensor); $i++) {
+                          echo "<tr><td>".$sensor[$i]['MAC']."</td>";
+                          echo "<td>".$sensor[$i]['latitude']."</td>";
+                          echo "<td>".$sensor[$i]['longitude']."</td>";
+                          echo "<td>".$sensor[$i]['Timestamp']."</td>";
+                          echo "<td><button type=\"button\" class=\"btn btn-outline-info\" name=\"chartBtn".$i."\">Chart</button></td>";
+                          echo "<td><button type=\"button\" class=\"btn btn-outline-danger\" name=\"deregBtn".$i."\">Deregister</button></td>";
+                          echo "<tr>";
+                        }
                       ?>
 
                       </tbody>
@@ -436,8 +435,8 @@
                 </div>
               </div>
             </div>
-         
-     
+
+
       </div>
         <!-- partial -->
       </div>
