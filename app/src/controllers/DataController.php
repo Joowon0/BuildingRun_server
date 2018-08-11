@@ -184,7 +184,7 @@ final class DataController extends BaseController {
     $jsonArray = json_decode($json, true);
 
     if (isset($jsonArray['MAC'])) {
-      $sql = "SELECT max(Timestamp) as TIME FROM `AirQuality_Info` WHERE MAC = '" .$jsonArray['MAC']. "'";
+      $sql = "SELECT max(Timestamp) as TIME FROM AirQuality_Info WHERE MAC = '" .$jsonArray['MAC']. "'";
 
       try {
         $stmt = $this->db->query($sql);
