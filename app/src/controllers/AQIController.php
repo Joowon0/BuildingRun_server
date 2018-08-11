@@ -13,14 +13,27 @@ final class AQIController extends BaseController {
   const O3_1 = array(0,   55,  71,  86,   106,  201);              // every 8 h
   const O3_2 = array(0,   0,   125, 165,  205,  405,  505,  605);  // every 1 h
 
+$sql = "SELECT MAC, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3_1
+        FROM AirQuality_Info
+        WHERE Timestamp >= NOW() - INTERVAL 1 Hour
+        GROUP BY MAC;"
 
+$sql2 = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_2
+        FROM AirQuality_Info
+        WHERE Timestamp >= NOW() - INTERVAL 8 Hour
+        GROUP BY MAC;"
 
   static public function calcul_CO ($CO) {
     // $CO = 50.5;
-    if ($CO < 0.0 || 50.5 <= $CO) {
+    if ($CO < 0.0) {
       echo "NOT IN RANGE";
-      return -10;
+      return 0;
+    } else if (50.5 <= $CO) {
+      echo "NOT IN RANGE";
+      return 500;
     }
+
+
     for ($category = 0; $category < count(self::CO); $category++) {
       if ($CO < self::CO[$category]){
         $category--;
@@ -45,10 +58,15 @@ final class AQIController extends BaseController {
 
   static public function calcul_SO2 ($SO2) {
     // $SO2 = 900;
-    if ($SO2 < 0 || 105 <= $SO2) {
+    if ($SO2 < 0) {
       echo "NOT IN RANGE";
-      return -10;
+      return 0;
+    } else if (105 <= $SO2) {
+      echo "NOT IN RANGE";
+      return 500;
     }
+
+
     for ($category = 0; $category < count(self::SO2); $category++) {
       if ($SO2 < self::SO2[$category]){
         $category--;
@@ -73,10 +91,15 @@ final class AQIController extends BaseController {
 
   static public function calcul_NO2 ($NO2) {
     // $NO2 = 2049;
-    if ($NO2 < 0 || 2050 <= $NO2) {
+    if ($NO2 < 0) {
       echo "NOT IN RANGE";
-      return -10;
+      return 0;
+    } else if (2050 <= $NO2) {
+      echo "NOT IN RANGE";
+      return 500;
     }
+
+
     for ($category = 0; $category < count(self::NO2); $category++) {
       if ($NO2 < self::NO2[$category]){
         $category--;
@@ -101,9 +124,12 @@ final class AQIController extends BaseController {
 
   static public function calcul_O3_1 ($O3_1) {
     // $O3_1 = 250;
-    if ($O3_1 < 0 || 201 <= $O3_1) {
+    if ($O3_1 < 0) {
       echo "NOT IN RANGE";
-      return -10;
+      return 0;
+    } else if (201 <= $O3_1) {
+      echo "NOT IN RANGE";
+      return 500;
     }
     for ($category = 0; $category < count(self::O3_1); $category++) {
       if ($O3_1 < self::O3_1[$category]){
@@ -129,9 +155,12 @@ final class AQIController extends BaseController {
 
   static public function calcul_O3_2 ($O3_2) {
     // $O3_2 = 604;
-    if ($O3_2 < 125 || 605 <= $O3_2) {
+    if ($O3_2 < 125) {
       echo "NOT IN RANGE";
-      return -10;
+      return 0;
+    } else if (605 <= $O3_2) {
+      echo "NOT IN RANGE";
+      return 500;
     }
     for ($category = 0; $category < count(self::O3_2); $category++) {
       if ($O3_2 < self::O3_2[$category]){

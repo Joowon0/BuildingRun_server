@@ -51,7 +51,10 @@ final class ChartController extends BaseController {
 
   // air quality information
   public function airRealTime(Request $request, Response $response, $args) {
-    $sql = "SELECT * FROM AirQuality_Info JOIN Sensor ON AirQuality_Info.MAC = Sensor.MAC WHERE Sensor.MAC = '".$_SESSION['MAC']."' ORDER BY Timestamp DESC LIMIT 20;";
+    $sql = "SELECT *
+            FROM AirQuality_Info JOIN Sensor ON AirQuality_Info.MAC = Sensor.MAC
+            WHERE Sensor.MAC = '".$_SESSION['MAC']."'
+            ORDER BY Timestamp DESC LIMIT 20;";
 
     $this->makeJSON($sql);
     return $response;
