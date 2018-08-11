@@ -79,7 +79,7 @@ final class SensorController extends BaseController {
 
     if (isset($jsonArray['MAC'])) {
       $MAC_existence = $this->checkMACExist2($jsonArray['MAC']);
-      echo $MAC_existence;
+      // echo $MAC_existence;
 
       if ($MAC_existence == self::MAC_EXIST) {
         $this->deleteMAC($jsonArray['MAC']);
@@ -92,6 +92,19 @@ final class SensorController extends BaseController {
     }
     else
       return $response->withStatus(204);
+  }
+
+  // for WEB
+  public function sensorDeregister(Request $request, Response $response, $args) {
+   $this->deleteMAC($_SESSION['MAC']);
+   $_SESSION["MAC"] = "";
+
+    $message = "Sensor " . $_SESSION['MAC'] . " is deregistered";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+
+    echo "<script> document.location.href='/sensor_list'; </script>";
+
+    return true;
   }
 
   public function checkMACExist2($MAC) {

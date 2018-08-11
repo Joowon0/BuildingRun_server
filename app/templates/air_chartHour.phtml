@@ -317,7 +317,41 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <h1 class="display-2 text-primary text-center">Historical Data <a class="display-4">(Period : 1h)</a></h1>
+          <h1 class="display-1 text-primary text-center">Historical Data <a class="display-4">(Period : 1h)</a></h1>
+          <div class="row">
+            <div class="col-lg-7 grid-margin stretch-card">
+              <!--weather card-->
+              <div class="card card-weather">
+                <div class="card-body">
+                  <address>
+
+                    <p class="font-weight-bold">MAC : <?php echo $MAC ;?></p>
+                    <p>
+                      latitude : <?php echo $lati ; ?>
+                    </p>
+                    <p>
+                      lognitude : <?php echo $logn ; ?>
+
+                    </p>
+                  </address>
+                </div>
+              </div>
+              <!--weather card ends-->
+            </div>
+            <div class="col-lg-5 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <button onclick="window.location='/sensor_list';" type="button" class="btn btn-inverse-primary btn-fw">View My Sensors</button>
+                  <button onclick="window.location='/air_map';" type="button" class="btn btn-inverse-success btn-fw">MAP</button>
+                  <form action="sensorDeregister" onsubmit="return check()">
+                    <div class="form-group">
+                      <button class="btn btn-inverse-danger btn-fw">Deregister</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
@@ -397,5 +431,16 @@
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
 </body>
+
+<script>
+  function check() {
+    if (confirm("Do you really want to Deregister?")) {
+        return true;
+    } else {
+        document.location.href='/air_chart';
+        return false;
+    }
+  }
+</script>
 
 </html>

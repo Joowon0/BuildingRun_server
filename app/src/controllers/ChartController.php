@@ -51,17 +51,16 @@ final class ChartController extends BaseController {
 
   // air quality information
   public function getJSON(Request $request, Response $response, $args) {
-    $sql = "SELECT * FROM AirQuality_Info JOIN Sensor WHERE USN = ".$_SESSION['USN']." ORDER BY Timestamp";
+    $sql = "SELECT * FROM AirQuality_Info JOIN Sensor ON AirQuality_Info.MAC = Sensor.MAC WHERE Sensor.MAC = '".$_SESSION['MAC']."' ORDER BY Timestamp;";
 
     $this->makeJSON($sql);
     return $response;
   }
 
   public function air10Min(Request $request, Response $response, $args) {
-    $MAC = 'fdsa';
     $sql = "SELECT SUBSTR(Timestamp, 9, 7) as ts, avg(CO) as CO, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3, avg(PM25) as PM25, avg(TEMP) as TEMP
             FROM AirQuality_Info
-            WHERE MAC = '".$MAC."'
+            WHERE MAC = '".$_SESSION['MAC']."'
             GROUP BY SUBSTR(Timestamp, 9, 7)";
     $this->makeJSON($sql);
   }
@@ -70,7 +69,7 @@ final class ChartController extends BaseController {
     $MAC = 'fdsa';
     $sql = "SELECT SUBSTR(Timestamp, 9, 5) as ts, avg(CO) as CO, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3, avg(PM25) as PM25, avg(TEMP) as TEMP
             FROM AirQuality_Info
-            WHERE MAC = '".$MAC."'
+            WHERE MAC = '".$_SESSION['MAC']."'
             GROUP BY SUBSTR(Timestamp, 9, 5)";
     $this->makeJSON($sql);
   }
@@ -93,8 +92,10 @@ final class ChartController extends BaseController {
         $airData = $this->dayAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
       else if ($jsonArray['period'] == 4)
         $airData = $this->tenDayAirQuality($jsonArray['MAC'], $jsonArray['startDate'], $jsonArray['endDate']);
+      else
+        return $response->withStatus(204);
 
-      print_r($airData);
+      // print_r($airData);
       exit();
 
       return $response->withStatus(200)
@@ -161,12 +162,12 @@ final class ChartController extends BaseController {
   }
   public function tenDayAirQuality($MAC, $startDate, $endDate) {
     $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(CO) AS CO, avg(SO2) AS SO2, avg(NO2) AS NO2, avg(O3) AS O3, avg(PM25) AS PM25, avg(TEMP) as TEMP
-FROM (SELECT *
-     FROM AirQuality_Info
-     WHERE MAC = '".$MAC."' AND
-     '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."'
-     ORDER BY Timestamp) x
-GROUP BY SUBSTR(Timestamp, 1, 10) LIMIT 10";
+            FROM (SELECT *
+                 FROM AirQuality_Info
+                 WHERE MAC = '".$MAC."' AND
+                 '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."'
+                 ORDER BY Timestamp) x
+            GROUP BY SUBSTR(Timestamp, 1, 10) LIMIT 10";
     try {
     	$stmt = $this->db->query($sql);
     	$result = $stmt->fetch();
@@ -198,6 +199,8 @@ GROUP BY SUBSTR(Timestamp, 1, 10) LIMIT 10";
         $airData = $this->hourHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);
       else if ($jsonArray['period'] == 3)
         $airData = $this->dayHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);
+      else if ($jsonArray['period'] == 4)
+        $airData = $this->tenDayHeart($jsonArray['USN'], $jsonArray['startDate'], $jsonArray['endDate']);
       else
         return $response->withStatus(204);
 
@@ -258,6 +261,32 @@ GROUP BY SUBSTR(Timestamp, 1, 10) LIMIT 10";
             FROM Heart_Info
             WHERE USN = ".$USN." AND
             '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."' GROUP BY SUBSTR(Timestamp, 1, 10)";
+
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      $airData = array();
+
+      while ($result != null) {
+        array_push($airData, $result);
+        $result = $stmt->fetch();
+      }
+      //print_r($data); exit;
+      return $airData;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function tenDayHeart($USN, $startDate, $endDate) {
+    $sql = "SELECT SUBSTR(Timestamp, 1, 10) as TIME, avg(HeartRate) as HeartRate, avg(HeartInterval) as HeartInterval
+            FROM (SELECT *
+                  FROM Heart_Info
+                  WHERE USN = ".$USN." AND
+                  '".$startDate."' <= Timestamp  AND Timestamp < '".$endDate."'
+                  ORDER BY Timestamp) x
+            GROUP BY SUBSTR(Timestamp, 1, 10) LIMIT 10";
 
     try {
     	$stmt = $this->db->query($sql);
