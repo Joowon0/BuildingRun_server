@@ -95,9 +95,6 @@ final class ChartController extends BaseController {
       else
         return $response->withStatus(204);
 
-      // print_r($airData);
-      exit();
-
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
           ->write(json_encode($airData));
