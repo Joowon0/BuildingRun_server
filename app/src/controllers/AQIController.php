@@ -7,21 +7,32 @@ use Psr\Http\Message\ResponseInterface as Response;
 final class AQIController extends BaseController {
   const AQI = array(array(0,50), array(51,100), array(101,150), array(151,200), array(201,300), array(301,400), array(401,500));
 
-  const CO   = array(0.0, 4.5, 9.5, 12.5, 15.5, 30.5, 40.5, 50.5); // every 8 h
-  const SO2  = array(0,   36,  76,  186,  305,  605,  805,  1005); // every 1 h
-  const NO2  = array(0,   54,  101, 361,  650,  1250, 1650, 2050); // every 1 h
-  const O3_1 = array(0,   55,  71,  86,   106,  201);              // every 8 h
-  const O3_2 = array(0,   0,   125, 165,  205,  405,  505,  605);  // every 1 h
+  const CO   = array(0.0, 4.5,  9.5,  12.5, 15.5,  30.5,  40.5,  50.5); // every 8 h
+  const SO2  = array(0,   36,   76,   186,  305,   605,   805,   1005); // every 1 h
+  const NO2  = array(0,   54,   101,  361,  650,   1250,  1650,  2050); // every 1 h
+  const O3_1 = array(0,   55,   71,   86,   106,   201);                // every 8 h
+  const O3_2 = array(0,   0,    125,  165,  205,   405,   505,   605);  // every 1 h
+  const PM25 = array(0.0, 12.1, 35.5, 55.5, 150.5, 250.5, 350.5, 500.5); // every 24 h
 
-$sql = "SELECT MAC, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3_1
-        FROM AirQuality_Info
-        WHERE Timestamp >= NOW() - INTERVAL 1 Hour
-        GROUP BY MAC;"
-
-$sql2 = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_2
-        FROM AirQuality_Info
-        WHERE Timestamp >= NOW() - INTERVAL 8 Hour
-        GROUP BY MAC;"
+  // public function calculAQI() {
+    // $this->get1hAvg();
+    // $this->get8hAvg();
+    //
+    // calcul_CO
+    // calcul_SO2
+    // calcul_NO2
+    // calcul_O3_1
+    // calcul_O3_2
+  // }
+// $sql = "SELECT MAC, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3_1
+//         FROM AirQuality_Info
+//         WHERE Timestamp >= NOW() - INTERVAL 1 Hour
+//         GROUP BY MAC;"
+//
+// $sql2 = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_2
+//         FROM AirQuality_Info
+//         WHERE Timestamp >= NOW() - INTERVAL 8 Hour
+//         GROUP BY MAC;"
 
   static public function calcul_CO ($CO) {
     // $CO = 50.5;
@@ -177,6 +188,36 @@ $sql2 = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_2
     echo $indexDiff . " = " . self::AQI[$category][1] . " - " . self::AQI[$category][0] . "<br>";
     echo $rangeDiff . " = " . self::O3_2[$category+1] . " - " . self::O3_2[$category] . "<br>";
     echo $concenDiff . " = " . $O3_2 . " - " . self::O3_2[$category] . "<br>";
+
+    $result = $indexDiff / $rangeDiff * $concenDiff + self::AQI[$category][0];
+    echo $result . " = " . $indexDiff . " / " . $rangeDiff . " * " . $concenDiff . " + " . self::AQI[$category][0] . "<br>";
+
+    return $result;
+  }
+  static public function calcul_PM25 ($PM25) {
+    // $PM25 = 500.0;
+    if ($PM25 < 0.0) {
+      echo "NOT IN RANGE";
+      return 0;
+    } else if (500.5 <= $PM25) {
+      echo "NOT IN RANGE";
+      return 500;
+    }
+    for ($category = 0; $category < count(self::PM25); $category++) {
+      if ($PM25 < self::PM25[$category]){
+        $category--;
+        break;
+      }
+    }
+
+
+    $indexDiff = self::AQI[$category][1] - self::AQI[$category][0];
+    $rangeDiff = self::PM25[$category+1] -  self::PM25[$category];
+    $concenDiff = $PM25 - self::PM25[$category];
+
+    echo $indexDiff . " = " . self::AQI[$category][1] . " - " . self::AQI[$category][0] . "<br>";
+    echo $rangeDiff . " = " . self::PM25[$category+1] . " - " . self::PM25[$category] . "<br>";
+    echo $concenDiff . " = " . $PM25 . " - " . self::PM25[$category] . "<br>";
 
     $result = $indexDiff / $rangeDiff * $concenDiff + self::AQI[$category][0];
     echo $result . " = " . $indexDiff . " / " . $rangeDiff . " * " . $concenDiff . " + " . self::AQI[$category][0] . "<br>";

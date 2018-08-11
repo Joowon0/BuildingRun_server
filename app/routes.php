@@ -144,7 +144,7 @@ $app->post('/app/heartHistory', 'App\Controller\ChartController:app_heartHistory
 $app->post('/app/recentTime', 'App\Controller\DataController:app_RecentUpdateTime')
     ->setName('app_recentTime');
 
-$app->get('/AQI/test', 'App\Controller\AQIController:calcul_CO')
+$app->get('/AQI/test', 'App\Controller\AQIController:calcul_PM25')
     ->setName('aqi_test');
 
 // show database for test
