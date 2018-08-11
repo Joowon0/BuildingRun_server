@@ -17,17 +17,6 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/teama_logo.png" />
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
-   <style>
-
-       /* Set the size of the div element that contains the map */
-      #map {
-        height: 400px;  /* The height is 400 pixels */
-        width: 100%;  /* The width is the width of the web page */
-       }
-    </style>
-  
-
 </head>
 <body>
 
@@ -326,84 +315,188 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+         
+          <script>
+          var sensor_list = (function () {
+          var json = null;
 
-<!--Start-->
-<div id="map"></div>
-    <script>
-var comics = (function () {
-    var json = null;
-    $.ajax({
-        'async': false,
-        'url': "/mapjson",
-        'dataType': "json",
-        'success': function (data) {
-            json = data;
+          $.ajax({
+             'async': false,
+             'url': "/sensor_json",
+             'dataType': "json",
+             'success': function (data) {
+             json = data;
         }
     });
     return json;
 })(); 
       
-      function initMap() {
-        // Create the map.
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 9,
-          center: {lat: 32.8826086, lng: -117.2344811},
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-
-        var infowindow = new google.maps.InfoWindow();
-
-        // Construct the circle for each value in citymap.
-        // Note: We scale the area of the circle based on the population.
+   function init_list() {
+       
         for (var hero in comics) {
         // Create marker 
                 var myLatLng = new google.maps.LatLng(comics[hero].latitude, comics[hero].longitude);
 
                 
-            
+                
                 var marker = new google.maps.Marker({
                     map: map,
                     position: myLatLng,
-                    html: "<span class='pogo_name'><p>MAC: " + comics[hero].MAC
-                     + "</a></span><br /><p>CO: " + comics[hero].CO 
-                     + "<br /><p>SO2: " + comics[hero].SO2 
-                     + "<br /><p>NO2: " + comics[hero].NO2 
-                     + "<br /><p>O3: " + comics[hero].O3 
-                     + "<br /><p>PM25: " + comics[hero].PM25 
-                     + "<br /><p>TEMP: " + comics[hero].TEMP
+                    html: "<span class='pogo_name'>" + comics[hero].MAC
+                     + "</a></span><br />" + comics[hero].CO 
+                     + "<br />" + comics[hero].SO2 
+                     + "<br />" + comics[hero].NO2 
+                     + "<br />" + comics[hero].O3 
+                     + "<br />" + comics[hero].PM25 
+                     + "<br />" + comics[hero].TEMP
                 });
-                
-
+                    
                 google.maps.event.addListener(marker, 'click', function(evt) {
-                  infowindow.setContent(this.html);
-                  infowindow.open(map, this);
+                  infoWin.setContent("<span class='pgclass'>" 
+                    +  comics[hero].MAC 
+                    + "</span><p>CO: " + comics[hero].CO 
+                    + "<br />SO2: " + comics[hero].SO2
+                    + "<br />NO2: " + comics[hero].NO2
+                    + "<br />O3: " + comics[hero].O3
+                    + "<br />PM25: " + comics[hero].PM25
+                    + "<br />TEMP: " + comics[hero].TEMP
+                    
+                    );
+                  infoWin.open(map, this);
                 })
-
-                radiuss = 350;
-                color = "green";
-                var cityCircle = new google.maps.Circle({
-                    strokeColor: color,
-                    strokeOpacity: 1,
-                    strokeWeight: 2,
-                    fillColor: color,
-                    fillOpacity: 0.15,
-                    map: map,
-                    center: myLatLng,
-                    radius: radiuss
-                });
 
         }
       }
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfHa_4ZD_TIff4iowZpOutTWlpAzw_Krg&callback=initMap&language=en">
-    </script>
 
+
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h1 class="card-title">My Sensor</h1>
+               
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>
+                            MAC
+                          </th>
+                          <th>
+                            Latitude
+                          </th>
+                          <th>
+                            Longitude
+                          </th>
+                          <th>
+                            Latest Update
+                          </th>
+                          <th>
+                            Chart
+                          </th>
+                          <th>
+                            Deregister
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            12:34:56:78:90:AB
+                          </td>
+                          <td>
+                            32.17
+                          </td>
+                          <td>
+                            -117.54
+                          </td>
+                          <td>
+                            2018-08-07 08:45:33
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-dark btn-rounded btn-xs">Show me</button>
+                          </td>
+                          <td> <button type="button" class="btn btn-danger btn-rounded btn-xs">Deregister</button>
+                          </td>
+                        </tr>
+                        
+                        <tr>
+                          <td>
+                            18:04:57:00:90:A7
+                          </td>
+                          <td>
+                            33.17
+                          </td>
+                          <td>
+                            -117.99
+                          </td>
+                          <td>
+                            2018-08-08 08:45:33
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-dark btn-rounded btn-xs">Show me</button>
+                          </td>
+                          <td> <button type="button" class="btn btn-danger btn-rounded btn-xs">Deregister</button>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            52:37:16:08:90:AY
+                          </td>
+                          <td>
+                            32.90
+                          </td>
+                          <td>
+                            -117.97
+                          </td>
+                          <td>
+                            2018-08-09 08:45:33
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-dark btn-rounded btn-xs">Show me</button>
+                          </td>
+                          <td> <button type="button" class="btn btn-danger btn-rounded btn-xs">Deregister</button>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            1P:36:16:08:80:EB
+                          </td>
+                          <td>
+                            32.22
+                          </td>
+                          <td>
+                            -117.11
+                          </td>
+                          <td>
+                            2018-08-10 08:45:33
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-dark btn-rounded btn-xs">Show me</button>
+                          </td>
+                          <td> <button type="button" class="btn btn-danger btn-rounded btn-xs">Deregister</button>
+                          </td>
+                        </tr>
+
+                        
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+     
+      </div>
+        <!-- partial -->
+      </div>
       <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
+
 
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>

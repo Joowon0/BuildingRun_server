@@ -51,7 +51,42 @@ final class SensorListController extends BaseController {
 
   public function sensor_list(Request $request, Response $response, $args)
   {
-      $this->view->render($response, 'sensor_list.phtml');
+       $sql = "SELECT Sensor.MAC as MAC, latitude, longitude, x.ts as Timestamp
+            FROM Sensor JOIN (SELECT MAC, max(Timestamp) ts FROM AirQuality_Info GROUP BY MAC) x
+            ON Sensor.MAC = x.MAC";
+    
+
+   try {
+            $sth = $this->db->query($sql);
+            $pogo = $sth->fetchAll();
+
+            if ($pogo) {
+                $sensor_array = [];
+                foreach ($pogo as $sensor) {
+
+                    $sensor_array[] = array(
+
+                        "MAC"=>$sensor['MAC'],
+                        "latitude" => $sensor['latitude'],
+                        "longitude" => $sensor['longitude'],
+                        "Timestamp" => $sensor['Timestamp'],
+                        
+                    );
+
+                }
+
+             
+                 
+
+            } else {
+                $response = $response->withStatus(404);
+            }
+        } catch(PDOException $e) {
+            echo '{"error":{"text":'. $e->getMessage() .'}}';
+        }
+
+
+      $this->view->render($response, 'sensor_list.phtml', ['sensor' => $sensor_array]);
       return $response;
   }
 }
