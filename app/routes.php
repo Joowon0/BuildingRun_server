@@ -141,6 +141,9 @@ $app->post('/app/airQualityHistory', 'App\Controller\ChartController:app_airQual
 $app->post('/app/heartHistory', 'App\Controller\ChartController:app_heartHistory')
     ->setName('app_heartHistory');
 
+$app->post('/app/recentTime', 'App\Controller\DataController:app_RecentUpdateTime')
+    ->setName('app_recentTime');
+
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')
     ->setName('showDB_airQuality');

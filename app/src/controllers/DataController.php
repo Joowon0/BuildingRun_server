@@ -177,4 +177,33 @@ final class DataController extends BaseController {
       echo "ERROR : " . $e->getMessage();
     }
   }
+
+  // for APP
+  public function app_RecentUpdateTime(Request $request, Response $response, $args) {
+    $json = file_get_contents('php://input');
+    $jsonArray = json_decode($json, true);
+
+    if (isset($jsonArray['MAC'])) {
+      $sql = "SELECT max(Timestamp) as TIME FROM `AirQuality_Info` WHERE MAC = '" .$jsonArray['MAC']. "'";
+
+      try {
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+
+        if ($result["TIME"] == null) {
+          $result = array("TIME" => "2000-01-01 00:00:00");
+        }
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($result));
+
+      } catch (PDOException $e) {
+        echo "ERROR : " . $e->getMessage();
+      }
+    }
+    else {
+      return $response->withStatus(204);
+    }
+  }
 }
