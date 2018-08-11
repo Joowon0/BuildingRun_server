@@ -15,14 +15,16 @@ var ajaxFn = function(){
       var PM2_5 = [];
       var TEMP = [];
 
+      len = data.length;
       for(var i in data) {
-        timestamp.push(data[i].Timestamp);
-        CO.push(data[i].CO);
-        SO2.push(data[i].SO2);
-        NO2.push(data[i].NO2);
-        O3.push(data[i].O3);
-        PM2_5.push(data[i].PM25);
-        TEMP.push(data[i].TEMP);
+        back = len - i - 1;
+        timestamp.push(data[back].Timestamp);
+        CO.push(data[back].CO);
+        SO2.push(data[back].SO2);
+        NO2.push(data[back].NO2);
+        O3.push(data[back].O3);
+        PM2_5.push(data[back].PM25);
+        TEMP.push(data[back].TEMP);
       }
 
       var chartdata = {

@@ -66,8 +66,8 @@ $app->get('/sensorDeregister', 'App\Controller\SensorController:sensorDeregister
     ->setName('sensorDeregister');
 
 // chart JSON data (air)
-$app->get('/getJSON/all', 'App\Controller\ChartController:getJSON')
-    ->setName('getJSONall');
+$app->get('/getJSON/airReal', 'App\Controller\ChartController:airRealTime')
+    ->setName('getJSONairReal');
 $app->get('/getJSON/air10Min', 'App\Controller\ChartController:air10Min')
     ->setName('getJSONair10Min');
 $app->get('/getJSON/airHour', 'App\Controller\ChartController:airHour')
