@@ -1,7 +1,7 @@
 var timeOutId = 0;
 var ajaxFn = function(){
   $.ajax({
-    url : "/getJSON/all",
+    url : "/getJSON/airReal",
     type : "GET",
     success : function(data){
       // console.log(data);
