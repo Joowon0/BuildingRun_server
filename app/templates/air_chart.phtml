@@ -343,7 +343,11 @@
                 <div class="card-body">
                   <button onclick="window.location='/sensor_list';" type="button" class="btn btn-inverse-primary btn-fw">View My Sensors</button>
                   <button onclick="window.location='/air_map';" type="button" class="btn btn-inverse-success btn-fw">MAP</button>
-                  <button onclick="window.location='/sensorDeregister';" type="button" class="btn btn-inverse-danger btn-fw">Deregister</button>
+                  <form action="sensorDeregister" onsubmit="return check()">
+                    <div class="form-group">
+                      <button class="btn btn-inverse-danger btn-fw">Deregister</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -427,5 +431,16 @@
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
 </body>
+
+<script>
+  function check() {
+    if (confirm("Do you really want to Deregister?")) {
+        return true;
+    } else {
+        document.location.href='/air_chart';
+        return false;
+    }
+  }
+</script>
 
 </html>
