@@ -15,6 +15,7 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chart.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/teama_logo.png" />
 </head>
@@ -357,7 +358,13 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">CO</h4>
-                  <canvas id="coChart" style="height:250px"></canvas>
+                  <div class="chartWrapper">
+                    <div class="chartAreaWrapper">
+                        <canvas id="coChart" height="250px" width="1200"></canvas>
+                    </div>
+                    <canvas id="myChartAxis" height="250px" width="0"></canvas>
+                  </div>
+                  <!-- <canvas id="coChart" style="height:250px"></canvas> -->
                 </div>
               </div>
             </div>
