@@ -6,8 +6,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 final class DataController extends BaseController {
   //abstract class loginMessage {
-      const MAC_EXIST = 1;
+      const SUCCESS = 1;
       const MAC_NOT_EXIST = 2;
+      const WRONG_USN_MAC_PAIR = 3;
+      const TIMESTAMP_EXIST = 4;
   //}
 
   // for APP
@@ -19,11 +21,42 @@ final class DataController extends BaseController {
 
       $this->storeGPS($jsonArray);
 
+      // 1. check if MAC exist
       $MAC_existence = $this->checkMAC($jsonArray['MAC']);
-      if ($MAC_existence == self::MAC_EXIST)
-        $this->storeAirQuality($jsonArray);
 
-      $sendData = array("Result"=>$MAC_existence);
+      if ($MAC_existence == self::MAC_NOT_EXIST) {
+        $sendData = array("Result"=>self::MAC_NOT_EXIST);
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($sendData));
+      }
+
+      // 2. check if USN and MAC is in correct pair
+      $correct_pair = $this->checkUSN_MAC_Pair($jsonArray['USN'], $jsonArray['MAC']);
+
+      if ($correct_pair == self::WRONG_USN_MAC_PAIR) {
+        $sendData = array("Result"=>self::WRONG_USN_MAC_PAIR);
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($sendData));
+      }
+
+      // 3. check if the timestamp alreay exist
+      $ts_existence = $this->checkTSexist($jsonArray['MAC'], $jsonArray['TIME']);
+
+      if ($ts_existence == self::TIMESTAMP_EXIST) {
+        $sendData = array("Result"=>self::TIMESTAMP_EXIST);
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($sendData));
+      }
+
+      // 4. sucess
+      $this->storeAirQuality($jsonArray);
+      $sendData = array("Result"=>self::SUCCESS);
 
       return $response->withStatus(200)
           ->withHeader('Content-Type', 'application/json')
@@ -53,7 +86,39 @@ final class DataController extends BaseController {
       if ($result == null) {
         return self::MAC_NOT_EXIST;
       } else {
-        return self::MAC_EXIST;
+        return self::SUCCESS;
+      }
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function checkUSN_MAC_Pair($USN, $MAC) {
+    $sql = "SELECT * FROM Sensor WHERE MAC = '".$MAC."' AND USN = ".$USN;
+    try {
+      $stmt = $this->db->query($sql);
+      $result = $stmt->fetch();
+
+      if ($result == null) {
+        return self::WRONG_USN_MAC_PAIR;
+      } else {
+        return self::SUCCESS;
+      }
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function checkTSexist($MAC, $Timestamp) {
+    $sql = "SELECT * FROM `AirQuality_Info` WHERE Timestamp = '".$Timestamp."' AND MAC = '".$MAC."'";
+    try {
+      $stmt = $this->db->query($sql);
+      $result = $stmt->fetch();
+
+      if ($result == null) {
+        return self::SUCCESS;
+      } else {
+        return self::TIMESTAMP_EXIST;
       }
     } catch (PDOException $e) {
       echo "ERROR : " . $e->getMessage();
