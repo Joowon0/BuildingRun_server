@@ -12,29 +12,103 @@ final class AQIController extends BaseController {
   const NO2  = array(0,   54,   101,  361,  650,   1250,  1650,  2050); // every 1 h
   const O3_1 = array(0,   55,   71,   86,   106,   201);                // every 8 h
   const O3_2 = array(0,   0,    125,  165,  205,   405,   505,   605);  // every 1 h
-  const PM25 = array(0.0, 12.1, 35.5, 55.5, 150.5, 250.5, 350.5, 500.5); // every 24 h
+  const PM25 = array(0.0, 12.1, 35.5, 55.5, 150.5, 250.5, 350.5, 500.5);// every 24 h
 
-  // public function calculAQI() {
-    // $this->get1hAvg();
-    // $this->get8hAvg();
-    //
-    // calcul_CO
-    // calcul_SO2
-    // calcul_NO2
-    // calcul_O3_1
-    // calcul_O3_2
-  // }
-// $sql = "SELECT MAC, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3_1
+  public function calculNstoreAQI($inData) {
+    echo "GOT into calculNstoreAQI" . "<br>";
+
+    $avg1h  = $this->get1hAvg($inData['MAC']);
+    $avg8h  = $this->get8hAvg($inData['MAC']);
+    $avg24h = $this->get24hAvg($inData['MAC']);
+
+    print_r($avg1h); echo "<br>";
+    print_r($avg8h); echo "<br>";
+    print_r($avg24h); echo "<br>";
+
+    echo "<br>";
+
+    $aqi_CO   = $this->calcul_CO($avg8h['CO']);
+    $aqi_SO2  = $this->calcul_SO2($avg1h['SO2']);
+    $aqi_NO2  = $this->calcul_NO2($avg1h['NO2']);
+    $aqi_O3_1 = $this->calcul_O3_1($avg8h['O3_1']);
+    $aqi_O3_2 = $this->calcul_O3_2($avg1h['O3_2']);
+    $aqi_PM25 = $this->calcul_PM25($avg24h['PM25']);
+
+    echo $aqi_CO;echo "<br>";
+    echo $aqi_SO2;echo "<br>";
+    echo $aqi_NO2;echo "<br>";
+    echo $aqi_O3_1;echo "<br>";
+    echo $aqi_O3_2;echo "<br>";
+    echo $aqi_PM25;echo "<br>";
+
+    $this->storeAQI($inData['MAC'], $inData['TIME'], $aqi_CO, $aqi_SO2, $aqi_NO2, $aqi_O3_1, $aqi_O3_2, $aqi_PM25);
+
+    exit;
+
+    return true;
+  }
+
+// $sql = "SELECT MAC, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3_2
 //         FROM AirQuality_Info
 //         WHERE Timestamp >= NOW() - INTERVAL 1 Hour
 //         GROUP BY MAC;"
 //
-// $sql2 = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_2
-//         FROM AirQuality_Info
-//         WHERE Timestamp >= NOW() - INTERVAL 8 Hour
-//         GROUP BY MAC;"
+// $sql2 = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_1
+//          FROM AirQuality_Info
+//          WHERE Timestamp >= NOW() - INTERVAL 8 Hour
+//          GROUP BY MAC;"
+// $sql3 = "SELECT MAC, avg(PM25) as PM25
+//          FROM AirQuality_Info
+//          WHERE Timestamp >= NOW() - INTERVAL 24 Hour
+//          GROUP BY MAC;"
+  public function get1hAvg($MAC) {
+    $sql = "SELECT MAC, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3) as O3_2
+            FROM AirQuality_Info
+            WHERE MAC = '".$MAC."' AND
+            Timestamp >= NOW() - INTERVAL 1 Hour";
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
 
-  static public function calcul_CO ($CO) {
+      return $result;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function get8hAvg($MAC) {
+    $sql = "SELECT MAC, avg(CO) as CO, avg(O3) as O3_1
+            FROM AirQuality_Info
+            WHERE MAC = '".$MAC."' AND
+            Timestamp >= NOW() - INTERVAL 8 Hour";
+
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      return $result;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  public function get24hAvg($MAC) {
+    $sql = "SELECT MAC, avg(PM25) as PM25
+            FROM AirQuality_Info
+            WHERE  MAC = '".$MAC."' AND
+            Timestamp >= NOW() - INTERVAL 24 Hour";
+
+    try {
+    	$stmt = $this->db->query($sql);
+    	$result = $stmt->fetch();
+
+      return $result;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
+  }
+
+  static public function calcul_CO($CO) {
     // $CO = 50.5;
     if ($CO < 0.0) {
       echo "NOT IN RANGE";
@@ -223,5 +297,17 @@ final class AQIController extends BaseController {
     echo $result . " = " . $indexDiff . " / " . $rangeDiff . " * " . $concenDiff . " + " . self::AQI[$category][0] . "<br>";
 
     return $result;
+  }
+
+  public function storeAQI($MAC, $ts, $CO, $SO2, $NO2, $O3_1, $O3_2, $PM25) {
+    $sql = "INSERT INTO AirQuality_Info(MAC, Timestamp, CO, SO2, NO2, O3_1, O3_2, PM25)
+            VALUES ('".$MAC."', '".$ts."', ".$CO.", ".$SO2.", ".$NO2.", ".$O3_1.", ".$O3_2.", ".$PM25.");";
+    try {
+    	$stmt = $this->db->query($sql);
+
+      return true;
+    } catch (PDOException $e) {
+      echo "ERROR : " . $e->getMessage();
+    }
   }
 }
