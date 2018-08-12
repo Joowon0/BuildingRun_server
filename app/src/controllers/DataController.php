@@ -11,6 +11,14 @@ final class DataController extends BaseController {
       const WRONG_USN_MAC_PAIR = 3;
       const TIMESTAMP_EXIST = 4;
   //}
+  const AQI = array(array(0,50), array(51,100), array(101,150), array(151,200), array(201,300), array(301,400), array(401,500));
+
+  const CO   = array(0.0, 4.5,  9.5,  12.5, 15.5,  30.5,  40.5,  50.5); // every 8 h
+  const SO2  = array(0,   36,   76,   186,  305,   605,   805,   1005); // every 1 h
+  const NO2  = array(0,   54,   101,  361,  650,   1250,  1650,  2050); // every 1 h
+  const O3_1 = array(0,   55,   71,   86,   106,   201);                // every 8 h
+  const O3_2 = array(0,   0,    125,  165,  205,   405,   505,   605);  // every 1 h
+  const PM25 = array(0.0, 12.1, 35.5, 55.5, 150.5, 250.5, 350.5, 500.5);// every 24 h
 
   // for APP
   public function app_airQualityDataTransfer(Request $request, Response $response, $args) {
@@ -234,14 +242,7 @@ final class DataController extends BaseController {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const AQI = array(array(0,50), array(51,100), array(101,150), array(151,200), array(201,300), array(301,400), array(401,500));
 
-  const CO   = array(0.0, 4.5,  9.5,  12.5, 15.5,  30.5,  40.5,  50.5); // every 8 h
-  const SO2  = array(0,   36,   76,   186,  305,   605,   805,   1005); // every 1 h
-  const NO2  = array(0,   54,   101,  361,  650,   1250,  1650,  2050); // every 1 h
-  const O3_1 = array(0,   55,   71,   86,   106,   201);                // every 8 h
-  const O3_2 = array(0,   0,    125,  165,  205,   405,   505,   605);  // every 1 h
-  const PM25 = array(0.0, 12.1, 35.5, 55.5, 150.5, 250.5, 350.5, 500.5);// every 24 h
 
   public function calculNstoreAQI($inData) {
     echo "GOT into calculNstoreAQI" . "<br>";
