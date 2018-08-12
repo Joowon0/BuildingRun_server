@@ -12,7 +12,7 @@ $(document).ready(function(){
       var NO2 = [];
       var O3  = [];
       var PM2_5 = [];
-      var TEMP = [];
+      // var TEMP = [];
 
       for(var i in data) {
         ts = data[i].ts;
@@ -22,7 +22,7 @@ $(document).ready(function(){
         NO2.push(data[i].NO2);
         O3.push(Math.min(data[i].O3_1, data[i].O3_2));
         PM2_5.push(data[i].PM25);
-        TEMP.push(data[i].TEMP);
+        // TEMP.push(data[i].TEMP);
       }
 
       var chartdata = {
@@ -77,17 +77,18 @@ $(document).ready(function(){
             pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
             pointHoverBorderColor: "rgba(211, 72, 54, 1)",
             data: PM2_5
-          },
-          {
-            label: "Temperature",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(211, 72, 54, 0.75)",
-            borderColor: "rgba(211, 72, 54, 1)",
-            pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
-            pointHoverBorderColor: "rgba(211, 72, 54, 1)",
-            data: TEMP
           }
+          // ,
+          // {
+          //   label: "Temperature",
+          //   fill: false,
+          //   lineTension: 0.1,
+          //   backgroundColor: "rgba(211, 72, 54, 0.75)",
+          //   borderColor: "rgba(211, 72, 54, 1)",
+          //   pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+          //   pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+          //   data: TEMP
+          // }
         ]
       };
 
@@ -166,21 +167,21 @@ $(document).ready(function(){
           }
         ]
       };
-      var TEMPchartdata = {
-        labels: timestamp,
-        datasets: [
-          {
-            label: "Temperature",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(211, 72, 54, 0.75)",
-            borderColor: "rgba(211, 72, 54, 1)",
-            pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
-            pointHoverBorderColor: "rgba(211, 72, 54, 1)",
-            data: TEMP
-          }
-        ]
-      };
+      // var TEMPchartdata = {
+      //   labels: timestamp,
+      //   datasets: [
+      //     {
+      //       label: "Temperature",
+      //       fill: false,
+      //       lineTension: 0.1,
+      //       backgroundColor: "rgba(211, 72, 54, 0.75)",
+      //       borderColor: "rgba(211, 72, 54, 1)",
+      //       pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+      //       pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+      //       data: TEMP
+      //     }
+      //   ]
+      // };
 
       var ctx = $("#mycanvas");
 
@@ -190,7 +191,7 @@ $(document).ready(function(){
       var no2ctx = $("#no2Chart");
       var o3ctx = $("#o3Chart");
       var pmctx = $("#pmChart");
-      var tempctx = $("#tempChart");
+      // var tempctx = $("#tempChart");
 
       var LineGraph = new Chart(coctx, {
         type: 'line',
@@ -216,10 +217,10 @@ $(document).ready(function(){
         type: 'line',
         data: PMchartdata
       });
-      var LineGraph = new Chart(tempctx, {
-        type: 'line',
-        data: TEMPchartdata
-      });
+      // var LineGraph = new Chart(tempctx, {
+      //   type: 'line',
+      //   data: TEMPchartdata
+      // });
     },
     error : function(data) {
 
