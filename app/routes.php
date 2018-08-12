@@ -73,6 +73,13 @@ $app->get('/getJSON/air10Min', 'App\Controller\ChartController:air10Min')
 $app->get('/getJSON/airHour', 'App\Controller\ChartController:airHour')
     ->setName('getJSONairHour');
 
+$app->get('/getJSON/allaqi', 'App\Controller\ChartController:airRealTimeaqi')
+    ->setName('getJSONairReal');
+$app->get('/getJSON/air10Minaqi', 'App\Controller\ChartController:air10Minaqi')
+    ->setName('getJSONair10Min');
+$app->get('/getJSON/airHouraqi', 'App\Controller\ChartController:airHouraqi')
+    ->setName('getJSONairHour');
+
 // chart JSON data (heart)
 $app->get('/getJSON/heartReal', 'App\Controller\ChartController:heartRateReal')
     ->setName('getJSONheartRateReal');
@@ -88,6 +95,13 @@ $app->get('/air_chart10min', 'App\Controller\HomeController:air_chart10min')
     ->setName('airair_chart10min_chart');
 $app->get('/air_chartHour', 'App\Controller\HomeController:air_chartHour')
     ->setName('air_chartHour');
+
+$app->get('/air_chartaqi', 'App\Controller\HomeController:air_chartaqi')
+    ->setName('air_chartaqi');
+$app->get('/air_chart10minaqi', 'App\Controller\HomeController:air_chart10minaqi')
+    ->setName('airair_chart10minaqi');
+$app->get('/air_chartHouraqi', 'App\Controller\HomeController:air_chartHouraqi')
+    ->setName('air_chartHouraqi');
 
 // chart (heart)
 $app->get('/heart', 'App\Controller\HomeController:heart')

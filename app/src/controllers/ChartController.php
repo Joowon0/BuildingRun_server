@@ -77,6 +77,33 @@ final class ChartController extends BaseController {
     $this->makeJSON($sql);
   }
 
+  // air quality information with AQI
+  public function airRealTimeaqi(Request $request, Response $response, $args) {
+    $sql = "SELECT *
+            FROM AQI_Info JOIN Sensor ON AQI_Info.MAC = Sensor.MAC
+            WHERE Sensor.MAC = 'a'
+            ORDER BY Timestamp DESC LIMIT 20";
+
+    $this->makeJSON($sql);
+    return $response;
+  }
+
+  public function air10Minaqi(Request $request, Response $response, $args) {
+    $sql = "SELECT SUBSTR(Timestamp, 9, 7) as ts, avg(CO) as CO, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3_1) as O3_1, avg(O3_2) as O3_2, avg(PM25) as PM25
+            FROM AQI_Info
+            WHERE MAC = '".$_SESSION['MAC']."'
+            GROUP BY SUBSTR(Timestamp, 9, 7)";
+    $this->makeJSON($sql);
+  }
+
+  public function airHouraqi(Request $request, Response $response, $args) {
+    $sql = "SELECT SUBSTR(Timestamp, 9, 5) as ts, avg(CO) as CO, avg(SO2) as SO2, avg(NO2) as NO2, avg(O3_1) as O3_1, avg(O3_2) as O3_2, avg(PM25) as PM25
+            FROM AQI_Info
+            WHERE MAC = '".$_SESSION['MAC']."'
+            GROUP BY SUBSTR(Timestamp, 9, 5)";
+    $this->makeJSON($sql);
+  }
+
 
   // for APP historic data view
   public function app_airQualityHistory(Request $request, Response $response, $args) {
