@@ -426,8 +426,8 @@
                           echo "<td>".$sensor[$i]['latitude']."</td>";
                           echo "<td>".$sensor[$i]['longitude']."</td>";
                           echo "<td>".$sensor[$i]['Timestamp']."</td>";
-                          echo "<td><button type=\"button\" class=\"btn btn-outline-info\" name=\"chartBtn".$i."\">Chart</button></td>";
-                          echo "<td><button type=\"button\" class=\"btn btn-outline-danger\" name=\"deregBtn".$i."\">Deregister</button></td>";
+                          echo "<td><button onclick=\"window.location='air_chart?MAC=".$sensor[$i]['MAC']."';\" type=\"button\" class=\"btn btn-outline-info\">Chart</button></td>";
+                          echo "<td><button onclick=\"window.location='sensorDeregister?MAC=".$sensor[$i]['MAC']."';\" type=\"button\" class=\"btn btn-outline-danger\">Deregister</button></td>";
                           echo "<tr>";
                         }
                       ?>

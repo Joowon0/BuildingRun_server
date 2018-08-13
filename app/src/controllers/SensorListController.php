@@ -37,8 +37,9 @@ final class SensorListController extends BaseController {
   public function sensor_list(Request $request, Response $response, $args)
   {
     $sql = "SELECT Sensor.MAC as MAC, latitude, longitude, x.ts as Timestamp
-            FROM Sensor JOIN (SELECT MAC, max(Timestamp) ts FROM AirQuality_Info GROUP BY MAC) x
-            ON Sensor.MAC = x.MAC";
+            FROM Sensor LEFT JOIN (SELECT MAC, max(Timestamp) ts FROM AirQuality_Info GROUP BY MAC) x
+            ON Sensor.MAC = x.MAC
+            WHERE Sensor.USN = '".$_SESSION['USN']."'";
 
     try {
       $sth = $this->db->query($sql);

@@ -66,8 +66,8 @@ $app->get('/sensorDeregister', 'App\Controller\SensorController:sensorDeregister
     ->setName('sensorDeregister');
 
 // chart JSON data (air)
-$app->get('/getJSON/all', 'App\Controller\ChartController:getJSON')
-    ->setName('getJSONall');
+$app->get('/getJSON/all', 'App\Controller\ChartController:airRealTime')
+    ->setName('getJSONairReal');
 $app->get('/getJSON/air10Min', 'App\Controller\ChartController:air10Min')
     ->setName('getJSONair10Min');
 $app->get('/getJSON/airHour', 'App\Controller\ChartController:airHour')
@@ -145,6 +145,12 @@ $app->post('/app/airQualityHistory', 'App\Controller\ChartController:app_airQual
     ->setName('app_airQualityHistory');
 $app->post('/app/heartHistory', 'App\Controller\ChartController:app_heartHistory')
     ->setName('app_heartHistory');
+
+$app->post('/app/recentTime', 'App\Controller\DataController:app_RecentUpdateTime')
+    ->setName('app_recentTime');
+
+$app->get('/AQI/test', 'App\Controller\AQIController:calcul_CO')
+    ->setName('aqi_test');
 
 // show database for test
 $app->get('/showDB/airQuality', 'App\Controller\DBTester:printAirQualityInfo')

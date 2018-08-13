@@ -133,12 +133,17 @@ final class HomeController extends BaseController {
 
   public function air_chart(Request $request, Response $response, $args)
   {
-      if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
+
+      if (isset($_GET['MAC']) && $_GET['MAC'] != '') {
+        $_SESSION['MAC'] = $_GET['MAC'];
+      }
+      else if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
         $sql = "SELECT * FROM Sensor WHERE USN = ".$_SESSION['USN']." LIMIT 1";
         $stmt = $this->db->query($sql);
         $result = $stmt->fetch();
         $_SESSION['MAC'] = $result['MAC'];
       }
+
 
       $sql = "SELECT * FROM Sensor WHERE MAC = '".$_SESSION['MAC']."' LIMIT 1";
 
@@ -179,7 +184,10 @@ final class HomeController extends BaseController {
 
   public function air_chart10min(Request $request, Response $response, $args)
   {
-      if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
+      if (isset($_GET['MAC']) && $_GET['MAC'] != '') {
+        $_SESSION['MAC'] = $_GET['MAC'];
+      }
+      else if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
         $sql = "SELECT * FROM Sensor WHERE USN = ".$_SESSION['USN']." LIMIT 1";
         $stmt = $this->db->query($sql);
         $result = $stmt->fetch();
@@ -201,7 +209,10 @@ final class HomeController extends BaseController {
   }
   public function air_chartHour(Request $request, Response $response, $args)
   {
-      if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
+      if (isset($_GET['MAC']) && $_GET['MAC'] != '') {
+        $_SESSION['MAC'] = $_GET['MAC'];
+      }
+      else if (!isset($_SESSION['MAC']) || $_SESSION['MAC'] == '') {
         $sql = "SELECT * FROM Sensor WHERE USN = ".$_SESSION['USN']." LIMIT 1";
         $stmt = $this->db->query($sql);
         $result = $stmt->fetch();
