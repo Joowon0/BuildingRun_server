@@ -16,7 +16,16 @@ $(document).ready(function(){
 
       for(var i in data) {
         ts = data[i].ts;
-        timestamp.push(ts.substring(0,2) + 'd ' + ts.substring(3,5) + 'h ' + ts.substring(6) + '0m ');
+        h = parseInt(ts.substring(3,5));
+        if (h < 12) {
+          hour = h;
+          stamp = "AM";
+        }
+        else {
+          hour = (h - 12);
+          stamp = "PM";
+        }
+        timestamp.push("day" + ts.substring(0,2) + " " + hour + stamp);
         CO.push(data[i].CO);
         SO2.push(data[i].SO2);
         NO2.push(data[i].NO2);

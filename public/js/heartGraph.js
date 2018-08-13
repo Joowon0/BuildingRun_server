@@ -23,8 +23,7 @@ var ajaxFn = function(){
           hour = (data[back].hh - 12);
           stamp = " PM";
         }
-        time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
-        console.log(time);
+        // time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
         timestamp.push(hour + ":" + data[back].mm + ":" + data[back].ss + stamp );
         heartRate.push(data[back].HeartRate);
         heartInterval.push(data[back].HeartInterval);
