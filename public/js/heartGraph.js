@@ -15,12 +15,12 @@ var ajaxFn = function(){
       for(var i in data) {
         back = len - i - 1;
 
-        if (data[back] < 12) {
-          hour = data[back];
+        if (data[back].hh < 12) {
+          hour = data[back].hh;
           stamp = " AM";
         }
         else {
-          hour = (data[back] - 12);
+          hour = (data[back].hh - 12);
           stamp = " PM";
         }
         time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
