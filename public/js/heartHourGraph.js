@@ -21,7 +21,7 @@ $(document).ready(function(){
           hour = (h - 12);
           stamp = "PM";
         }
-        timestamp.push("Day" + ts.substring(0,2) + hour + stamp);
+        timestamp.push("day" + ts.substring(0,2) " " + hour + stamp);
         heartRate.push(data[i].HeartRate);
         heartInterval.push(data[i].HeartInterval);
       }
