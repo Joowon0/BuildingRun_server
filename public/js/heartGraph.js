@@ -15,16 +15,16 @@ var ajaxFn = function(){
       for(var i in data) {
         back = len - i - 1;
 
-        if (data[back].hh < 12) {
-          hour = data[back].hh;
-          stamp = " AM";
-        }
-        else {
-          hour = (data[back].hh - 12);
-          stamp = " PM";
-        }
+        // if (data[back].hh < 12) {
+        //   hour = data[back].hh;
+        //   stamp = " AM";
+        // }
+        // else {
+        //   hour = (data[back].hh - 12);
+        //   stamp = " PM";
+        // }
         // time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
-        timestamp.push(hour + ":" + data[back].mm + ":" + data[back].ss + stamp );
+        timestamp.push(data[back].mm + ":" + data[back].ss);
         heartRate.push(data[back].HeartRate);
         heartInterval.push(data[back].HeartInterval);
       }

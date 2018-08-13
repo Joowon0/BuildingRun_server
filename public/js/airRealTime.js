@@ -27,7 +27,7 @@ var ajaxFn = function(){
           hour = (data[back].hh - 12);
           stamp = " PM";
         }
-        // time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
+        time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
         timestamp.push(hour + ":" + data[back].mm + ":" + data[back].ss + stamp );
         CO.push(data[back].CO);
         SO2.push(data[back].SO2);
