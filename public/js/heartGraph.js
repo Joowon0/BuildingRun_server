@@ -24,7 +24,7 @@ var ajaxFn = function(){
         //   stamp = " PM";
         // }
         // time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
-        timestamp.push(data[back].mm + ":" + data[back].ss);
+        timestamp.push(data[back].mm + "min " + data[back].ss + "sec");
         heartRate.push(data[back].HeartRate);
         heartInterval.push(data[back].HeartInterval);
       }

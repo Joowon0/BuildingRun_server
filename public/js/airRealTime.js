@@ -18,8 +18,7 @@ var ajaxFn = function(){
       len = data.length;
       for(var i in data) {
         back = len - i - 1;
-
-        timestamp.push( ts.substring(6,12) );
+        timestamp.push(data[back].Timestamp);
         CO.push(data[back].CO);
         SO2.push(data[back].SO2);
         NO2.push(data[back].NO2);
