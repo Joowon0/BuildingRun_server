@@ -12,7 +12,15 @@ $(document).ready(function(){
 
       for(var i in data) {
         ts = data[i].ts;
-        timestamp.push(ts.substring(0,2) + 'd ' + ts.substring(3,5) + 'h ');
+        if (ts < 12) {
+          hour = ts;
+          stamp = " AM";
+        }
+        else {
+          hour = (ts - 12);
+          stamp = " PM";
+        }
+        timestamp.push(ts.substring(0,2) + 'th ' + hour + stamp);
         heartRate.push(data[i].HeartRate);
         heartInterval.push(data[i].HeartInterval);
       }
