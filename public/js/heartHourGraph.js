@@ -15,13 +15,13 @@ $(document).ready(function(){
         h = parseInt(ts.substring(3,5));
         if (h < 12) {
           hour = h;
-          stamp = " AM";
+          stamp = "AM";
         }
         else {
           hour = (h - 12);
-          stamp = " PM";
+          stamp = "PM";
         }
-        timestamp.push(ts.substring(0,2) + 'th ' + hour + 'h ');
+        timestamp.push("Day" + ts.substring(0,2) + hour + stamp);
         heartRate.push(data[i].HeartRate);
         heartInterval.push(data[i].HeartInterval);
       }
