@@ -16,17 +16,17 @@ $(document).ready(function(){
 
       for(var i in data) {
         ts = data[i].ts;
-        // h = ts.substring(3,5);
-        // if (h < 12) {
-        //   hour = h;
-        //   stamp = " AM";
-        // }
-        // else {
-        //   hour = (h - 12);
-        //   stamp = " PM";
-        // }
+        h = ts.substring(3,5);
+        if (h < 12) {
+          hour = h;
+          stamp = " AM";
+        }
+        else {
+          hour = (h - 12);
+          stamp = " PM";
+        }
 
-        timestamp.push(ts.substring(6, 9);
+        timestamp.push(hour + ':' + ts.substring(6) + '0' + stamp);
         CO.push(data[i].CO);
         SO2.push(data[i].SO2);
         NO2.push(data[i].NO2);

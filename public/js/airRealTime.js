@@ -19,16 +19,7 @@ var ajaxFn = function(){
       for(var i in data) {
         back = len - i - 1;
 
-        if (data[back].hh < 12) {
-          hour = data[back].hh;
-          stamp = " AM";
-        }
-        else {
-          hour = (data[back].hh - 12);
-          stamp = " PM";
-        }
-        time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
-        timestamp.push(hour + ":" + data[back].mm + ":" + data[back].ss + stamp );
+        timestamp.push( ts.substring(6,12) );
         CO.push(data[back].CO);
         SO2.push(data[back].SO2);
         NO2.push(data[back].NO2);
