@@ -101,7 +101,7 @@ final class SensorController extends BaseController {
     }
 
     $this->deleteMAC($_SESSION['MAC']);
-   
+
     $message = "Sensor " . $_SESSION['MAC'] . " is deregistered";
     echo "<script type='text/javascript'>alert('$message');</script>";
 
@@ -158,7 +158,7 @@ final class SensorController extends BaseController {
   }
 
   public function getSensorInfo($USN) {
-    $sql = "SELECT MAC, latitude, longitude FROM Sensor WHERE USN = ".$USN ;
+    $sql = "SELECT MAC, latitude, longitude FROM Sensor" ;
     try {
     	$stmt = $this->db->query($sql);
     	$result = $stmt->fetch();
