@@ -4,7 +4,7 @@ var ajaxFn = function(){
     url : "/getJSON/heartReal",
     type : "GET",
     success : function(data){
-      //console.log(data);
+      console.log(data);
       data = JSON.parse(data);
 
       var timestamp = [];
@@ -14,7 +14,18 @@ var ajaxFn = function(){
       len = data.length;
       for(var i in data) {
         back = len - i - 1;
-        timestamp.push(data[back].hh + 'h ' + data[back].mm + 'm ' + data[back].ss + 's ' );
+
+        if (data[back].hh < 12) {
+          hour = data[back].hh;
+          stamp = " AM";
+        }
+        else {
+          hour = (data[back].hh - 12);
+          stamp = " PM";
+        }
+        time = hour + ":" + data[back].mm + ":" + data[back].ss + stamp;
+        console.log(time);
+        timestamp.push(hour + ":" + data[back].mm + ":" + data[back].ss + stamp );
         heartRate.push(data[back].HeartRate);
         heartInterval.push(data[back].HeartInterval);
       }
@@ -101,4 +112,4 @@ var ajaxFn = function(){
 
 ajaxFn();
 //OR use BELOW line to wait 10 secs before first call
-setInterval(ajaxFn, 1000);
+setInterval(ajaxFn, 5000);
