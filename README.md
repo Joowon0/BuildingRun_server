@@ -2,7 +2,7 @@
 
 Air quality and heart data is measured through sensors. A user can view overall data in both app and web.
 (Related to IoT Development Program, 2018 summer, UCSD.)
-Whole repository : https://github.com/Joowon0/BuildingRun
+* Whole repository : https://github.com/Joowon0/BuildingRun
 
 
 ## Getting Started
