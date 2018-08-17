@@ -1,58 +1,48 @@
-# Slim 3 MVC Skeleton
+# Building Run
 
-This is a simple skeleton project for Slim 3 that includes Doctrine, Twig, Flash messages and Monolog.
+Air quality and heart data is measured through sensors. A user can view overall data in both app and web.
+(Related to IoT Development Program, 2018 summer, UCSD.)
+Whole repository : https://github.com/Joowon0/BuildingRun
 
-Base on https://github.com/akrabat/slim3-skeleton
 
-## Prepare
+## Getting Started
 
-1. Create your project:
+### Vagrant
 
-       `$ composer create-project -n -s dev vhchung/slim3-skeleton-mvc your-app`
-
-1. Execute `your-app\sql\blog.sql` to create sample database (MySQL)
-2. Change database connection settings at `entities_generator.php` and `app/settings.php`
-3. Generate models (Doctrine entities):
-
+First, install vagrant to set the local server.
+```
+sudo apt-get install virtualbox
+sudo apt-get install vagrant
 ```
 
-$ cd your-app
-$ php entities_generator.php
-
+Go to where the VagrantFile is and type the following.
+```
+vagrant init
+vagrant up
 ```
 
- Add namespace for each model: `namespace App\Model;`
+Now the server is started. To end the server, type the following.
 
- Notice: Delete all models before re-generate to update models.
+```
+vagrant halt
+```
 
-### Run it:
+### Android Studio
 
-1. `$ cd your-app`
-2. `$ php -S 0.0.0.0:8888 -t public/`
-3. Browse to http://localhost:8888
+Install Android Studio to install apk file in you phone or virtual machine.
+You can download it at https://developer.android.com/studio/
 
-### Notice
+## Built With
 
-Set `logs` and `cache` folder permission to writable when deploy to production environment
+* [PHP](http://php.net/) - The web framework used
+* [MySQL](https://www.mysql.com/) - Database management
+* [Android Studio](https://developer.android.com/studio/) - The android framework used
+* [Udoo board](https://www.udoo.org/) - Air quality measurement
 
-## Key directories
+## Contributors
 
-* `app`: Application code
-* `app/src`: All class files within the `App` namespace
-* `app/templates`: Twig template files
-* `cache/twig`: Twig's Autocreated cache files
-* `log`: Log files
-* `public`: Webserver root
-* `vendor`: Composer dependencies
-* `sql`: sql dump file for sample database
-
-## Key files
-
-* `public/index.php`: Entry point to application
-* `app/settings.php`: Configuration
-* `app/dependencies.php`: Services for Pimple
-* `app/middleware.php`: Application middleware
-* `app/routes.php`: All application routes are here
-* `app/src/controllers/HomeController.php`: Controller class for the home page
-* `app/src/models/Post.php`: Entity class for post table
-* `app/templates/home.twig`: Twig template file for the home page
+* **Joowon Byun** - *Web development* - https://github.com/Joowon0
+* **Umji Choi (Wendy)** - *Web development* - https://github.com/cute2969
+* **Doyoung Ha (James)** - *App development* - https://github.com/gkehdud
+* **Janghyun Song (Jack)** - *App development* - https://github.com/jhsong13
+* **Junho Suk (Juno)** - *Sensor development* - https://github.com/aaatype
